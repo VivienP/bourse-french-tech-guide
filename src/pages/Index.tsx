@@ -425,10 +425,34 @@ const Index = () => {
             Processus de candidature
           </h2>
           
-          <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-            Le dépôt d'un dossier se fait en ligne via la plateforme officielle de Bpifrance : 
-            <strong> app.bel.bpifrance.fr</strong>
-          </p>
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Dépôt du dossier</h3>
+              <p className="mb-6">
+                L'ensemble du processus de candidature est digitalisé. La demande de financement s'effectue en ligne via la plateforme de Bpifrance <strong>app.bel.bpifrance.fr</strong>.
+              </p>
+
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Contenu du dossier</h3>
+              <p className="mb-4">Le dossier pour la BFT se compose de :</p>
+              <ol className="list-decimal list-inside space-y-2 mb-6">
+                <li>Un pitch deck</li>
+                <li>Un business plan</li>
+                <li>Un plan de trésorerie sur 24 mois</li>
+                <li>Une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages)</li>
+                <li>L'annexe financière détaillant les dépenses prévisionnelles</li>
+                <li>Table de capitalisation</li>
+              </ol>
+
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Étude du dossier en 5 phases :</h3>
+              <ol className="list-decimal list-inside space-y-2 mb-8">
+                <li>Ouverture d'une demande et transmission du pitch deck et du business plan</li>
+                <li>Entretien téléphonique avec le porteur de projet pour valider le respect des critères et préqualifier l'aspect innovant du projet</li>
+                <li>Présentation en pré-comité</li>
+                <li>Si validé, instruction en comité</li>
+                <li>Réception de la première tranche en quelques semaines après la réponse positive officielle</li>
+              </ol>
+            </div>
+          </div>
 
           <ProcessTimeline />
         </div>
