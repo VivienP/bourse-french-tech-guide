@@ -192,14 +192,7 @@ const Index = () => {
           
           <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
             <p className="text-xl mb-6">
-              La Bourse French Tech (BFT) est une <strong>subvention publique non remboursable</strong> attribuée par Bpifrance. 
-              Elle vise à soutenir la création de startups à fort potentiel d'innovation et de croissance en finançant une 
-              étude de faisabilité technico-économique.
-            </p>
-            
-            <p className="mb-6">
-              Cette aide couvre les premières dépenses liées à la structuration du projet, au développement de prototypes, 
-              à la propriété intellectuelle ou encore à la validation marché.
+              La <strong>Bourse French Tech</strong> (BFT) est une subvention publique gérée par <strong>Bpifrance</strong>, conçue pour accompagner les <strong>jeunes entreprises innovantes</strong> dans leur phase d’amorçage. Elle finance les premières dépenses liées à la maturation et à la validation technico-économique des projets, comme la R&D, les études de faisabilité, le prototypage ou la protection de la propriété intellectuelle. C’est un dispositif clé pour les startups technologiques en France, offrant non seulement un soutien financier mais aussi une porte d’entrée vers l’écosystème Bpifrance.
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 my-8">
