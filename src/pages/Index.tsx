@@ -342,16 +342,15 @@ const Index = () => {
                   <div className="flex items-center p-3 bg-green-50 rounded-lg">
                     <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
                     <div>
-                      <div className="font-medium">Première tranche : 70%</div>
+                      <div className="font-medium">1ère avance : 70%</div>
                       <div className="text-sm text-gray-600">À la signature de la convention</div>
                     </div>
                   </div>
                   <div className="flex items-center p-3 bg-blue-50 rounded-lg">
                     <CheckCircle className="h-5 w-5 text-blue-500 mr-3" />
                     <div>
-                      <div className="font-medium">Seconde tranche : 30%</div>
+                      <div className="font-medium">Solde : 30%</div>
                       <div className="text-sm text-gray-600">À l'issue du projet</div>
-                      <div className="text-xs text-gray-500 mt-1">Sous réserve de bonne utilisation de la 1ère tranche</div>
                     </div>
                   </div>
                 </div>
