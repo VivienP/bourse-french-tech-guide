@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,72 @@ import CriteriaGrid from '@/components/CriteriaGrid';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import ProjectExamples from '@/components/ProjectExamples';
 import StatsSection from '@/components/StatsSection';
+
+const faqData = [
+  {
+    question: "Faut-il avoir créé l'entreprise avant de candidater ?",
+    answer: "Oui, l'entreprise doit être immatriculée (moins d'un an d'existence).",
+  },
+  {
+    question: "Qu'entend-on par fonds propres ?",
+    answer: "Au sens de Bpifrance, les fonds propres désignent les ressources financières durables qui \"appartiennent\" directement ou indirectement à l'entreprise : capital, réserves, bénéfice, report à nouveau, subvention d'investissement, provisions réglementées… par opposition aux financements externes (provenant de tiers). En création d'entreprise, les fonds propres évoquent l'apport personnel ou le capital social de l'entreprise.",
+  },
+  {
+    question: "Quelle est la différence entre fonds propres et capital social ?",
+    answer: "Le capital social est la somme initiale apportée par les associés lors de la création de l'entreprise. Les fonds propres englobent le capital social, mais aussi d'autres ressources financières comme les bénéfices non distribués ou les apports supplémentaires.",
+  },
+  {
+    question: "Le capital social de la société a-t-il de l'importance ? Peut-on avoir la BFT avec 500 € au capital social ?",
+    answer: "Oui le capital social a de l'importance. Un capital social trop faible peut signaler un manque d'engagement des fondateurs, augmentant le risque perçu par Bpifrance. Un minimum de 5 000 € est recommandé pour une demande de 30 000 €.",
+  },
+  {
+    question: "L'incubation est-elle obligatoire ?",
+    answer: "En Île-de-France, l'accompagnement par un incubateur labellisé est requis. Ailleurs, il est fortement recommandé, surtout pour les primo-entrepreneurs, car il renforce la crédibilité du dossier.",
+  },
+  {
+    question: "La BFT peut-elle couvrir des frais déjà engagés ?",
+    answer: "Non, seuls les frais futurs sont éligibles.",
+  },
+  {
+    question: "Les entrepreneurs individuels peuvent-ils candidater ?",
+    answer: "Non, les entreprises individuelles, EIRL ou personnes physiques ne sont pas éligibles.",
+  },
+  {
+    question: "Tous les secteurs sont-ils éligibles ?",
+    answer: "Oui, à condition que le projet soit innovant et respecte les critères. En 2025, les projets software, notamment en IA, dominent les financements.",
+  },
+  {
+    question: "Un projet de transfert technologique est-il éligible ?",
+    answer: "Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance.",
+  },
+  {
+    question: "Quel niveau d'innovation est requis ?",
+    answer: "L'innovation peut être technologique, d'usage, de service, de procédé ou organisationnelle. Une innovation incrémentale ou une approche originale suffit, à condition qu'elle présente un fort potentiel de croissance.",
+  },
+  {
+    question: "Est-il plus facile d'obtenir la BFT dans certaines régions ?",
+    answer: "Les grandes métropoles (Paris, Lyon, Lille, Bordeaux, Grenoble, Marseille) sont plus compétitives en raison du volume de candidatures. Les antennes régionales moins sollicitées sont généralement plus accessibles. Si cela fait sens pour votre entreprise, immatriculer sa société dans des régions peut sollicitées peut vous permettre d'augmenter significativement vos financements Bpifrance.",
+  },
+  {
+    question: "Y a-t-il des périodes plus favorables pour candidater ?",
+    answer: "Non, mais les enveloppes budgétaires régionales peuvent s'épuiser en fin d'année (4e trimestre, voire dès le 3e trimestre). Il est conseillé de déposer son dossier le plus tôt possible dans l'année.",
+  },
+  {
+    question: "Mon entreprise a bientôt un an, est-ce la peine de postuler ?",
+    answer: "L'entreprise doit avoir moins d'un an au dépôt complet du dossier, et non à la date de validation du dossier par le comité.",
+  },
+  {
+    question: "La BFT est-elle disponible à Paris ?",
+    answer: `Oui, mais à Paris (75), deux dispositifs spécifiques existent en complément ou substitution :
+
+• Paris Innovation Amorçage (PIA) : jusqu'à 30 000 €, réservé aux entreprises de moins de 3 ans incubées à Paris.
+• Fonds parisien pour l'innovation (FPI) : jusqu'à 30 000 € (dont frais d'incubation), pour les startups innovantes à fort impact immatriculées à Paris depuis moins de 3 ans.`
+  },
+  {
+    question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
+    answer: "Cette subvention est destinée aux projets deeptech (innovation issue de laboratoires), immatriculés depuis moins d'un an, avec un plan clair (budget, calendrier). Elle couvre jusqu'à 70 % des dépenses de faisabilité, brevet, personnel ou prestations externes, pour un montant maximal de 90 000 €.",
+  },
+];
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('');
@@ -450,53 +515,12 @@ const Index = () => {
           </h2>
           
           <Accordion type="single" collapsible className="space-y-4">
-            {[
-              {
-                question: "Faut-il avoir déjà créé l'entreprise ?",
-                answer: "Oui, elle doit être immatriculée depuis moins d'un an et avoir une forme juridique commerciale (SAS, SARL, etc.)."
-              },
-              {
-                question: "Peut-on candidater avec 100 € de capital social ?",
-                answer: "C'est fortement déconseillé. Bpifrance valorise un engagement financier réel, souvent au moins 5 000 € de capital."
-              },
-              {
-                question: "Quelle différence entre fonds propres et capital social ?",
-                answer: "Le capital est l'apport initial. Les fonds propres incluent également les apports en compte courant d'associés et les résultats non distribués."
-              },
-              {
-                question: "L'incubation est-elle obligatoire ?",
-                answer: "Oui en Île-de-France. Recommandée ailleurs pour renforcer la crédibilité du dossier."
-              },
-              {
-                question: "La subvention peut-elle être partielle ?",
-                answer: "Oui. Certaines dépenses peuvent être écartées par Bpifrance si jugées non éligibles."
-              },
-              {
-                question: "Puis-je candidater en tant qu'auto-entrepreneur ou entreprise individuelle ?",
-                answer: "Non, seuls les statuts de société sont admis."
-              },
-              {
-                question: "Est-ce que tous les secteurs sont éligibles ?",
-                answer: "Oui. Mais l'innovation doit être clairement démontrée. Les projets numériques sont les plus courants."
-              },
-              {
-                question: "Mon projet doit-il être une innovation de rupture ?",
-                answer: "Non. Une innovation d'usage, d'organisation ou de service peut suffire si elle apporte une valeur différenciante."
-              },
-              {
-                question: "Y a-t-il des régions où il est plus facile d'obtenir la BFT ?",
-                answer: "Oui. Les grandes métropoles (Paris, Lyon, Marseille…) sont très sollicitées. Les régions moins denses offrent un meilleur taux de réussite."
-              },
-              {
-                question: "Y a-t-il une période idéale pour candidater ?",
-                answer: "Il est conseillé d'éviter la fin d'année : certaines antennes régionales épuisent leur enveloppe budgétaire dès le troisième trimestre."
-              }
-            ].map((faq, index) => (
+            {faqData.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger className="text-left hover:text-primary">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600">
+                <AccordionContent className="text-gray-600 whitespace-pre-line">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
