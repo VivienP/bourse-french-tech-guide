@@ -2,39 +2,54 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Bot, ShoppingCart, Heart, Lightbulb, TrendingUp, Shield } from 'lucide-react';
+import { Bot, Heart, Lightbulb } from 'lucide-react';
 
 const ProjectExamples = () => {
   const projects = [
     {
       icon: Bot,
-      title: 'Intelligence Artificielle - Support Client',
+      title: 'Solution SaaS d’optimisation logistique (IA)',
       sector: 'IA & Automatisation',
-      subvention: '30 000 €',
+      subvention: '28 000 €',
       fondsPropres: '20 000 €',
-      description: 'Développement d\'une solution IA pour automatiser le support client avec traitement du langage naturel.',
-      depenses: ['Prototypage', 'Validation utilisateur', 'Protection intellectuelle'],
+      description: 'Développement d’une plateforme basée sur l’intelligence artificielle pour optimiser les flux logistiques des PME.',
+      depenses: [
+        'R&D : 20 000 €', 
+        'Prototypage : 10 000 €', 
+        'Étude de marché : 6 000 €', 
+        'Accompagnement incubateur : 3 000 €', 
+        'Frais juridiques : 1 000 €'
+      ],
       color: 'bg-blue-500'
     },
     {
-      icon: ShoppingCart,
-      title: 'E-commerce Alimentaire - Circuits Courts',
-      sector: 'Commerce & Distribution',
-      subvention: '25 000 €',
-      fondsPropres: '15 000 €',
-      description: 'Plateforme e-commerce spécialisée dans les circuits courts et l\'alimentation locale.',
-      depenses: ['Prototype logiciel', 'Étude de marché', 'Aspects juridiques'],
-      color: 'bg-green-500'
+      icon: Heart,
+      title: 'Dispositif médical connecté',
+      sector: 'Santé & Bien-être',
+      subvention: '30 000 €',
+      fondsPropres: '30 000 €',
+      description: 'Création d’un algorithme IA pour l\'identification précoce des troubles cardiaques des personnes âgées isolées via capteur portable connecté.',
+      depenses: [
+        'Développement par laboratoire IA : 35 000 €', 
+        'Frais de personnel & fonctionnement : 7 000 €', 
+        'Protection propriété intellectuelle : 1 000 €'
+      ],
+      color: 'bg-red-500'
     },
     {
-      icon: Heart,
-      title: 'SaaS Santé Connectée',
-      sector: 'Santé & Bien-être',
-      subvention: '50 000 €',
-      fondsPropres: '30 000 €',
-      description: 'Solution SaaS pour le suivi médical à distance et la télémédecine.',
-      depenses: ['R&D avancée', 'Tests d\'usage', 'Déplacements partenaires'],
-      color: 'bg-red-500'
+      icon: Lightbulb,
+      title: 'Application mobile écoresponsable',
+      sector: 'Tech & Impact',
+      subvention: '29 400 €',
+      fondsPropres: '18 000 €',
+      description: 'Développement d’une application pour encourager les comportements écoresponsables via gamification et neurosciences.',
+      depenses: [
+        'Prototypage & tests (CTO ext.) : 20 000 €',
+        'Partenariat neurosciences : 7 000 €',
+        'Participation salon : 2 000 €',
+        'Étude de marché (ChatGPT Pro) : 400 €'
+      ],
+      color: 'bg-green-500'
     }
   ];
 
@@ -57,7 +72,7 @@ const ProjectExamples = () => {
             {/* Financing */}
             <div className="grid grid-cols-2 gap-3">
               <div className="p-3 bg-primary/10 rounded-lg text-center">
-                <p className="text-sm font-medium text-gray-600">Subvention</p>
+                <p className="text-sm font-medium text-gray-600">Subvention obtenue</p>
                 <p className="text-lg font-bold text-primary">{project.subvention}</p>
               </div>
               <div className="p-3 bg-gray-50 rounded-lg text-center">
@@ -72,8 +87,8 @@ const ProjectExamples = () => {
               <ul className="space-y-1">
                 {project.depenses.map((depense, depenseIndex) => (
                   <li key={depenseIndex} className="text-sm text-gray-600 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></div>
-                    {depense}
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2 flex-shrink-0"></div>
+                    <span>{depense}</span>
                   </li>
                 ))}
               </ul>
