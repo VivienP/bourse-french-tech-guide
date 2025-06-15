@@ -1,132 +1,124 @@
 
-import React, { useState } from 'react';
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+import React from 'react';
+import { MapPin, Users, CheckCircle } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const FranceMap = () => {
-  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
-
-  // URL pour les données géographiques de la France (TopoJSON)
-  const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@3/countries-50m.json";
-  
-  // Régions prioritaires avec leurs coordonnées approximatives
+  // Régions prioritaires avec leurs informations
   const priorityRegions = [
     { 
       name: 'Île-de-France', 
-      coordinates: [2.3522, 48.8566],
-      description: 'Accompagnement obligatoire'
+      description: 'Accompagnement obligatoire',
+      difficulty: 'Difficile',
+      details: 'Incubation labellisée requise'
     },
     { 
       name: 'Auvergne-Rhône-Alpes', 
-      coordinates: [4.8357, 45.7640],
-      description: 'Taux de réussite élevé'
+      description: 'Taux de réussite élevé',
+      difficulty: 'Favorable',
+      details: 'Région active avec bon accompagnement'
     },
     { 
       name: 'Hauts-de-France', 
-      coordinates: [3.0573, 50.6292],
-      description: 'Région prioritaire'
+      description: 'Région prioritaire',
+      difficulty: 'Favorable',
+      details: 'Moins de concurrence'
     },
     { 
       name: 'Nouvelle-Aquitaine', 
-      coordinates: [-0.5792, 44.8378],
-      description: 'Accompagnement renforcé'
+      description: 'Accompagnement renforcé',
+      difficulty: 'Favorable',
+      details: 'Écosystème startup en développement'
     }
   ];
 
   return (
     <div className="relative">
       <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-primary/20">
-        <h4 className="text-lg font-semibold text-center mb-4">Régions à fort accompagnement</h4>
+        <h4 className="text-lg font-semibold text-center mb-6">Régions et facilité d'obtention</h4>
         
-        <div className="relative w-full h-80 bg-gray-50 rounded-lg overflow-hidden">
-          <ComposableMap
-            projection="geoMercator"
-            projectionConfig={{
-              scale: 2800,
-              center: [2.5, 46.5]
-            }}
-            width={800}
-            height={600}
-            className="w-full h-full"
-          >
-            <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies
-                  .filter((geo) => geo.properties.NAME === "France")
-                  .map((geo) => (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill="#e5e7eb"
-                      stroke="#9ca3af"
-                      strokeWidth={0.5}
-                      style={{
-                        default: { outline: "none" },
-                        hover: { outline: "none", fill: "#d1d5db" },
-                        pressed: { outline: "none" }
-                      }}
-                    />
-                  ))
-              }
-            </Geographies>
-            
-            {/* Marqueurs pour les régions prioritaires */}
-            {priorityRegions.map((region, index) => (
-              <Marker
-                key={index}
-                coordinates={region.coordinates}
-                onMouseEnter={() => setHoveredRegion(region.name)}
-                onMouseLeave={() => setHoveredRegion(null)}
-              >
-                <circle
-                  r={8}
-                  fill="#F8D164"
-                  stroke="#D97706"
-                  strokeWidth={2}
-                  className="cursor-pointer transition-all duration-200 hover:r-10"
-                  style={{
-                    filter: hoveredRegion === region.name ? 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' : 'none'
-                  }}
-                />
-                <text
-                  textAnchor="middle"
-                  y={-12}
-                  className="text-xs font-medium fill-gray-700"
-                  style={{ fontSize: '10px' }}
-                >
-                  {region.name.split('-')[0]}
-                </text>
-              </Marker>
-            ))}
-          </ComposableMap>
-          
-          {/* Tooltip au survol */}
-          {hoveredRegion && (
-            <div className="absolute top-4 left-4 bg-white p-3 rounded-lg shadow-lg border border-gray-200 z-10">
-              <h5 className="font-semibold text-primary">{hoveredRegion}</h5>
-              <p className="text-sm text-gray-600">
-                {priorityRegions.find(r => r.name === hoveredRegion)?.description}
-              </p>
-            </div>
-          )}
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          {priorityRegions.map((region, index) => (
+            <Card key={index} className={`border-l-4 ${
+              region.difficulty === 'Difficile' ? 'border-l-red-400 bg-red-50' : 'border-l-green-400 bg-green-50'
+            }`}>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center justify-between">
+                  <span className="flex items-center">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    {region.name}
+                  </span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    region.difficulty === 'Difficile' 
+                      ? 'bg-red-100 text-red-700' 
+                      : 'bg-green-100 text-green-700'
+                  }`}>
+                    {region.difficulty}
+                  </span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-sm font-medium text-gray-700 mb-1">{region.description}</p>
+                <p className="text-xs text-gray-600">{region.details}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-        
-        <div className="mt-4">
-          <div className="flex items-center justify-center space-x-4 text-sm">
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-primary rounded-full mr-2"></div>
-              <span>Régions prioritaires</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-gray-300 rounded-full mr-2"></div>
-              <span>Autres régions</span>
-            </div>
-          </div>
-          
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
-              Les régions marquées offrent un accompagnement renforcé et des taux de réussite généralement plus élevés.
-            </p>
-          </div>
+
+        <div className="space-y-4">
+          <Card className="border-l-4 border-l-blue-400 bg-blue-50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base flex items-center">
+                <Users className="h-4 w-4 mr-2 text-blue-600" />
+                Île-de-France (Paris et région)
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-2">
+                <div className="flex items-center text-sm">
+                  <CheckCircle className="h-4 w-4 text-red-500 mr-2" />
+                  <span className="font-medium text-red-700">Accompagnement obligatoire</span>
+                </div>
+                <p className="text-xs text-gray-700 ml-6">
+                  Incubateur référencé ou structure labellisée requis
+                </p>
+                <p className="text-xs text-gray-600 ml-6">
+                  À Paris intra-muros : seule l'incubation labellisée par la Ville de Paris donne accès au dispositif PIA
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-l-4 border-l-green-400 bg-green-50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base flex items-center">
+                <MapPin className="h-4 w-4 mr-2 text-green-600" />
+                Autres régions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-2">
+                <div className="flex items-center text-sm">
+                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <span className="font-medium text-green-700">Accompagnement recommandé</span>
+                </div>
+                <p className="text-xs text-gray-700 ml-6">
+                  Non imposé mais renforce significativement la crédibilité du dossier
+                </p>
+                <p className="text-xs text-gray-600 ml-6">
+                  Taux de réussite généralement plus élevé que Paris
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          <h5 className="font-medium text-gray-800 mb-2">💡 Conseil stratégique</h5>
+          <p className="text-sm text-gray-600">
+            Les régions hors Île-de-France offrent généralement de meilleures chances d'acceptation 
+            en raison d'une concurrence moins forte et d'enveloppes budgétaires souvent moins sollicitées.
+          </p>
         </div>
       </div>
     </div>
