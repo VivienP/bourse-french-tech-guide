@@ -5,8 +5,8 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 const FranceMap = () => {
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
 
-  // URL pour les données géographiques de la France (régions)
-  const geoUrl = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+  // URL pour les données géographiques de la France (TopoJSON)
+  const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@3/countries-50m.json";
   
   // Régions prioritaires avec leurs coordonnées approximatives
   const priorityRegions = [
