@@ -131,7 +131,7 @@ const Index = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                  className={`text-sm font-medium transition-colors duration-200 hover:text-primary ${
                     activeSection === item.id ? 'text-primary' : 'text-gray-600'
                   }`}
                 >
@@ -140,7 +140,10 @@ const Index = () => {
               ))}
             </div>
 
-            <Button onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button
+              onClick={() => scrollToSection('cta')}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200"
+            >
               Prendre rendez-vous
             </Button>
           </div>
@@ -148,13 +151,16 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section
+        className="pt-36 sm:pt-44 md:pt-48 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center"
+        style={{ minHeight: '75vh' }}
+      >
+        <div className="max-w-7xl mx-auto w-full">
           <div className="text-center animate-fade-in">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 transition-opacity duration-500">
               Bourse French Tech
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed transition-opacity duration-500 delay-100">
               Subvention publique non remboursable jusqu'à <span className="text-primary font-semibold">50 000 €</span> pour soutenir 
               la création de startups innovantes à fort potentiel de croissance.
             </p>
@@ -163,7 +169,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 onClick={() => scrollToSection('definition')}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200"
               >
                 Découvrir le dispositif
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -172,13 +178,15 @@ const Index = () => {
                 size="lg" 
                 variant="outline" 
                 onClick={() => scrollToSection('cta')}
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200"
               >
                 Prendre rendez-vous
               </Button>
             </div>
 
-            <StatsSection />
+            <div className="animate-fade-in transition-opacity duration-500 delay-200">
+              <StatsSection />
+            </div>
           </div>
         </div>
       </section>
@@ -245,7 +253,7 @@ const Index = () => {
             Critères d'éligibilité
           </h2>
           
-          <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 text-center mb-12">
             Pour déposer un dossier de Bourse French Tech, deux types d'éligibilité sont examinés : 
             celle de l'entreprise et celle du projet.
           </p>
@@ -573,11 +581,11 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
               <Calendar className="mr-2 h-5 w-5" />
               Prendre rendez-vous
             </Button>
-            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3">
+            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
               <Phone className="mr-2 h-5 w-5" />
               Nous contacter
             </Button>
@@ -615,10 +623,18 @@ const Index = () => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Liens utiles</h4>
               <ul className="space-y-2 text-gray-300">
-                <li><a href="#definition" className="hover:text-primary transition-colors">Qu'est-ce que la BFT ?</a></li>
-                <li><a href="#criteres" className="hover:text-primary transition-colors">Critères d'éligibilité</a></li>
-                <li><a href="#processus" className="hover:text-primary transition-colors">Processus de candidature</a></li>
-                <li><a href="#faq" className="hover:text-primary transition-colors">FAQ</a></li>
+                <li>
+                  <a href="#definition" className="hover:text-primary transition-colors duration-200">Qu'est-ce que la BFT ?</a>
+                </li>
+                <li>
+                  <a href="#criteres" className="hover:text-primary transition-colors duration-200">Critères d'éligibilté</a>
+                </li>
+                <li>
+                  <a href="#processus" className="hover:text-primary transition-colors duration-200">Processus de candidature</a>
+                </li>
+                <li>
+                  <a href="#faq" className="hover:text-primary transition-colors duration-200">FAQ</a>
+                </li>
               </ul>
             </div>
             
