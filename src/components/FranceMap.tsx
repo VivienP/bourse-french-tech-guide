@@ -4,7 +4,6 @@ import { MapPin, Users, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const FranceMap = () => {
-  // Régions prioritaires avec leurs informations
   const priorityRegions = [
     { 
       name: 'Île-de-France', 
@@ -15,7 +14,7 @@ const FranceMap = () => {
     { 
       name: 'Auvergne-Rhône-Alpes', 
       description: 'Taux de réussite élevé',
-      difficulty: 'Favorable',
+      difficulty: 'Moyenne',
       details: 'Région active avec bon accompagnement'
     },
     { 
@@ -32,27 +31,43 @@ const FranceMap = () => {
     }
   ];
 
+  // Fonction utilitaire pour la couleur selon le niveau de difficulté
+  const getRegionClasses = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Difficile':
+        return 'border-l-red-400 bg-red-50';
+      case 'Moyenne':
+        return 'border-l-orange-400 bg-orange-50';
+      default:
+        return 'border-l-green-400 bg-green-50';
+    }
+  };
+  const getBadgeClasses = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Difficile':
+        return 'bg-red-100 text-red-700';
+      case 'Moyenne':
+        return 'bg-orange-100 text-orange-700';
+      default:
+        return 'bg-green-100 text-green-700';
+    }
+  };
+
   return (
     <div className="relative">
       <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-primary/20">
         <h4 className="text-lg font-semibold text-center mb-6">Régions et facilité d'obtention</h4>
         
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
+        <div className="flex flex-col gap-4 mb-6">
           {priorityRegions.map((region, index) => (
-            <Card key={index} className={`border-l-4 ${
-              region.difficulty === 'Difficile' ? 'border-l-red-400 bg-red-50' : 'border-l-green-400 bg-green-50'
-            }`}>
+            <Card key={index} className={`border-l-4 ${getRegionClasses(region.difficulty)}`}>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center justify-between">
                   <span className="flex items-center">
                     <MapPin className="h-4 w-4 mr-2" />
                     {region.name}
                   </span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    region.difficulty === 'Difficile' 
-                      ? 'bg-red-100 text-red-700' 
-                      : 'bg-green-100 text-green-700'
-                  }`}>
+                  <span className={`text-xs px-2 py-1 rounded-full ${getBadgeClasses(region.difficulty)}`}>
                     {region.difficulty}
                   </span>
                 </CardTitle>

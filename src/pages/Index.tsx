@@ -262,10 +262,8 @@ const Index = () => {
 
           <div className="mt-16">
             <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Régions et accompagnement</h3>
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <FranceMap />
-              </div>
+            <div className="flex flex-col gap-12">
+              <FranceMap />
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
