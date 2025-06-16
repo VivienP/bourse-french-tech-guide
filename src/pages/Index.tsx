@@ -484,11 +484,11 @@ const Index = () => {
 
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Étude du dossier en 5 phases :</h3>
               <ol className="list-decimal list-inside space-y-2 mb-8">
-  <li><strong>Ouverture d'une demande et transmission du pitch deck et du business plan</strong></li>
-  <li><strong>Entretien téléphonique avec le porteur de projet pour valider le respect des critères et préqualifier l'aspect innovant du projet</strong></li>
-  <li><strong>Présentation en pré-comité</strong></li>
-  <li><strong>Si validé, instruction en comité</strong></li>
-  <li><strong>Réception de la première tranche en quelques semaines après la réponse positive officielle</strong></li>
+  <li><strong>Ouverture d'une demande</strong> et transmission du pitch deck et du business plan</li>
+  <li><strong>Entretien téléphonique</strong> avec le porteur de projet pour valider le respect des critères et préqualifier l'aspect innovant du projet</li>
+  <li><strong>Transmission des élémnets complémentaires</strong>, étudiés pas le chargé d'affaire et éventuellement par un pré-comité</strong></li>
+  <li>Si validé, <strong>instruction en comité</strong></li>
+  <li><strong>Réponse officielle</strong> du comité bpifrance et réception des fonds en quelques semaines</li>
               </ol>
             </div>
           </div>
