@@ -8,7 +8,7 @@ const ProjectExamples = () => {
   const projects = [
     {
       icon: Bot,
-      title: 'Solution SaaS d’optimisation logistique (IA)',
+      title: 'Solution SaaS d’optimisation logistique',
       sector: 'Intelligence Artificielle',
       subvention: '28 000 €',
       fondsPropres: '20 000 €',
