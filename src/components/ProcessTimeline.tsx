@@ -21,22 +21,22 @@ const ProcessTimeline = () => {
     },
     {
       icon: Users,
-      title: 'Pré-comité régional',
-      description: 'Présentation devant le comité préliminaire',
+      title: 'Etude du dossier par le chargé d\'affaire ou le Pré-comité',
+      description: 'Etude préliminaire du dossier',
       documents: ['Avis favorable requis', 'Recommandations éventuelles'],
       color: 'bg-yellow-500'
     },
     {
       icon: FileText,
       title: 'Instruction du dossier',
-      description: 'Analyse approfondie par les équipes Bpifrance',
+      description: 'Réstitution du dossier par le chargé d\'affaire devant le comité',
       documents: ['Vérification éligibilité', 'Évaluation technique'],
       color: 'bg-purple-500'
     },
     {
       icon: CheckCircle,
-      title: 'Comité de décision',
-      description: 'Décision finale d\'attribution',
+      title: 'Réponse de bpifrance',
+      description: 'Décision finale d\'attribution du financement',
       documents: ['Notification de décision', 'Convention de subvention'],
       color: 'bg-primary'
     }
