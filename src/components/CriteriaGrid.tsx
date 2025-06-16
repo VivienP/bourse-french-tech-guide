@@ -1,64 +1,155 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building, Lightbulb } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Building, Lightbulb, Calendar, Circle, CheckCircle } from 'lucide-react';
 
 const CriteriaGrid = () => {
+  const companyCriteria = [
+    {
+      icon: Building,
+      title: 'Statut juridique',
+      requirement: 'SAS, SARL uniquement',
+      description: 'Les statuts d\'auto-entrepreneur et d\'EIRL sont exclus',
+      status: 'required'
+    },
+    {
+      icon: Calendar,
+      title: 'Âge de l\'entreprise',
+      requirement: '< 1 an',
+      description: 'La société doit avoir été créée il y a moins d\'un an',
+      status: 'required'
+    },
+    {
+      icon: Circle,
+      title: 'Capital social',
+      requirement: '≥ 5 000 €',
+      description: 'Fortement recommandé pour signaler un engagement sérieux',
+      status: 'recommended'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Fonds propres',
+      requirement: '10-30k€',
+      description: 'IDF: 20-30k€ • Régions: 10-30k€',
+      status: 'required'
+    }
+  ];
+
+  const projectCriteria = [
+    {
+      icon: Lightbulb,
+      title: 'Type d\'innovation',
+      requirement: 'Innovation démontrée',
+      description: 'Technologique, d\'usage, de procédé ou organisationnelle',
+      status: 'required'
+    },
+    {
+      icon: Building,
+      title: 'Secteurs d\'activité',
+      requirement: 'Tous secteurs',
+      description: 'Numérique, IA, santé et e-commerce sont fréquents',
+      status: 'flexible'
+    },
+    {
+      icon: Calendar,
+      title: 'Durée du projet',
+      requirement: '≤ 24 mois',
+      description: 'Phase de faisabilité financée limitée à 24 mois',
+      status: 'required'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Transfert de technologie',
+      requirement: 'Pleinement éligible',
+      description: 'Projets issus d\'un laboratoire vers une entreprise',
+      status: 'eligible'
+    }
+  ];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'required': return 'bg-red-100 text-red-800 border-red-200';
+      case 'recommended': return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'flexible': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'eligible': return 'bg-green-100 text-green-800 border-green-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'required': return 'Obligatoire';
+      case 'recommended': return 'Recommandé';
+      case 'flexible': return 'Flexible';
+      case 'eligible': return 'Éligible';
+      default: return 'Info';
+    }
+  };
+
+  const CriteriaCard = ({ title, criteria, iconColor }: { 
+    title: string; 
+    criteria: typeof companyCriteria; 
+    iconColor: string;
+  }) => (
+    <Card className="h-full hover:shadow-lg transition-all duration-300 border-0 shadow-md">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center text-xl mb-2">
+          {criteria === companyCriteria ? (
+            <Building className={`h-6 w-6 ${iconColor} mr-3`} />
+          ) : (
+            <Lightbulb className={`h-6 w-6 ${iconColor} mr-3`} />
+          )}
+          {title}
+        </CardTitle>
+        <CardDescription className="text-base">
+          {criteria === companyCriteria 
+            ? "Conditions relatives à la structure juridique et financière de votre société."
+            : "Conditions relatives au caractère innovant et au potentiel de votre projet."
+          }
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {criteria.map((criterion, index) => (
+          <div key={index} className="group p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center space-x-3">
+                <criterion.icon className="h-5 w-5 text-gray-600 group-hover:text-primary transition-colors" />
+                <h4 className="font-semibold text-gray-900">{criterion.title}</h4>
+              </div>
+              <Badge variant="outline" className={`text-xs font-medium ${getStatusColor(criterion.status)}`}>
+                {getStatusLabel(criterion.status)}
+              </Badge>
+            </div>
+            
+            <div className="ml-8">
+              <div className="mb-2">
+                <span className="inline-block px-3 py-1 bg-primary/10 text-primary font-semibold text-sm rounded-full">
+                  {criterion.requirement}
+                </span>
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {criterion.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="grid lg:grid-cols-2 gap-8">
-      {/* Critères Entreprise */}
-      <Card className="h-full">
-        <CardHeader>
-          <CardTitle className="flex items-center text-xl">
-            <Building className="h-6 w-6 text-primary mr-3" />
-            Critères Entreprise
-          </CardTitle>
-          <CardDescription>
-            Conditions relatives à la structure juridique et financière de votre société.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Statut juridique :</strong> Seules les sociétés commerciales (<strong>SAS, SARL</strong>) sont éligibles. Les statuts d'auto-entrepreneur et d'EIRL sont exclus.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Âge de l'entreprise :</strong> La société doit avoir été créée il y a <strong>moins d'un an</strong>.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Capital social :</strong> Un minimum de <strong>5 000 €</strong> est fortement recommandé pour signaler un engagement financier sérieux.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Fonds propres :</strong> Il est nécessaire de disposer de fonds propres à hauteur de <strong>20k€ à 30k€</strong> en Île-de-France et de <strong>10k€ à 30k€</strong> en régions.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Critères Projet */}
-      <Card className="h-full">
-        <CardHeader>
-          <CardTitle className="flex items-center text-xl">
-            <Lightbulb className="h-6 w-6 text-primary mr-3" />
-            Critères Projet
-          </CardTitle>
-          <CardDescription>
-            Conditions relatives au caractère innovant et au potentiel de votre projet.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Type d'innovation :</strong> L'innovation peut être <strong>technologique, d'usage, de procédé ou organisationnelle</strong>. Une innovation de rupture n'est pas obligatoire.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Secteurs d'activité :</strong> Tous les secteurs sont éligibles, bien que les projets dans le <strong>numérique, l'IA, la santé et l'e-commerce</strong> soient fréquents.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Durée du projet :</strong> La phase de faisabilité financée ne doit pas excéder <strong>24 mois</strong>.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>Transfert de technologie :</strong> Les projets issus d'un transfert technologique d'un laboratoire vers une entreprise sont <strong>pleinement éligibles</strong>.
-          </p>
-        </CardContent>
-      </Card>
+      <CriteriaCard 
+        title="Critères Entreprise" 
+        criteria={companyCriteria} 
+        iconColor="text-blue-600"
+      />
+      <CriteriaCard 
+        title="Critères Projet" 
+        criteria={projectCriteria} 
+        iconColor="text-green-600"
+      />
     </div>
   );
 };
