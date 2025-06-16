@@ -71,6 +71,10 @@ const faqData = [
     question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
     answer: " La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d’un an (ou porteurs avant création). Elle finance jusqu’à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis.",
   },
+  {
+    question: "Quels sont les incubateurs labellisés pour bénéficier du Fonds Parisien pour l’Innovation (FPI), l'équivalent de la BFT à Paris ?",
+    answer: "Pour bénéficier du Fonds Parisien pour l’Innovation (FPI), votre projet doit être incubé dans l’un des 25 incubateurs labellisés par la Ville de Paris et Bpifrance. Voici la liste des principaux incubateurs labellisés FPI : 104factory, Agoranov, Bureau du design, de la mode et des métiers d'arts, Incubateur du Conservatoire National des Arts et Métiers, Créatis, Créative Valley, Incubateur de l’université Paris Dauphine, Incubateur parisien de l’EDHEC, L’Escalator, La Ruche, Liberté Living-Lab, MakeSense, Matrice, Paris&Co, Paris Biotech Santé, Pépinière 27, PULSE Montreuil, Incubateur de l’Institut d’Etudes Politiques de Paris, Schoolab, SINGA, Incubateur de Télécom Paris, WACANO, Willa, PC’UP (incubateur de l’ESPCI), Incubateur des Arts et Métiers...",
+  },
 ];
 
 const Index = () => {
@@ -272,7 +276,7 @@ const Index = () => {
                   <CardContent>
                     <p>Accompagnement par un incubateur référencé ou une structure labellisée <strong>obligatoire</strong>.</p>
                     <p className="mt-2 text-sm text-gray-600">
-                      À Paris intra-muros, seule l'incubation labellisée par la Ville de Paris donne accès au dispositif PIA.
+                      À Paris intra-muros (75), seule les incubateurs labellisés donne accès au dispositif Fonds Parisien pour l’Innovation (FPI).
                     </p>
                   </CardContent>
                 </Card>
