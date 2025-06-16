@@ -10,86 +10,68 @@ import CriteriaGrid from '@/components/CriteriaGrid';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import ProjectExamples from '@/components/ProjectExamples';
 import StatsSection from '@/components/StatsSection';
-
-const faqData = [
-  {
-    question: "Faut-il avoir créé l'entreprise avant de candidater ?",
-    answer: "Oui, désormais l'entreprise doit être immatriculée pour débuter les démarches en ligne (moins d'un an d'existence).",
-  },
-  {
-    question: "Qu'entend-on par fonds propres ?",
-    answer: "Au sens de Bpifrance, les fonds propres désignent les ressources financières durables qui \"appartiennent\" directement ou indirectement à l'entreprise : capital, réserves, bénéfice, report à nouveau, subvention d'investissement, provisions réglementées… par opposition aux financements externes (provenant de tiers). En création d'entreprise, les fonds propres évoquent l'apport personnel ou le capital social de l'entreprise.",
-  },
-  {
-    question: "Quelle est la différence entre fonds propres et capital social ?",
-    answer: "Le capital social est la somme initiale apportée par les associés lors de la création de l'entreprise. Les fonds propres englobent le capital social, mais aussi d'autres ressources financières comme les bénéfices non distribués ou les apports supplémentaires.",
-  },
-  {
-    question: "Quel est le capital social requis pour candidater à la BFT ?",
-    answer: "Le capital social n'est pas soumis à un seuil réglementaire pour la Bourse French Tech, mais il a une importance dans l'analyse du dossier. Un capital social trop faible (par exemple 500 €) peut être perçu comme un manque d'engagement des fondateurs et fragiliser la crédibilité du projet auprès de Bpifrance. Il est généralement recommandé d'avoir un capital social de 5 000 €",
-  },
-  {
-    question: "L'incubation est-elle obligatoire ?",
-    answer: "En Île-de-France, l'accompagnement par un incubateur labellisé est requis. Ailleurs, il est fortement recommandé, surtout pour les primo-entrepreneurs, car il renforce la crédibilité du dossier.",
-  },
-  {
-    question: "La BFT peut-elle couvrir des frais déjà engagés ?",
-    answer: "Non, seuls les frais futurs sont éligibles.",
-  },
-  {
-    question: "Les entrepreneurs individuels peuvent-ils candidater ?",
-    answer: "Non, les entreprises individuelles, EIRL ou personnes physiques ne sont pas éligibles.",
-  },
-  {
-    question: "Tous les secteurs sont-ils éligibles ?",
-    answer: "Oui, à condition que le projet soit innovant et respecte les critères. En 2025, les projets software, notamment en IA, dominent les financements.",
-  },
-  {
-    question: "Un projet de transfert technologique est-il éligible ?",
-    answer: "Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance.",
-  },
-  {
-    question: "Quel niveau d'innovation est requis ?",
-    answer: "L'innovation peut être technologique, d'usage, de service, de procédé ou organisationnelle. Une innovation incrémentale ou une approche originale suffit, à condition qu'elle présente un fort potentiel de croissance.",
-  },
-  {
-    question: "Est-il plus facile d'obtenir la BFT dans certaines régions ?",
-    answer: "Les grandes métropoles (Paris, Lyon, Lille, Bordeaux, Grenoble, Marseille) sont plus compétitives en raison du volume de candidatures. Les antennes régionales moins sollicitées sont généralement plus accessibles. Si cela fait sens pour votre entreprise, immatriculer sa société dans des régions peut sollicitées peut vous permettre d'augmenter significativement vos financements Bpifrance.",
-  },
-  {
-    question: "Y a-t-il des périodes plus favorables pour candidater ?",
-    answer: "Non, mais les enveloppes budgétaires régionales peuvent s'épuiser en fin d'année (4e trimestre, voire dès le 3e trimestre). Il est conseillé de déposer son dossier le plus tôt possible dans l'année.",
-  },
-  {
-    question: "Mon entreprise a bientôt un an, est-ce la peine de postuler ?",
-    answer: "L'entreprise doit avoir moins d'un an au dépôt complet du dossier, et non à la date de validation du dossier par le comité.",
-  },
-  {
-    question: "La BFT est-elle disponible à Paris ?",
-    answer: "Non. À Paris, le Fonds Parisien pour l'Innovation (FPI) – jusqu'à 30 000 €, dont frais d'incubation – remplace les anciens dispositifs (PIA et BFT) et s'adresse aux startups innovantes à impact, de moins de 3 ans, incubées à Paris."
-  },
-  {
-    question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
-    answer: " La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d'un an (ou porteurs avant création). Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis.",
-  },
-  {
-    question: "Quels sont les incubateurs labellisés pour bénéficier du Fonds Parisien pour l'Innovation (FPI), l'équivalent de la BFT à Paris ?",
-    answer: "Pour bénéficier du Fonds Parisien pour l'Innovation (FPI), votre projet doit être incubé dans l'un des 25 incubateurs labellisés par la Ville de Paris et Bpifrance. Voici la liste des principaux incubateurs labellisés FPI : 104factory, Agoranov, Bureau du design, de la mode et des métiers d'arts, Incubateur du Conservatoire National des Arts et Métiers, Créatis, Créative Valley, Incubateur de l'université Paris Dauphine, Incubateur parisien de l'EDHEC, L'Escalator, La Ruche, Liberté Living-Lab, MakeSense, Matrice, Paris&Co, Paris Biotech Santé, Pépinière 27, PULSE Montreuil, Incubateur de l'Institut d'Etudes Politiques de Paris, Schoolab, SINGA, Incubateur de Télécom Paris, WACANO, Willa, PC'UP (incubateur de l'ESPCI), Incubateur des Arts et Métiers...",
-  },
-];
-
+const faqData = [{
+  question: "Faut-il avoir créé l'entreprise avant de candidater ?",
+  answer: "Oui, désormais l'entreprise doit être immatriculée pour débuter les démarches en ligne (moins d'un an d'existence)."
+}, {
+  question: "Qu'entend-on par fonds propres ?",
+  answer: "Au sens de Bpifrance, les fonds propres désignent les ressources financières durables qui \"appartiennent\" directement ou indirectement à l'entreprise : capital, réserves, bénéfice, report à nouveau, subvention d'investissement, provisions réglementées… par opposition aux financements externes (provenant de tiers). En création d'entreprise, les fonds propres évoquent l'apport personnel ou le capital social de l'entreprise."
+}, {
+  question: "Quelle est la différence entre fonds propres et capital social ?",
+  answer: "Le capital social est la somme initiale apportée par les associés lors de la création de l'entreprise. Les fonds propres englobent le capital social, mais aussi d'autres ressources financières comme les bénéfices non distribués ou les apports supplémentaires."
+}, {
+  question: "Quel est le capital social requis pour candidater à la BFT ?",
+  answer: "Le capital social n'est pas soumis à un seuil réglementaire pour la Bourse French Tech, mais il a une importance dans l'analyse du dossier. Un capital social trop faible (par exemple 500 €) peut être perçu comme un manque d'engagement des fondateurs et fragiliser la crédibilité du projet auprès de Bpifrance. Il est généralement recommandé d'avoir un capital social de 5 000 €"
+}, {
+  question: "L'incubation est-elle obligatoire ?",
+  answer: "En Île-de-France, l'accompagnement par un incubateur labellisé est requis. Ailleurs, il est fortement recommandé, surtout pour les primo-entrepreneurs, car il renforce la crédibilité du dossier."
+}, {
+  question: "La BFT peut-elle couvrir des frais déjà engagés ?",
+  answer: "Non, seuls les frais futurs sont éligibles."
+}, {
+  question: "Les entrepreneurs individuels peuvent-ils candidater ?",
+  answer: "Non, les entreprises individuelles, EIRL ou personnes physiques ne sont pas éligibles."
+}, {
+  question: "Tous les secteurs sont-ils éligibles ?",
+  answer: "Oui, à condition que le projet soit innovant et respecte les critères. En 2025, les projets software, notamment en IA, dominent les financements."
+}, {
+  question: "Un projet de transfert technologique est-il éligible ?",
+  answer: "Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance."
+}, {
+  question: "Quel niveau d'innovation est requis ?",
+  answer: "L'innovation peut être technologique, d'usage, de service, de procédé ou organisationnelle. Une innovation incrémentale ou une approche originale suffit, à condition qu'elle présente un fort potentiel de croissance."
+}, {
+  question: "Est-il plus facile d'obtenir la BFT dans certaines régions ?",
+  answer: "Les grandes métropoles (Paris, Lyon, Lille, Bordeaux, Grenoble, Marseille) sont plus compétitives en raison du volume de candidatures. Les antennes régionales moins sollicitées sont généralement plus accessibles. Si cela fait sens pour votre entreprise, immatriculer sa société dans des régions peut sollicitées peut vous permettre d'augmenter significativement vos financements Bpifrance."
+}, {
+  question: "Y a-t-il des périodes plus favorables pour candidater ?",
+  answer: "Non, mais les enveloppes budgétaires régionales peuvent s'épuiser en fin d'année (4e trimestre, voire dès le 3e trimestre). Il est conseillé de déposer son dossier le plus tôt possible dans l'année."
+}, {
+  question: "Mon entreprise a bientôt un an, est-ce la peine de postuler ?",
+  answer: "L'entreprise doit avoir moins d'un an au dépôt complet du dossier, et non à la date de validation du dossier par le comité."
+}, {
+  question: "La BFT est-elle disponible à Paris ?",
+  answer: "Non. À Paris, le Fonds Parisien pour l'Innovation (FPI) – jusqu'à 30 000 €, dont frais d'incubation – remplace les anciens dispositifs (PIA et BFT) et s'adresse aux startups innovantes à impact, de moins de 3 ans, incubées à Paris."
+}, {
+  question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
+  answer: " La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d'un an (ou porteurs avant création). Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis."
+}, {
+  question: "Quels sont les incubateurs labellisés pour bénéficier du Fonds Parisien pour l'Innovation (FPI), l'équivalent de la BFT à Paris ?",
+  answer: "Pour bénéficier du Fonds Parisien pour l'Innovation (FPI), votre projet doit être incubé dans l'un des 25 incubateurs labellisés par la Ville de Paris et Bpifrance. Voici la liste des principaux incubateurs labellisés FPI : 104factory, Agoranov, Bureau du design, de la mode et des métiers d'arts, Incubateur du Conservatoire National des Arts et Métiers, Créatis, Créative Valley, Incubateur de l'université Paris Dauphine, Incubateur parisien de l'EDHEC, L'Escalator, La Ruche, Liberté Living-Lab, MakeSense, Matrice, Paris&Co, Paris Biotech Santé, Pépinière 27, PULSE Montreuil, Incubateur de l'Institut d'Etudes Politiques de Paris, Schoolab, SINGA, Incubateur de Télécom Paris, WACANO, Willa, PC'UP (incubateur de l'ESPCI), Incubateur des Arts et Métiers..."
+}];
 const Index = () => {
   const [activeSection, setActiveSection] = useState('');
-
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['definition', 'criteres', 'depenses', 'financement', 'processus', 'evaluation', 'exemples', 'faq'];
       const scrollPosition = window.scrollY + 100;
-
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
+          const {
+            offsetTop,
+            offsetHeight
+          } = element;
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
@@ -97,20 +79,19 @@ const Index = () => {
         }
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+  return <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,29 +104,27 @@ const Index = () => {
             </div>
             
             <div className="hidden md:flex items-center space-x-6">
-              {[
-                { id: 'definition', label: 'Définition' },
-                { id: 'criteres', label: 'Critères' },
-                { id: 'processus', label: 'Processus' },
-                { id: 'exemples', label: 'Exemples' },
-                { id: 'faq', label: 'FAQ' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`text-sm font-medium transition-colors duration-200 hover:text-primary ${
-                    activeSection === item.id ? 'text-primary' : 'text-gray-600'
-                  }`}
-                >
+              {[{
+              id: 'definition',
+              label: 'Définition'
+            }, {
+              id: 'criteres',
+              label: 'Critères'
+            }, {
+              id: 'processus',
+              label: 'Processus'
+            }, {
+              id: 'exemples',
+              label: 'Exemples'
+            }, {
+              id: 'faq',
+              label: 'FAQ'
+            }].map(item => <button key={item.id} onClick={() => scrollToSection(item.id)} className={`text-sm font-medium transition-colors duration-200 hover:text-primary ${activeSection === item.id ? 'text-primary' : 'text-gray-600'}`}>
                   {item.label}
-                </button>
-              ))}
+                </button>)}
             </div>
 
-            <Button
-              onClick={() => scrollToSection('cta')}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200"
-            >
+            <Button onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200">
               Prendre rendez-vous
             </Button>
           </div>
@@ -153,10 +132,9 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section
-        className="pt-36 sm:pt-44 md:pt-48 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center"
-        style={{ minHeight: '75vh' }}
-      >
+      <section className="pt-36 sm:pt-44 md:pt-48 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center" style={{
+      minHeight: '75vh'
+    }}>
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 transition-opacity duration-500">
@@ -168,20 +146,11 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button 
-                size="lg" 
-                onClick={() => scrollToSection('definition')}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200"
-              >
+              <Button size="lg" onClick={() => scrollToSection('definition')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
                 Découvrir le dispositif
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={() => scrollToSection('cta')}
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200"
-              >
+              <Button size="lg" variant="outline" onClick={() => scrollToSection('cta')} className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
                 Prendre rendez-vous
               </Button>
             </div>
@@ -201,7 +170,7 @@ const Index = () => {
           </h2>
           
           <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
-            <p className="text-xl mb-6">
+            <p className="mb-6 text-lg">
               La <strong>Bourse French Tech</strong> (BFT) est une subvention publique gérée par <strong>Bpifrance</strong>, conçue pour accompagner les <strong>jeunes entreprises innovantes</strong> dans leur phase d'amorçage. Elle finance les premières dépenses liées à la maturation et à la validation technico-économique des projets, comme la R&D, les études de faisabilité, le prototypage ou la protection de la propriété intellectuelle. C'est un dispositif clé pour les startups technologiques en France, offrant non seulement un soutien financier mais aussi une porte d'entrée vers l'écosystème Bpifrance.
             </p>
             
@@ -320,19 +289,10 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {[
-                    'Conception et prototypage',
-                    'Études de marché ou de faisabilité',
-                    'Prestations de conseil ou d\'accompagnement',
-                    'Dépôts de brevet',
-                    'Formations techniques',
-                    'Prestations juridiques'
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start">
+                  {['Conception et prototypage', 'Études de marché ou de faisabilité', 'Prestations de conseil ou d\'accompagnement', 'Dépôts de brevet', 'Formations techniques', 'Prestations juridiques'].map((item, index) => <li key={index} className="flex items-start">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </CardContent>
             </Card>
@@ -343,18 +303,10 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {[
-                    'Rémunérations des membres de l\'équipe projet',
-                    'Frais généraux forfaitaires (20% des salaires)',
-                    'Frais de déplacement chez les partenaires',
-                    'Frais de déplacement chez les utilisateurs',
-                    'Frais de déplacement chez les clients'
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start">
+                  {['Rémunérations des membres de l\'équipe projet', 'Frais généraux forfaitaires (20% des salaires)', 'Frais de déplacement chez les partenaires', 'Frais de déplacement chez les utilisateurs', 'Frais de déplacement chez les clients'].map((item, index) => <li key={index} className="flex items-start">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </CardContent>
             </Card>
@@ -508,34 +460,27 @@ const Index = () => {
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Users,
-                title: "L'équipe fondatrice",
-                description: "Un profil expérimenté, multi-entrepreneur ou expert reconnu dans son domaine, est un signal très positif. La capacité à mener le projet et à mobiliser des ressources est déterminante."
-              },
-              {
-                icon: Lightbulb,
-                title: "La qualité du projet",
-                description: "Son caractère innovant, sa proposition de valeur, son positionnement marché."
-              },
-              {
-                icon: Target,
-                title: "La structuration du projet",
-                description: "Cohérence des étapes, clarté des livrables, crédibilité du planning, alignement entre objectifs et budget."
-              },
-              {
-                icon: TrendingUp,
-                title: "L'innovation vs concurrence",
-                description: "Différenciation claire, éléments de rupture ou d'originalité."
-              },
-              {
-                icon: Award,
-                title: "L'impact global",
-                description: "Bénéfices pour les utilisateurs, impact sociétal ou environnemental, potentiel de création d'emplois ou de valeur durable."
-              }
-            ].map((criterion, index) => (
-              <Card key={index} className="h-full hover:shadow-lg transition-shadow">
+            {[{
+            icon: Users,
+            title: "L'équipe fondatrice",
+            description: "Un profil expérimenté, multi-entrepreneur ou expert reconnu dans son domaine, est un signal très positif. La capacité à mener le projet et à mobiliser des ressources est déterminante."
+          }, {
+            icon: Lightbulb,
+            title: "La qualité du projet",
+            description: "Son caractère innovant, sa proposition de valeur, son positionnement marché."
+          }, {
+            icon: Target,
+            title: "La structuration du projet",
+            description: "Cohérence des étapes, clarté des livrables, crédibilité du planning, alignement entre objectifs et budget."
+          }, {
+            icon: TrendingUp,
+            title: "L'innovation vs concurrence",
+            description: "Différenciation claire, éléments de rupture ou d'originalité."
+          }, {
+            icon: Award,
+            title: "L'impact global",
+            description: "Bénéfices pour les utilisateurs, impact sociétal ou environnemental, potentiel de création d'emplois ou de valeur durable."
+          }].map((criterion, index) => <Card key={index} className="h-full hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                     <criterion.icon className="h-6 w-6 text-primary" />
@@ -545,8 +490,7 @@ const Index = () => {
                 <CardContent>
                   <p className="text-gray-600">{criterion.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -570,16 +514,14 @@ const Index = () => {
           </h2>
           
           <Accordion type="single" collapsible className="space-y-4">
-            {faqData.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
+            {faqData.map((faq, index) => <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger className="text-left hover:text-primary">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600 whitespace-pre-line">
                   {faq.answer}
                 </AccordionContent>
-              </AccordionItem>
-            ))}
+              </AccordionItem>)}
           </Accordion>
         </div>
       </section>
@@ -591,7 +533,7 @@ const Index = () => {
             Avantages au-delà du financement court-terme
           </h2>
           <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
-            <p className="text-xl mb-6">
+            <p className="mb-6 text-lg">
               Obtenir la BFT permet d'établir un premier contact avec Bpifrance. En cas de succès du projet et de croissance de l'entreprise, ce lien facilite l'accès à d'autres financements, comme des prêts RDI (Recherche, Développement, Innovation) ou des dispositifs plus ambitieux.
             </p>
           </div>
@@ -605,7 +547,7 @@ const Index = () => {
             Vous envisagez de candidater à la Bourse French Tech ?
           </h2>
           
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
             Bénéficiez de notre expertise pour structurer un dossier convaincant, répondre aux attentes de Bpifrance, 
             et maximiser vos chances d'acceptation.
           </p>
@@ -683,8 +625,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
