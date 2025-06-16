@@ -1,137 +1,201 @@
 
 import React from 'react';
-import { MapPin, Users, CheckCircle } from 'lucide-react';
+import { MapPin, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const FranceMap = () => {
-  const priorityRegions = [
-    { 
-      name: 'Île-de-France', 
-      description: 'Accompagnement obligatoire',
-      difficulty: 'Difficile',
-      details: 'Incubation labellisée requise'
+  const regionDelegations = [
+    {
+      region: 'Hauts-de-France',
+      delegations: [
+        { name: 'Délégation Compiègne', difficulty: 'Accessible' },
+        { name: 'Direction régionale Amiens', difficulty: 'Modéré' },
+        { name: 'Direction régionale Lille', difficulty: 'Compétitif' }
+      ]
     },
-    { 
-      name: 'Auvergne-Rhône-Alpes', 
-      description: 'Taux de réussite élevé',
-      difficulty: 'Moyenne',
-      details: 'Région active avec bon accompagnement'
+    {
+      region: 'Normandie',
+      delegations: [
+        { name: 'Direction régionale Caen', difficulty: 'Accessible' },
+        { name: 'Direction régionale Rouen', difficulty: 'Accessible' }
+      ]
     },
-    { 
-      name: 'Hauts-de-France', 
-      description: 'Région prioritaire',
-      difficulty: 'Favorable',
-      details: 'Moins de concurrence'
+    {
+      region: 'Bretagne',
+      delegations: [
+        { name: 'Délégation Brest', difficulty: 'Accessible' },
+        { name: 'Délégation Lorient', difficulty: 'Accessible' },
+        { name: 'Délégation Saint-Brieuc', difficulty: 'Accessible' },
+        { name: 'Direction régionale Rennes', difficulty: 'Modéré' }
+      ]
     },
-    { 
-      name: 'Nouvelle-Aquitaine', 
-      description: 'Accompagnement renforcé',
-      difficulty: 'Favorable',
-      details: 'Écosystème startup en développement'
+    {
+      region: 'Grand Est',
+      delegations: [
+        { name: 'Délégation Metz', difficulty: 'Accessible' },
+        { name: 'Délégation Troyes', difficulty: 'Accessible' },
+        { name: 'Direction régionale Nancy', difficulty: 'Accessible' },
+        { name: 'Direction régionale Reims', difficulty: 'Accessible' },
+        { name: 'Direction régionale Strasbourg', difficulty: 'Compétitif' }
+      ]
+    },
+    {
+      region: 'Île-de-France',
+      delegations: [
+        { name: 'Direction régionale La Défense', difficulty: 'Compétitif' },
+        { name: 'Direction régionale Val de Fontenay', difficulty: 'Compétitif' },
+        { name: 'Direction régionale Paris', difficulty: 'Compétitif' }
+      ]
+    },
+    {
+      region: 'Pays de la Loire',
+      delegations: [
+        { name: 'Délégation La Roche-sur-Yon', difficulty: 'Accessible' },
+        { name: 'Délégation Le Mans', difficulty: 'Accessible' },
+        { name: 'Direction régionale Nantes', difficulty: 'Modéré' }
+      ]
+    },
+    {
+      region: 'Centre-Val de Loire',
+      delegations: [
+        { name: 'Délégation Tours', difficulty: 'Modéré' },
+        { name: 'Direction régionale Orléans', difficulty: 'Modéré' }
+      ]
+    },
+    {
+      region: 'Bourgogne-Franche-Comté',
+      delegations: [
+        { name: 'Délégation Besançon', difficulty: 'Accessible' },
+        { name: 'Direction régionale Dijon', difficulty: 'Accessible' }
+      ]
+    },
+    {
+      region: 'Nouvelle-Aquitaine',
+      delegations: [
+        { name: 'Délégation La Rochelle', difficulty: 'Accessible' },
+        { name: 'Délégation Limoges', difficulty: 'Accessible' },
+        { name: 'Délégation Pau', difficulty: 'Accessible' },
+        { name: 'Direction régionale Bordeaux', difficulty: 'Modéré' },
+        { name: 'Direction régionale Poitiers', difficulty: 'Accessible' }
+      ]
+    },
+    {
+      region: 'Auvergne-Rhône-Alpes',
+      delegations: [
+        { name: 'Délégation Annecy', difficulty: 'Accessible' },
+        { name: 'Délégation Bourg-en-Bresse', difficulty: 'Accessible' },
+        { name: 'Délégation Saint-Etienne', difficulty: 'Modéré' },
+        { name: 'Délégation Valence', difficulty: 'Accessible' },
+        { name: 'Direction régionale Clermont-Ferrand', difficulty: 'Accessible' },
+        { name: 'Direction régionale Grenoble', difficulty: 'Compétitif' },
+        { name: 'Direction régionale Lyon', difficulty: 'Compétitif' }
+      ]
+    },
+    {
+      region: 'Occitanie',
+      delegations: [
+        { name: 'Délégation Perpignan', difficulty: 'Accessible' },
+        { name: 'Direction régionale Montpellier', difficulty: 'Modéré' },
+        { name: 'Direction régionale Toulouse', difficulty: 'Compétitif' },
+        { name: 'Délégation territoriale Aveyron - Lot - Tarn', difficulty: 'Accessible' }
+      ]
+    },
+    {
+      region: 'Provence-Alpes-Côte d\'Azur',
+      delegations: [
+        { name: 'Délégation Avignon', difficulty: 'Accessible' },
+        { name: 'Délégation Nice', difficulty: 'Modéré' },
+        { name: 'Direction régionale Marseille', difficulty: 'Compétitif' }
+      ]
+    },
+    {
+      region: 'Corse',
+      delegations: [
+        { name: 'Direction régionale Ajaccio', difficulty: 'Accessible' }
+      ]
+    },
+    {
+      region: 'Outre-mer',
+      delegations: [
+        { name: 'Direction régionale Guadeloupe', difficulty: 'Accessible' },
+        { name: 'Direction régionale Martinique', difficulty: 'Accessible' },
+        { name: 'Direction régionale Guyane', difficulty: 'Accessible' },
+        { name: 'Direction régionale La Réunion', difficulty: 'Accessible' },
+        { name: 'Direction régionale Mayotte', difficulty: 'Accessible' },
+        { name: 'Direction régionale Nouvelle-Calédonie', difficulty: 'Accessible' }
+      ]
     }
   ];
 
-  // Fonction utilitaire pour la couleur selon le niveau de difficulté
-  const getRegionClasses = (difficulty: string) => {
+  const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Difficile':
-        return 'border-l-red-400 bg-red-50';
-      case 'Moyenne':
-        return 'border-l-orange-400 bg-orange-50';
+      case 'Compétitif':
+        return 'text-red-700 bg-red-100';
+      case 'Modéré':
+        return 'text-orange-700 bg-orange-100';
       default:
-        return 'border-l-green-400 bg-green-50';
+        return 'text-green-700 bg-green-100';
     }
   };
-  const getBadgeClasses = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Difficile':
-        return 'bg-red-100 text-red-700';
-      case 'Moyenne':
-        return 'bg-orange-100 text-orange-700';
-      default:
-        return 'bg-green-100 text-green-700';
-    }
+
+  const getRegionColor = (delegations: any[]) => {
+    const hasCompetitif = delegations.some(d => d.difficulty === 'Compétitif');
+    const hasModere = delegations.some(d => d.difficulty === 'Modéré');
+    
+    if (hasCompetitif) return 'border-l-red-400';
+    if (hasModere) return 'border-l-orange-400';
+    return 'border-l-green-400';
   };
 
   return (
     <div className="relative">
       <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-primary/20">
-        <h4 className="text-lg font-semibold text-center mb-6">Régions et facilité d'obtention</h4>
+        <h4 className="text-lg font-semibold text-center mb-6">Délégations par région et niveau de difficulté</h4>
         
-        <div className="flex flex-col gap-4 mb-6">
-          {priorityRegions.map((region, index) => (
-            <Card key={index} className={`border-l-4 ${getRegionClasses(region.difficulty)}`}>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base flex items-center justify-between">
-                  <span className="flex items-center">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    {region.name}
-                  </span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${getBadgeClasses(region.difficulty)}`}>
-                    {region.difficulty}
-                  </span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm font-medium text-gray-700 mb-1">{region.description}</p>
-                <p className="text-xs text-gray-600">{region.details}</p>
-              </CardContent>
-            </Card>
+        <div className="space-y-2">
+          {regionDelegations.map((regionData, index) => (
+            <Collapsible key={index}>
+              <Card className={`border-l-4 ${getRegionColor(regionData.delegations)}`}>
+                <CollapsibleTrigger className="w-full">
+                  <CardHeader className="py-3 hover:bg-gray-50">
+                    <CardTitle className="text-sm flex items-center justify-between">
+                      <span className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        {regionData.region}
+                      </span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs text-gray-500">
+                          {regionData.delegations.length} délégation{regionData.delegations.length > 1 ? 's' : ''}
+                        </span>
+                        <ChevronDown className="h-4 w-4 text-gray-400" />
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <CardContent className="pt-0 pb-3">
+                    <div className="space-y-2">
+                      {regionData.delegations.map((delegation, delIndex) => (
+                        <div key={delIndex} className="flex items-center justify-between py-1 px-2 rounded bg-gray-50">
+                          <span className="text-sm text-gray-800">{delegation.name}</span>
+                          <span className={`text-xs px-2 py-1 rounded-full ${getDifficultyColor(delegation.difficulty)}`}>
+                            {delegation.difficulty}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </CollapsibleContent>
+              </Card>
+            </Collapsible>
           ))}
-        </div>
-
-        <div className="space-y-4">
-          <Card className="border-l-4 border-l-blue-400 bg-blue-50">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center">
-                <Users className="h-4 w-4 mr-2 text-blue-600" />
-                Île-de-France (Paris et région)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-2">
-                <div className="flex items-center text-sm">
-                  <CheckCircle className="h-4 w-4 text-red-500 mr-2" />
-                  <span className="font-medium text-red-700">Accompagnement obligatoire</span>
-                </div>
-                <p className="text-xs text-gray-700 ml-6">
-                  Incubateur référencé ou structure labellisée requis
-                </p>
-                <p className="text-xs text-gray-600 ml-6">
-                  À Paris intra-muros : seule l'incubation labellisée par la Ville de Paris donne accès au dispositif PIA
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-l-4 border-l-green-400 bg-green-50">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center">
-                <MapPin className="h-4 w-4 mr-2 text-green-600" />
-                Autres régions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="space-y-2">
-                <div className="flex items-center text-sm">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                  <span className="font-medium text-green-700">Accompagnement recommandé</span>
-                </div>
-                <p className="text-xs text-gray-700 ml-6">
-                  Non imposé mais renforce significativement la crédibilité du dossier
-                </p>
-                <p className="text-xs text-gray-600 ml-6">
-                  Taux de réussite généralement plus élevé que Paris
-                </p>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
           <h5 className="font-medium text-gray-800 mb-2">💡 Conseil stratégique</h5>
           <p className="text-sm text-gray-600">
-            Les régions hors Île-de-France offrent généralement de meilleures chances d'acceptation 
+            Les délégations marquées "Accessible" offrent généralement de meilleures chances d'acceptation 
             en raison d'une concurrence moins forte et d'enveloppes budgétaires souvent moins sollicitées.
           </p>
         </div>
