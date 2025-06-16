@@ -1,58 +1,81 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Building, Lightbulb, Calendar, Circle, CheckCircle } from 'lucide-react';
+import { Building, Lightbulb, Calendar, Circle, CheckCircle, X } from 'lucide-react';
+
 const CriteriaGrid = () => {
-  const companyCriteria = [{
-    icon: Building,
-    title: 'Statut juridique',
-    requirement: 'SAS, SARL uniquement',
-    description: 'Les statuts d\'auto-entrepreneur et d\'EIRL sont exclus',
-    status: 'required'
-  }, {
-    icon: Calendar,
-    title: 'Âge de l\'entreprise',
-    requirement: '< 1 an',
-    description: 'La société doit avoir été créée il y a moins d\'un an',
-    status: 'required'
-  }, {
-    icon: Circle,
-    title: 'Capital social',
-    requirement: '≥ 5 000 €',
-    description: 'Fortement recommandé pour signaler un engagement sérieux',
-    status: 'recommended'
-  }, {
-    icon: CheckCircle,
-    title: 'Fonds propres',
-    requirement: '10-30k€',
-    description: 'IDF: 20-30k€ • Régions: 10-30k€',
-    status: 'required'
-  }];
-  const projectCriteria = [{
-    icon: Lightbulb,
-    title: 'Type d\'innovation',
-    requirement: 'Innovation démontrée',
-    description: 'Technologique, d\'usage, de procédé ou organisationnelle',
-    status: 'required'
-  }, {
-    icon: Building,
-    title: 'Secteurs d\'activité',
-    requirement: 'Tous secteurs',
-    description: 'Numérique, IA, santé et e-commerce sont fréquents',
-    status: 'flexible'
-  }, {
-    icon: Calendar,
-    title: 'Durée du projet',
-    requirement: '≤ 24 mois',
-    description: 'Phase de faisabilité financée limitée à 24 mois',
-    status: 'required'
-  }, {
-    icon: CheckCircle,
-    title: 'Transfert de technologie',
-    requirement: 'Pleinement éligible',
-    description: 'Projets issus d\'un laboratoire vers une entreprise',
-    status: 'eligible'
-  }];
+  const companyCriteria = [
+    {
+      icon: Building,
+      title: 'Statut juridique',
+      requirement: 'SAS, SARL uniquement',
+      description: 'Les statuts d\'auto-entrepreneur et d\'EIRL sont exclus',
+      status: 'required'
+    },
+    {
+      icon: Calendar,
+      title: 'Âge de l\'entreprise',
+      requirement: '< 1 an',
+      description: 'La société doit avoir été créée il y a moins d\'un an',
+      status: 'required'
+    },
+    {
+      icon: Circle,
+      title: 'Capital social',
+      requirement: '≥ 5 000 €',
+      description: 'Fortement recommandé pour signaler un engagement sérieux',
+      status: 'recommended'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Fonds propres',
+      requirement: '10-30k€',
+      description: 'IDF: 20-30k€ • Régions: 10-30k€',
+      status: 'required'
+    }
+  ];
+
+  const projectCriteria = [
+    {
+      icon: Lightbulb,
+      title: 'Type d\'innovation',
+      requirement: 'Innovation démontrée',
+      description: 'Technologique, d\'usage, de procédé ou organisationnelle',
+      status: 'required'
+    },
+    {
+      icon: Building,
+      title: 'Secteurs d\'activité',
+      requirement: 'Tous secteurs',
+      description: 'Numérique, IA, santé et e-commerce sont fréquents',
+      status: 'flexible'
+    },
+    {
+      icon: Calendar,
+      title: 'Durée du projet',
+      requirement: '≤ 24 mois',
+      description: 'Phase de faisabilité financée limitée à 24 mois',
+      status: 'required'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Transfert de technologie',
+      requirement: 'Pleinement éligible',
+      description: 'Projets issus d\'un laboratoire vers une entreprise',
+      status: 'eligible'
+    }
+  ];
+
+  const exclusions = [
+    'les personnes physiques, les entreprises individuelles et EIRL',
+    'les laboratoires publics, les établissements publics',
+    'les associations (sauf si l\'association dispose d\'une activité économique réelle)',
+    'les sociétés civiles immobilières (SCI), les activités de promotion immobilière et marchands de biens',
+    'les activités d\'intermédiation financière, hors Fintech',
+    'les entreprises en procédure collective ouverte',
+    'les entreprises qui ne sont pas à jour de leurs obligations fiscales et sociales'
+  ];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'required':
@@ -67,6 +90,7 @@ const CriteriaGrid = () => {
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
+
   const getStatusLabel = (status: string) => {
     switch (status) {
       case 'required':
@@ -81,26 +105,28 @@ const CriteriaGrid = () => {
         return 'Info';
     }
   };
-  const CriteriaCard = ({
-    title,
-    criteria,
-    iconColor
-  }: {
-    title: string;
-    criteria: typeof companyCriteria;
-    iconColor: string;
-  }) => <Card className="h-full hover:shadow-lg transition-all duration-300 border-0 shadow-md">
+
+  const CriteriaCard = ({ title, criteria, iconColor }: { title: string; criteria: typeof companyCriteria; iconColor: string; }) => (
+    <Card className="h-full hover:shadow-lg transition-all duration-300 border-0 shadow-md">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center text-xl mb-2">
-          {criteria === companyCriteria ? <Building className={`h-6 w-6 ${iconColor} mr-3`} /> : <Lightbulb className={`h-6 w-6 ${iconColor} mr-3`} />}
+          {criteria === companyCriteria ? (
+            <Building className={`h-6 w-6 ${iconColor} mr-3`} />
+          ) : (
+            <Lightbulb className={`h-6 w-6 ${iconColor} mr-3`} />
+          )}
           {title}
         </CardTitle>
         <CardDescription className="text-base">
-          {criteria === companyCriteria ? "Conditions relatives à la structure juridique et financière de votre société." : "Conditions relatives au caractère innovant et au potentiel de votre projet."}
+          {criteria === companyCriteria 
+            ? "Conditions relatives à la structure juridique et financière de votre société."
+            : "Conditions relatives au caractère innovant et au potentiel de votre projet."
+          }
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {criteria.map((criterion, index) => <div key={index} className="group p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
+        {criteria.map((criterion, index) => (
+          <div key={index} className="group p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center space-x-3">
                 <criterion.icon className="h-5 w-5 text-gray-600 group-hover:text-primary transition-colors" />
@@ -121,12 +147,51 @@ const CriteriaGrid = () => {
                 {criterion.description}
               </p>
             </div>
-          </div>)}
+          </div>
+        ))}
       </CardContent>
-    </Card>;
-  return <div className="grid lg:grid-cols-2 gap-8">
-      <CriteriaCard title="Critères Entreprise" criteria={companyCriteria} iconColor="text-blue-600" />
-      <CriteriaCard title="Critères Projet" criteria={projectCriteria} iconColor="text-green-600" />
-    </div>;
+    </Card>
+  );
+
+  return (
+    <div className="space-y-8">
+      <div className="grid lg:grid-cols-2 gap-8">
+        <CriteriaCard 
+          title="Critères Entreprise" 
+          criteria={companyCriteria} 
+          iconColor="text-blue-600" 
+        />
+        <CriteriaCard 
+          title="Critères Projet" 
+          criteria={projectCriteria} 
+          iconColor="text-green-600" 
+        />
+      </div>
+
+      {/* Exclusions Section */}
+      <Card className="border-red-200 bg-red-50/30">
+        <CardHeader>
+          <CardTitle className="flex items-center text-xl text-red-800">
+            <X className="h-6 w-6 text-red-600 mr-3" />
+            Exclusions
+          </CardTitle>
+          <CardDescription className="text-red-700">
+            Les types d'entreprises et d'activités suivants ne sont pas éligibles à la Bourse French Tech.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-3">
+            {exclusions.map((exclusion, index) => (
+              <li key={index} className="flex items-start">
+                <X className="h-4 w-4 text-red-500 mr-3 mt-1 flex-shrink-0" />
+                <span className="text-red-800 text-sm leading-relaxed">{exclusion}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };
+
 export default CriteriaGrid;
