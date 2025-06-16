@@ -9,7 +9,7 @@ const ProjectExamples = () => {
     {
       icon: Bot,
       title: 'Solution SaaS d’optimisation logistique (IA)',
-      sector: 'IA & Automatisation',
+      sector: 'Intelligence Artificielle',
       subvention: '28 000 €',
       fondsPropres: '20 000 €',
       description: 'Développement d’une plateforme basée sur l’intelligence artificielle pour optimiser les flux logistiques des PME.',
