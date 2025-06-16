@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award } from 'lucide-react';
+import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -583,6 +583,17 @@ const Index = () => {
                 <p>boursefrenchtech.fr</p>
                 <p>contact@boursefrenchtech.fr</p>
                 <p>01 23 45 67 89</p>
+                <div className="flex items-center mt-3">
+                  <Linkedin className="h-5 w-5 mr-2" />
+                  <a 
+                    href="https://www.linkedin.com/in/vivien-perrelle/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors duration-200"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
               </div>
             </div>
           </div>
