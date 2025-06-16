@@ -486,7 +486,7 @@ const Index = () => {
               <ol className="list-decimal list-inside space-y-2 mb-8">
   <li><strong>Ouverture d'une demande</strong> et transmission du pitch deck et du business plan</li>
   <li><strong>Entretien téléphonique</strong> avec le porteur de projet pour valider le respect des critères et préqualifier l'aspect innovant du projet</li>
-  <li><strong>Transmission des élémnets complémentaires</strong>, étudiés pas le chargé d'affaire et éventuellement par un pré-comité</strong></li>
+  <li><strong>Transmission des éléments complémentaires</strong>, étudiés par le chargé d'affaire et éventuellement par un pré-comité</li>
   <li>Si validé, <strong>instruction en comité</strong></li>
   <li><strong>Réponse officielle</strong> du comité bpifrance et réception des fonds en quelques semaines</li>
               </ol>
