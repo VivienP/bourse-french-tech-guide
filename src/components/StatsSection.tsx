@@ -8,7 +8,7 @@ const StatsSection = () => {
       icon: TrendingUp,
       value: '50 000 €',
       label: 'Montant maximum',
-      sublabel: 'Depuis avril 2025'
+      sublabel: '30 000€ max. en pratique'
     },
     {
       icon: Target,
