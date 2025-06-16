@@ -170,44 +170,11 @@ const Index = () => {
           </h2>
           
           <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
-            <p className="mb-6 text-lg">
+            <p className="mb-6 text-base">
               La <strong>Bourse French Tech</strong> (BFT) est une subvention publique gérée par <strong>Bpifrance</strong>, conçue pour accompagner les <strong>jeunes entreprises innovantes</strong> dans leur phase d'amorçage. Elle finance les premières dépenses liées à la maturation et à la validation technico-économique des projets, comme la R&D, les études de faisabilité, le prototypage ou la protection de la propriété intellectuelle. C'est un dispositif clé pour les startups technologiques en France, offrant non seulement un soutien financier mais aussi une porte d'entrée vers l'écosystème Bpifrance.
             </p>
             
-            <div className="grid md:grid-cols-3 gap-6 my-8">
-              <Card className="border-l-4 border-l-primary">
-                <CardContent className="pt-6">
-                  <div className="flex items-center mb-4">
-                    <TrendingUp className="h-8 w-8 text-primary mr-3" />
-                    <h3 className="font-semibold text-lg">Montant maximum</h3>
-                  </div>
-                  <p className="text-2xl font-bold text-primary mb-2">50 000 €</p>
-                  <p className="text-sm text-gray-600">Depuis avril 2025</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-l-4 border-l-primary">
-                <CardContent className="pt-6">
-                  <div className="flex items-center mb-4">
-                    <Target className="h-8 w-8 text-primary mr-3" />
-                    <h3 className="font-semibold text-lg">Taux d'intervention</h3>
-                  </div>
-                  <p className="text-2xl font-bold text-primary mb-2">Jusqu'à 70%</p>
-                  <p className="text-sm text-gray-600">des dépenses éligibles</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-l-4 border-l-primary">
-                <CardContent className="pt-6">
-                  <div className="flex items-center mb-4">
-                    <CheckCircle className="h-8 w-8 text-primary mr-3" />
-                    <h3 className="font-semibold text-lg">Taux de succès</h3>
-                  </div>
-                  <p className="text-2xl font-bold text-primary mb-2">~25%</p>
-                  <p className="text-sm text-gray-600">des dossiers acceptés</p>
-                </CardContent>
-              </Card>
-            </div>
+            
             
             <p>
               <strong>Important :</strong> Bien que le montant maximum théorique puisse atteindre 50 000 €, 
