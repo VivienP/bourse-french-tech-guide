@@ -477,18 +477,18 @@ const Index = () => {
                 <div className="flex items-center space-x-3">
                   <Checkbox id="table-capitalisation" />
                   <label htmlFor="table-capitalisation" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Table de capitalisation
+                    La table de capitalisation
                   </label>
                 </div>
               </div>
 
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Étude du dossier en 5 phases :</h3>
               <ol className="list-decimal list-inside space-y-2 mb-8">
-                <li>Ouverture d'une demande et transmission du pitch deck et du business plan</li>
-                <li>Entretien téléphonique avec le porteur de projet pour valider le respect des critères et préqualifier l'aspect innovant du projet</li>
-                <li>Présentation en pré-comité</li>
-                <li>Si validé, instruction en comité</li>
-                <li>Réception de la première tranche en quelques semaines après la réponse positive officielle</li>
+  <li><strong>Ouverture d'une demande et transmission du pitch deck et du business plan</strong></li>
+  <li><strong>Entretien téléphonique avec le porteur de projet pour valider le respect des critères et préqualifier l'aspect innovant du projet</strong></li>
+  <li><strong>Présentation en pré-comité</strong></li>
+  <li><strong>Si validé, instruction en comité</strong></li>
+  <li><strong>Réception de la première tranche en quelques semaines après la réponse positive officielle</strong></li>
               </ol>
             </div>
           </div>
