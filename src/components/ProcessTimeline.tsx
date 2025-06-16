@@ -14,7 +14,7 @@ const ProcessTimeline = () => {
     },
     {
       icon: Phone,
-      title: 'Entretien téléphonique',
+      title: 'Entretien avec le chargé d\'affaire',
       description: 'Échange avec un chargé d\'affaires Bpifrance',
       documents: ['Validation du projet', 'Clarifications techniques'],
       color: 'bg-green-500'
