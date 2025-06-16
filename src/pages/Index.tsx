@@ -1,9 +1,11 @@
+
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Checkbox } from '@/components/ui/checkbox';
 import FranceMap from '@/components/FranceMap';
 import CriteriaGrid from '@/components/CriteriaGrid';
 import ProcessTimeline from '@/components/ProcessTimeline';
@@ -441,14 +443,44 @@ const Index = () => {
 
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Contenu du dossier</h3>
               <p className="mb-4">Le dossier pour la BFT se compose de :</p>
-              <ol className="list-decimal list-inside space-y-2 mb-6">
-                <li>Un pitch deck</li>
-                <li>Un business plan</li>
-                <li>Un plan de trésorerie sur 24 mois</li>
-                <li>Une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages)</li>
-                <li>L'annexe financière détaillant les dépenses prévisionnelles</li>
-                <li>Table de capitalisation</li>
-              </ol>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center space-x-3">
+                  <Checkbox id="pitch-deck" />
+                  <label htmlFor="pitch-deck" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Un pitch deck
+                  </label>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Checkbox id="business-plan" />
+                  <label htmlFor="business-plan" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Un business plan
+                  </label>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Checkbox id="tresorerie" />
+                  <label htmlFor="tresorerie" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Un plan de trésorerie sur 24 mois
+                  </label>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Checkbox id="fiche-presentation" />
+                  <label htmlFor="fiche-presentation" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages)
+                  </label>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Checkbox id="annexe-financiere" />
+                  <label htmlFor="annexe-financiere" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    L'annexe financière détaillant les dépenses prévisionnelles
+                  </label>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Checkbox id="table-capitalisation" />
+                  <label htmlFor="table-capitalisation" className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Table de capitalisation
+                  </label>
+                </div>
+              </div>
 
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Étude du dossier en 5 phases :</h3>
               <ol className="list-decimal list-inside space-y-2 mb-8">
