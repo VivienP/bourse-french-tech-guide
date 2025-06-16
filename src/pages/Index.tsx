@@ -13,7 +13,7 @@ import StatsSection from '@/components/StatsSection';
 const faqData = [
   {
     question: "Faut-il avoir créé l'entreprise avant de candidater ?",
-    answer: "Oui, l'entreprise doit être immatriculée (moins d'un an d'existence).",
+    answer: "Oui, désormais l'entreprise doit être immatriculée pour débuter les démarches en ligne (moins d'un an d'existence).",
   },
   {
     question: "Qu'entend-on par fonds propres ?",
@@ -24,8 +24,8 @@ const faqData = [
     answer: "Le capital social est la somme initiale apportée par les associés lors de la création de l'entreprise. Les fonds propres englobent le capital social, mais aussi d'autres ressources financières comme les bénéfices non distribués ou les apports supplémentaires.",
   },
   {
-    question: "Le capital social de la société a-t-il de l'importance ? Peut-on avoir la BFT avec 500 € au capital social ?",
-    answer: "Oui le capital social a de l'importance. Un capital social trop faible peut signaler un manque d'engagement des fondateurs, augmentant le risque perçu par Bpifrance. Un minimum de 5 000 € est recommandé pour une demande de 30 000 €.",
+    question: "Quel est le capital social requis pour candidater à la BFT ?",
+    answer: "Le capital social n’est pas soumis à un seuil réglementaire pour la Bourse French Tech, mais il a une importance dans l’analyse du dossier. Un capital social trop faible (par exemple 500 €) peut être perçu comme un manque d’engagement des fondateurs et fragiliser la crédibilité du projet auprès de Bpifrance. Il est généralement recommandé d’avoir un capital social de 5 000 €",
   },
   {
     question: "L'incubation est-elle obligatoire ?",
@@ -65,14 +65,11 @@ const faqData = [
   },
   {
     question: "La BFT est-elle disponible à Paris ?",
-    answer: `Oui, mais à Paris (75), deux dispositifs spécifiques existent en complément ou substitution :
-
-• Paris Innovation Amorçage (PIA) : jusqu'à 30 000 €, réservé aux entreprises de moins de 3 ans incubées à Paris.
-• Fonds parisien pour l'innovation (FPI) : jusqu'à 30 000 € (dont frais d'incubation), pour les startups innovantes à fort impact immatriculées à Paris depuis moins de 3 ans.`
+    answer: "Non. À Paris, le Fonds Parisien pour l’Innovation (FPI) – jusqu’à 30 000 €, dont frais d’incubation – remplace les anciens dispositifs (PIA et BFT) et s’adresse aux startups innovantes à impact, de moins de 3 ans, incubées à Paris."
   },
   {
     question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
-    answer: "Cette subvention est destinée aux projets deeptech (innovation issue de laboratoires), immatriculés depuis moins d'un an, avec un plan clair (budget, calendrier). Elle couvre jusqu'à 70 % des dépenses de faisabilité, brevet, personnel ou prestations externes, pour un montant maximal de 90 000 €.",
+    answer: " La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d’un an (ou porteurs avant création). Elle finance jusqu’à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis.",
   },
 ];
 
@@ -162,7 +159,7 @@ const Index = () => {
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed transition-opacity duration-500 delay-100">
               Subvention publique non remboursable jusqu'à <span className="text-primary font-semibold">50 000 €</span> pour soutenir 
-              la création de startups innovantes à fort potentiel de croissance.
+              la création d'entreprises innovantes à fort potentiel de croissance.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
