@@ -3,6 +3,7 @@ import { MapPin, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import CriteriaGrid from '@/components/CriteriaGrid';
 import FranceMap from '@/components/FranceMap';
+
 const EligibilitySection = () => {
   return <section id="criteres" className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -17,7 +18,7 @@ const EligibilitySection = () => {
         <CriteriaGrid />
 
         <div className="mt-16">
-          <h3 className="font-bold text-gray-900 mb-8 text-center text-4xl">Régions et accompagnement</h3>
+          <h2 className="font-bold text-gray-900 mb-8 text-center text-4xl">Régions et accompagnement</h2>
           <div className="flex flex-col gap-12">
             <FranceMap />
             <div className="space-y-6">
@@ -56,4 +57,5 @@ const EligibilitySection = () => {
       </div>
     </section>;
 };
+
 export default EligibilitySection;
