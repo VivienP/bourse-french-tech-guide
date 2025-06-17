@@ -21,7 +21,7 @@ const FAQSection = () => {
       answer: "Le capital social n'est pas soumis à un seuil réglementaire pour la Bourse French Tech, mais il a une importance dans l'analyse du dossier. Un capital social trop faible (par exemple 500 €) peut être perçu comme un manque d'engagement des fondateurs et fragiliser la crédibilité du projet auprès de Bpifrance. Il est généralement recommandé d'avoir un capital social de 5 000 €"
     },
     {
-      question: "L'incubation est-elle obligatoire ?",
+      question: "Est-il indispensable d'être accompagné par un incubateur pour obtenir la BFT ?",
       answer: "En Île-de-France, l'accompagnement par un incubateur labellisé est requis. Ailleurs, il est fortement recommandé, surtout pour les primo-entrepreneurs, car il renforce la crédibilité du dossier."
     },
     {
