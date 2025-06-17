@@ -65,7 +65,7 @@ const FAQSection = () => {
       answer: "La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d'un an (ou porteurs avant création). Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis."
     },
     {
-      question: "Le processus de candidature est-il différent de la BFT pour la BFTE ?",
+      question: "Le processus de candidature pour la BFTE est-il différent de la BFT ?",
       answer: "La Bourse French Tech Emergence vous sera proposée par votre chargé d'affaire selon son jugement. Vous ne pouvez pas décider de déposer un dossier pour la BFT ou BFTE."
     },
     {
