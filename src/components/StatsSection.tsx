@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { TrendingUp, Users, Award, Target } from 'lucide-react';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const StatsSection = () => {
   const stats = [
@@ -32,22 +33,34 @@ const StatsSection = () => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-      {stats.map((stat, index) => (
-        <div key={index} className="text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-3">
-            <stat.icon className="h-6 w-6 text-primary" />
+      {stats.map((stat, index) => {
+        const { ref, isVisible } = useScrollAnimation(0.1, index * 100);
+        
+        return (
+          <div 
+            key={index} 
+            ref={ref}
+            className={`text-center transition-all duration-700 hover:scale-105 ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-3 transition-all duration-300 hover:bg-primary/20">
+              <stat.icon className="h-6 w-6 text-primary" />
+            </div>
+            <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
+              {stat.value}
+            </div>
+            <div className="text-sm font-medium text-gray-600 mb-1">
+              {stat.label}
+            </div>
+            <div className="text-xs text-gray-500">
+              {stat.sublabel}
+            </div>
           </div>
-          <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-            {stat.value}
-          </div>
-          <div className="text-sm font-medium text-gray-600 mb-1">
-            {stat.label}
-          </div>
-          <div className="text-xs text-gray-500">
-            {stat.sublabel}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

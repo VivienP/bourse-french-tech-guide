@@ -2,8 +2,14 @@
 import React from 'react';
 import { Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const CTASection = () => {
+  const { ref: containerRef, isVisible: containerVisible } = useScrollAnimation(0.1, 0);
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation(0.1, 200);
+  const { ref: subtitleRef, isVisible: subtitleVisible } = useScrollAnimation(0.1, 400);
+  const { ref: buttonsRef, isVisible: buttonsVisible } = useScrollAnimation(0.1, 600);
+
   return (
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Background elements */}
@@ -16,19 +22,51 @@ const CTASection = () => {
       
       <div className="max-w-4xl mx-auto text-center relative z-10">
         {/* Enhanced container with border and shadow */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
-          </h2>
+        <div 
+          ref={containerRef}
+          className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-1000 ${
+            containerVisible 
+              ? 'opacity-100 scale-100' 
+              : 'opacity-0 scale-95'
+          }`}
+        >
+          <div 
+            ref={titleRef}
+            className={`transition-all duration-700 ${
+              titleVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
+            </h2>
+          </div>
           
-          <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
-            Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
-          </p>
+          <div 
+            ref={subtitleRef}
+            className={`transition-all duration-700 ${
+              subtitleVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
+              Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
+            </p>
+          </div>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div 
+            ref={buttonsRef}
+            className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-700 ${
+              buttonsVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
             <Button 
               size="lg" 
-              className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
+              className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
               onClick={() => window.open('https://tapthe.link/rendez-vous', '_blank')}
             >
               <Calendar className="mr-3 h-5 w-5" />
@@ -37,7 +75,7 @@ const CTASection = () => {
             
             <Button 
               size="lg" 
-              className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300 overflow-hidden group"
+              className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300 overflow-hidden group hover:scale-105"
               onClick={() => window.open('https://tapx.it/ia', '_blank')}
             >
               {/* Animated background */}
