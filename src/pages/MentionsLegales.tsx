@@ -37,7 +37,7 @@ const MentionsLegales = () => {
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Éditeur du site</h2>
               <div className="text-gray-700 space-y-2">
-                <p><strong>Raison sociale :</strong> Finexov</p>
+                <p>ADEXOV, société par actions simplifiée unipersonnelle, située au 254 Rue Vendôme, 69003 LYON, immatriculée au RCS de Lyon sous le numéro 925 048 498</p>
                 <p><strong>Site web :</strong> <a href="https://www.finexov.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">www.finexov.com</a></p>
                 <p><strong>Contact :</strong> <a href="https://taap.it/M96y4a" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">LinkedIn</a></p>
               </div>
