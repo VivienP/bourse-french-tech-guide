@@ -6,7 +6,7 @@ const FAQSection = () => {
   const faqData = [
     {
       question: "Faut-il avoir créé l'entreprise avant de candidater ?",
-      answer: "Oui, désormais l'entreprise doit être immatriculée pour débuter les démarches en ligne (moins d'un an d'existence)."
+      answer: "L'entreprise doit être immatriculée pour débuter les démarches en ligne, cependant vous pouvez prendre contact avec Bpifrance le plus tôt possible, avant que l'entreprise soit créée."
     },
     {
       question: "Qu'entend-on par fonds propres ?",
@@ -30,7 +30,7 @@ const FAQSection = () => {
     },
     {
       question: "Les entrepreneurs individuels peuvent-ils candidater ?",
-      answer: "Non, les entreprises individuelles, EIRL ou personnes physiques ne sont pas éligibles."
+      answer: "Non, les personnes physiques, les entreprises individuelles, et les EIRL ne sont pas éligibles."
     },
     {
       question: "Tous les secteurs sont-ils éligibles ?",
@@ -42,7 +42,7 @@ const FAQSection = () => {
     },
     {
       question: "Quel niveau d'innovation est requis ?",
-      answer: "L'innovation peut être technologique, d'usage, de service, de procédé ou organisationnelle. Une innovation incrémentale ou une approche originale suffit, à condition qu'elle présente un fort potentiel de croissance."
+      answer: "L’innovation peut être technologique, d’usage, de service, de procédé ou organisationnelle. Cependant, elle doit apporter une réelle différenciation et un fort potentiel de croissance. Une simple innovation incrémentale ou une approche originale ne suffit pas : le projet doit démontrer un avantage concurrentiel significatif."
     },
     {
       question: "Est-il plus facile d'obtenir la BFT dans certaines régions ?",
