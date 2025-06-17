@@ -54,7 +54,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 Finexov. Tous droits réservés.</p>
+          <p>&copy; 2025 <a href="https://www.finexov.com/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">Finexov</a>. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
