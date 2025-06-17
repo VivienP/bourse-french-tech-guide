@@ -10,7 +10,7 @@ const FranceMap = () => {
       region: 'Hauts-de-France',
       delegations: [
         { name: 'Délégation Compiègne', difficulty: 'Accessible' },
-        { name: 'Direction régionale Amiens', difficulty: 'Modéré' },
+        { name: 'Direction régionale Amiens', difficulty: 'Accessible' },
         { name: 'Direction régionale Lille', difficulty: 'Compétitif' }
       ]
     },
@@ -37,7 +37,7 @@ const FranceMap = () => {
         { name: 'Délégation Troyes', difficulty: 'Accessible' },
         { name: 'Direction régionale Nancy', difficulty: 'Accessible' },
         { name: 'Direction régionale Reims', difficulty: 'Accessible' },
-        { name: 'Direction régionale Strasbourg', difficulty: 'Compétitif' }
+        { name: 'Direction régionale Strasbourg', difficulty: 'Modéré' }
       ]
     },
     {
@@ -59,7 +59,7 @@ const FranceMap = () => {
     {
       region: 'Centre-Val de Loire',
       delegations: [
-        { name: 'Délégation Tours', difficulty: 'Modéré' },
+        { name: 'Délégation Tours', difficulty: 'Accessible' },
         { name: 'Direction régionale Orléans', difficulty: 'Modéré' }
       ]
     },
