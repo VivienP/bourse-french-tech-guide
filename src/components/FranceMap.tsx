@@ -97,7 +97,7 @@ const FranceMap = () => {
       delegations: [
         { name: 'Délégation Perpignan', difficulty: 'Accessible' },
         { name: 'Direction régionale Montpellier', difficulty: 'Modéré' },
-        { name: 'Direction régionale Toulouse', difficulty: 'Compétitif' },
+        { name: 'Direction régionale Toulouse', difficulty: 'Modéré' },
         { name: 'Délégation territoriale Aveyron - Lot - Tarn', difficulty: 'Accessible' }
       ]
     },
