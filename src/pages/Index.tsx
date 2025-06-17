@@ -57,6 +57,7 @@ const Index = () => {
       <ExpensesSection />
       <FinancingSection />
       <ApplicationProcessSection />
+      <CTASection />
       <EvaluationSection />
       
       {/* Exemples de projets */}
