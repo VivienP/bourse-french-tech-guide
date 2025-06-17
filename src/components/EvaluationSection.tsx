@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Users, Target, Lightbulb, TrendingUp, Award } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,7 @@ const EvaluationSection = () => {
     {
       icon: Users,
       title: "L'équipe fondatrice",
-      description: "Un profil expérimenté, multi-entrepreneur ou expert reconnu dans son domaine, est un signal très positif. La capacité à mener le projet et à mobiliser des ressources est déterminante."
+      description: "Un profil expérimenté, entrepreneur ou expert dans son domaine, est un signal positif."
     },
     {
       icon: Lightbulb,
