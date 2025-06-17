@@ -27,7 +27,7 @@ const FranceMap = () => {
         { name: 'Délégation Brest', difficulty: 'Accessible' },
         { name: 'Délégation Lorient', difficulty: 'Accessible' },
         { name: 'Délégation Saint-Brieuc', difficulty: 'Accessible' },
-        { name: 'Direction régionale Rennes', difficulty: 'Modéré' }
+        { name: 'Direction régionale Rennes', difficulty: 'Accessible' }
       ]
     },
     {
