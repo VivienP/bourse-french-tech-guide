@@ -33,7 +33,7 @@ const FAQSection = () => {
     answer: "L’innovation peut être technologique, d’usage, de service, de procédé ou organisationnelle. Cependant, elle doit apporter une réelle différenciation et un fort potentiel de croissance. Une simple innovation incrémentale ou une approche originale ne suffit pas : le projet doit démontrer un avantage concurrentiel significatif."
   }, {
     question: "Est-il plus facile d'obtenir la BFT dans certaines régions ?",
-    answer: "Les grandes métropoles (Paris, Lyon, Lille, Bordeaux, Grenoble, Marseille) sont plus compétitives en raison du volume de candidatures. Les antennes régionales moins sollicitées sont généralement plus accessibles. Si cela fait sens pour votre entreprise, immatriculer sa société dans des régions peut sollicitées peut vous permettre d'augmenter significativement vos financements Bpifrance."
+    answer: "Les grandes métropoles (Paris, Lyon, Lille, Marseille, Bordeaux, Grenoble) sont plus compétitives en raison du volume de candidatures. Les antennes régionales moins sollicitées sont généralement plus accessibles. Si cela fait sens pour votre entreprise, immatriculer sa société dans des régions peut sollicitées peut vous permettre d'augmenter significativement vos financements Bpifrance."
   }, {
     question: "Y a-t-il des périodes plus favorables pour candidater ?",
     answer: "Non, mais les enveloppes budgétaires régionales peuvent s'épuiser en fin d'année (4e trimestre, voire dès le 3e trimestre). Il est conseillé de déposer son dossier le plus tôt possible dans l'année."
