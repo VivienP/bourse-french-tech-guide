@@ -62,7 +62,11 @@ const FAQSection = () => {
     },
     {
       question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
-      answer: " La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d'un an (ou porteurs avant création). Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis."
+      answer: "La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d'un an (ou porteurs avant création). Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis."
+    },
+    {
+      question: "Le processus de candidature est-il différent de la BFT pour la BFTE ?",
+      answer: "La Bourse French Tech Emergence vous sera proposée par votre chargé d'affaire selon son jugement. Vous ne pouvez pas décider de déposer un dossier pour la BFT ou BFTE."
     },
     {
       question: "Quels sont les incubateurs labellisés pour bénéficier du Fonds Parisien pour l'Innovation (FPI), l'équivalent de la BFT à Paris ?",
