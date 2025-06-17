@@ -39,15 +39,16 @@ const Footer = () => {
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
-            <div className="space-y-2 text-gray-300">
-              <p>boursefrenchtech.fr</p>
-              <p>01 23 45 67 89</p>
-              <div className="flex items-center mt-3">
+            <div className="flex items-center">
+              <a 
+                href="https://taap.it/M96y4a" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center hover:text-primary transition-colors duration-200 cursor-pointer"
+              >
                 <Linkedin className="h-5 w-5 mr-2" />
-                <a href="https://www.linkedin.com/in/vivien-perrelle/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">
-                  LinkedIn
-                </a>
-              </div>
+                LinkedIn
+              </a>
             </div>
           </div>
         </div>
