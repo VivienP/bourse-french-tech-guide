@@ -511,7 +511,7 @@ const Index = () => {
       <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Background gradient with subtle pattern */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(248,209,100,0.1),transparent_70%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(248,209,100,0.1),transparent_70%)] py-0"></div>
         
         {/* Floating elements */}
         <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
@@ -535,10 +535,7 @@ const Index = () => {
                 Accompagnement sur-mesure
               </Button>
               
-              <Button 
-                size="lg" 
-                className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden group"
-              >
+              <Button size="lg" className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden group">
                 {/* Animated background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
@@ -611,12 +608,7 @@ const Index = () => {
                 <p>01 23 45 67 89</p>
                 <div className="flex items-center mt-3">
                   <Linkedin className="h-5 w-5 mr-2" />
-                  <a 
-                    href="https://www.linkedin.com/in/vivien-perrelle/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors duration-200"
-                  >
+                  <a href="https://www.linkedin.com/in/vivien-perrelle/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">
                     LinkedIn
                   </a>
                 </div>
