@@ -13,22 +13,34 @@ const ProjectExamples = () => {
       icon: Bot,
       title: 'Solution SaaS d\'optimisation logistique',
       sector: 'Intelligence Artificielle',
-      subvention: '28 000 €',
-      montantTotal: '40 000 €',
-      fondsPropres: '28 000 €',
-      description: 'Développement d\'une plateforme basée sur l\'intelligence artificielle pour optimiser les flux logistiques des PME.',
-      depenses: ['R&D : 20 000 €', 'Prototypage : 10 000 €', 'Étude de marché : 6 000 €', 'Accompagnement incubateur : 6 000 €', 'Frais juridiques : 1 000 €'],
+      subvention: '30 000 €',
+      montantTotal: '43 000 €',
+      fondsPropres: '30 000 €',
+      description: 'Développement d\'une plateforme basée sur l\'IA pour optimiser les flux logistiques des PME.',
+      depenses: [
+        'Développement algorithme IA : 20 000 €',
+        'Intégration & tests plateforme : 11 000 €',
+        'Infrastructure cloud & licences : 4 000 €',
+        'Étude de marché terrain : 4 000 €',
+        'Accompagnement incubateur : 3 000 €',
+        'Frais juridiques & conformité : 1 000 €'
+      ],
       color: 'bg-blue-500'
     },
     {
       icon: Heart,
       title: 'Dispositif médical connecté',
       sector: 'Santé & Bien-être',
-      montantTotal: 'XXX€',
       subvention: '30 000 €',
+      montantTotal: '57 000 €',
       fondsPropres: '30 000 €',
-      description: 'Création d\'un algorithme IA pour l\'identification précoce des troubles cardiaques des personnes âgées isolées via capteur portable connecté.',
-      depenses: ['Développement par laboratoire IA : 35 000 €', 'Frais de personnel & fonctionnement : 7 000 €', 'Protection propriété intellectuelle : 1 000 €'],
+      description: 'Algorithme IA pour détecter précocement les troubles cardiaques chez les seniors via capteur portable.',
+      depenses: [
+        'Conception capteur & électronique : 20 000 €',
+        'Développement software & IA : 22 000 €',
+        'Tests cliniques & validation : 10 000 €',
+        'Propriété intellectuelle & brevets : 5 000 €'
+      ],
       color: 'bg-red-500'
     },
     {
@@ -36,10 +48,16 @@ const ProjectExamples = () => {
       title: 'Application mobile écoresponsable',
       sector: 'Tech & Impact',
       subvention: '29 000 €',
-      montantTotal: 'XXX€',
+      montantTotal: '47 000 €',
       fondsPropres: '18 000 €',
-      description: 'Développement d\'une application pour encourager les comportements écoresponsables via gamification et neurosciences.',
-      depenses: ['Prototypage & tests (CTO ext.) : 20 000 €', 'Partenariat neurosciences : 7 000 €', 'Participation salon : 2 000 €', 'Étude de marché (ChatGPT Pro) : 400 €'],
+      description: 'App pour encourager les comportements écoresponsables grâce à la gamification et aux neurosciences.',
+      depenses: [
+        'Design UX/UI & gamification : 12 000 €',
+        'Développement mobile (iOS/Android) : 20 000 €',
+        'Recherche neurosciences : 8 000 €',
+        'Hébergement & services cloud : 3 000 €',
+        'Lancement marketing & salon : 4 000 €'
+      ],
       color: 'bg-green-500'
     }
   ];
@@ -65,6 +83,12 @@ const ProjectExamples = () => {
             </CardHeader>
             
             <CardContent className="space-y-4">
+              {/* Total Project Amount */}
+              <div className="p-3 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg text-center border border-primary/20">
+                <p className="text-sm font-medium text-gray-600">Montant total du projet</p>
+                <p className="text-xl font-bold text-primary">{project.montantTotal}</p>
+              </div>
+
               {/* Financing */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 bg-primary/10 rounded-lg text-center">
