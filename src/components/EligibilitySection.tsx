@@ -14,8 +14,7 @@ const EligibilitySection = () => {
         </h2>
         
         <p className="text-xl text-gray-600 text-center mb-12">
-          Pour déposer un dossier de Bourse French Tech, deux types d'éligibilité sont examinés : 
-          celle de l'entreprise et celle du projet.
+          L'éligibilité à la Bourse French Tech repose sur des critères propres à l'entreprise et et propres au projet.
         </p>
 
         <CriteriaGrid />
