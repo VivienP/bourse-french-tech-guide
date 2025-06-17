@@ -10,6 +10,7 @@ import CriteriaGrid from '@/components/CriteriaGrid';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import ProjectExamples from '@/components/ProjectExamples';
 import StatsSection from '@/components/StatsSection';
+
 const faqData = [{
   question: "Faut-il avoir créé l'entreprise avant de candidater ?",
   answer: "Oui, désormais l'entreprise doit être immatriculée pour débuter les démarches en ligne (moins d'un an d'existence)."
@@ -59,6 +60,7 @@ const faqData = [{
   question: "Quels sont les incubateurs labellisés pour bénéficier du Fonds Parisien pour l'Innovation (FPI), l'équivalent de la BFT à Paris ?",
   answer: "Pour bénéficier du Fonds Parisien pour l'Innovation (FPI), votre projet doit être incubé dans l'un des 25 incubateurs labellisés par la Ville de Paris et Bpifrance. Voici la liste des principaux incubateurs labellisés FPI : 104factory, Agoranov, Bureau du design, de la mode et des métiers d'arts, Incubateur du Conservatoire National des Arts et Métiers, Créatis, Créative Valley, Incubateur de l'université Paris Dauphine, Incubateur parisien de l'EDHEC, L'Escalator, La Ruche, Liberté Living-Lab, MakeSense, Matrice, Paris&Co, Paris Biotech Santé, Pépinière 27, PULSE Montreuil, Incubateur de l'Institut d'Etudes Politiques de Paris, Schoolab, SINGA, Incubateur de Télécom Paris, WACANO, Willa, PC'UP (incubateur de l'ESPCI), Incubateur des Arts et Métiers..."
 }];
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState('');
   useEffect(() => {
@@ -100,7 +102,7 @@ const Index = () => {
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <Award className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-gray-900">Bourse French Tech</span>
+              <span className="text-xl font-bold text-gray-900 whitespace-nowrap">Bourse French Tech</span>
             </div>
             
             <div className="hidden md:flex items-center space-x-6">
@@ -138,7 +140,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 transition-opacity duration-500">
-              Bourse French Tech
+              <span className="whitespace-nowrap">Bourse French Tech</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed transition-opacity duration-500 delay-100">
               Subvention publique non remboursable jusqu'à <span className="text-primary font-semibold">50 000 €</span> pour soutenir 
@@ -146,11 +148,11 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button size="lg" onClick={() => scrollToSection('definition')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
+              <Button size="lg" onClick={() => scrollToSection('definition')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-lg">
                 Découvrir le dispositif
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" onClick={() => scrollToSection('cta')} className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
+              <Button size="lg" variant="outline" onClick={() => scrollToSection('cta')} className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-lg">
                 Prendre rendez-vous
               </Button>
             </div>
@@ -508,10 +510,9 @@ const Index = () => {
       </section>
 
       {/* CTA Final */}
-      <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Background gradient with subtle pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(248,209,100,0.1),transparent_70%)] py-0"></div>
+      <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(248,209,100,0.08),transparent_70%)]"></div>
         
         {/* Floating elements */}
         <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
@@ -520,9 +521,9 @@ const Index = () => {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           {/* Enhanced container with border and shadow */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-white/20">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-12 shadow-2xl border border-white/20">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Vous envisagez de candidater à la Bourse French Tech ?
+              Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
             </h2>
             
             <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
@@ -530,29 +531,22 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-colors duration-300">
+              <Button 
+                size="lg" 
+                className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
+                onClick={() => window.open('https://tapthe.link/rendez-vous', '_blank')}
+              >
                 <Calendar className="mr-3 h-5 w-5" />
                 Réserver un appel
               </Button>
               
-              <Button size="lg" className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 overflow-hidden group">
-                {/* Animated background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                {/* Sliding highlight effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                
-                <div className="relative flex items-center">
-                  Générer mon dossier
-                </div>
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300"
+                onClick={() => window.open('https://tapx.it/ia', '_blank')}
+              >
+                Générer mon dossier
               </Button>
-            </div>
-            
-            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-600">
-              <div className="flex items-center bg-gray-50 px-4 py-2 rounded-full">
-                <Mail className="h-5 w-5 mr-2" />
-                <span>contact@boursefrenchtech.fr</span>
-              </div>
             </div>
           </div>
         </div>
