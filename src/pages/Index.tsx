@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award, Linkedin } from 'lucide-react';
+import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award, Linkedin, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -508,31 +508,62 @@ const Index = () => {
       </section>
 
       {/* CTA Final */}
-      <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-primary/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Vous envisagez de candidater à la Bourse French Tech ?
-          </h2>
-          
-          <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
-            Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
-              <Calendar className="mr-2 h-5 w-5" />
-              Prendre rendez-vous
-            </Button>
-            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-3 transition-all duration-200">
-              <Phone className="mr-2 h-5 w-5" />
-              Nous contacter
-            </Button>
-          </div>
-          
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-600">
-            <div className="flex items-center">
-              <Mail className="h-5 w-5 mr-2" />
-              <span>contact@boursefrenchtech.fr</span>
+      <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background gradient with subtle pattern */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(248,209,100,0.1),transparent_70%)]"></div>
+        
+        {/* Floating elements */}
+        <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-primary/8 rounded-full blur-lg animate-pulse delay-300"></div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          {/* Enhanced container with border and shadow */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-white/20">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Vous envisagez de candidater à la Bourse French Tech ?
+            </h2>
+            
+            <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
+              Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+                <Calendar className="mr-3 h-5 w-5" />
+                Accompagnement sur-mesure
+              </Button>
+              
+              <Button 
+                size="lg" 
+                className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden group"
+              >
+                {/* Animated background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                {/* Sparkle animation */}
+                <div className="absolute inset-0 opacity-30">
+                  <Sparkles className="absolute top-2 left-4 h-3 w-3 animate-pulse delay-0" />
+                  <Sparkles className="absolute bottom-2 right-4 h-4 w-4 animate-pulse delay-500" />
+                  <Sparkles className="absolute top-1/2 right-8 h-2 w-2 animate-pulse delay-1000" />
+                </div>
+                
+                {/* Sliding highlight effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                
+                <div className="relative flex items-center">
+                  <Sparkles className="mr-3 h-5 w-5 animate-spin-slow" />
+                  Structurer mon dossier avec l'IA
+                </div>
+              </Button>
+            </div>
+            
+            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-600">
+              <div className="flex items-center bg-gray-50 px-4 py-2 rounded-full">
+                <Mail className="h-5 w-5 mr-2" />
+                <span>contact@boursefrenchtech.fr</span>
+              </div>
             </div>
           </div>
         </div>
