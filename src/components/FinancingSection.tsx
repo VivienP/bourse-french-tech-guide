@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
 const FinancingSection = () => {
-  return (
-    <section id="financement" className="py-16 px-4 sm:px-6 lg:px-8">
+  return <section id="financement" className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
           Financement et tranches de versement
@@ -14,16 +11,16 @@ const FinancingSection = () => {
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <Card>
             <CardHeader>
-              <CardTitle className="text-primary">Conditions de financement</CardTitle>
+              <CardTitle className="text-yellow-600">Conditions de financement</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                 <span className="font-medium">Plafond maximum</span>
-                <span className="text-primary font-bold">50 000 €</span>
+                <span className="font-bold text-yellow-600">50 000 €</span>
               </div>
               <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                 <span className="font-medium">Taux d'intervention</span>
-                <span className="text-primary font-bold">Jusqu'à 70%</span>
+                <span className="font-bold text-yellow-600">Jusqu'à 70%</span>
               </div>
               <p className="text-sm text-gray-600">
                 L'entreprise doit avancer les fonds propres nécessaires à l'équilibre financier du projet.
@@ -33,7 +30,7 @@ const FinancingSection = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-primary">Versement en 2 tranches</CardTitle>
+              <CardTitle className="text-yellow-600">Versement en 2 tranches</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
@@ -56,8 +53,6 @@ const FinancingSection = () => {
           </Card>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default FinancingSection;
