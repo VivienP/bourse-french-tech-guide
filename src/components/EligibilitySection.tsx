@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { MapPin, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,39 +20,37 @@ const EligibilitySection = () => {
 
         <div className="mt-16">
           <h2 className="font-bold text-gray-900 mb-8 text-center text-4xl">Régions et accompagnement</h2>
-          <div className="flex flex-col gap-12">
-            <FranceMap />
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <MapPin className="h-5 w-5 text-primary mr-2" />
-                    Île-de-France
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>Accompagnement par un incubateur référencé ou une structure labellisée <strong>obligatoire</strong>.</p>
-                  <p className="mt-2 text-sm text-gray-600">
-                    À Paris intra-muros (75), seule les incubateurs labellisés donne accès au dispositif Fonds Parisien pour l'Innovation (FPI).
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Users className="h-5 w-5 text-primary mr-2" />
-                    Autres régions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>Accompagnement <strong>fortement recommandé</strong> mais non imposé.</p>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Renforce significativement la crédibilité du dossier.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+          <FranceMap />
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <MapPin className="h-5 w-5 text-primary mr-2" />
+                  Île-de-France
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>Accompagnement par un incubateur référencé ou une structure labellisée <strong>obligatoire</strong>.</p>
+                <p className="mt-2 text-sm text-gray-600">
+                  À Paris intra-muros (75), seule les incubateurs labellisés donne accès au dispositif Fonds Parisien pour l'Innovation (FPI).
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Users className="h-5 w-5 text-primary mr-2" />
+                  Autres régions
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>Accompagnement <strong>fortement recommandé</strong> mais non imposé.</p>
+                <p className="mt-2 text-sm text-gray-600">
+                  Renforce significativement la crédibilité du dossier.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
