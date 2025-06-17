@@ -42,7 +42,7 @@ const FAQSection = () => {
     answer: "L'entreprise doit avoir moins d'un an au dépôt complet du dossier, et non à la date de validation du dossier par le comité."
   }, {
     question: "La BFT est-elle disponible à Paris ?",
-    answer: "Non. À Paris, le Fonds Parisien pour l'Innovation (FPI) – jusqu'à 30 000 €, dont frais d'incubation – remplace les anciens dispositifs (PIA et BFT) et s'adresse aux startups innovantes à impact, de moins de 3 ans, incubées à Paris."
+    answer: "Non, à Paris, le Fonds Parisien pour l'Innovation (FPI) – jusqu'à 30 000 €, dont frais d'incubation – remplace les anciens dispositifs (PIA et BFT). Le FPI s'adresse aux startups innovantes à impact, de moins de 3 ans, incubées dans un des 25 incubateurs parisiens agréés. Le processus de candidature est similaire à celui de la BFT."
   }, {
     question: "Quels critères pour la Bourse French Tech de 90 000 € (Émergence) ?",
     answer: "La Bourse French Tech Émergence (90 000 €) est une subvention destinée aux projets deeptech issus de la recherche académique ou de laboratoires, portés par des entreprises immatriculées depuis moins d'un an (ou porteurs avant création). Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €. Un plan structuré (budget, calendrier, jalons) est requis."
