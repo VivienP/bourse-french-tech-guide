@@ -6,34 +6,53 @@ import { Bot, Heart, Lightbulb } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const ProjectExamples = () => {
-  const projects = [{
-    icon: Bot,
-    title: 'Solution SaaS d'optimisation logistique',
-    sector: 'Intelligence Artificielle',
-    subvention: '28 000 €',
-    fondsPropres: '28 000 €',
-    description: 'Développement d'une plateforme basée sur l'intelligence artificielle pour optimiser les flux logistiques des PME.',
-    depenses: ['R&D : 20 000 €', 'Prototypage : 10 000 €', 'Étude de marché : 6 000 €', 'Accompagnement incubateur : 3 000 €', 'Frais juridiques : 1 000 €'],
-    color: 'bg-blue-500'
-  }, {
-    icon: Heart,
-    title: 'Dispositif médical connecté',
-    sector: 'Santé & Bien-être',
-    subvention: '30 000 €',
-    fondsPropres: '30 000 €',
-    description: 'Création d'un algorithme IA pour l\'identification précoce des troubles cardiaques des personnes âgées isolées via capteur portable connecté.',
-    depenses: ['Développement par laboratoire IA : 35 000 €', 'Frais de personnel & fonctionnement : 7 000 €', 'Protection propriété intellectuelle : 1 000 €'],
-    color: 'bg-red-500'
-  }, {
-    icon: Lightbulb,
-    title: 'Application mobile écoresponsable',
-    sector: 'Tech & Impact',
-    subvention: '29 000 €',
-    fondsPropres: '18 000 €',
-    description: 'Développement d'une application pour encourager les comportements écoresponsables via gamification et neurosciences.',
-    depenses: ['Prototypage & tests (CTO ext.) : 20 000 €', 'Partenariat neurosciences : 7 000 €', 'Participation salon : 2 000 €', 'Étude de marché (ChatGPT Pro) : 400 €'],
-    color: 'bg-green-500'
-  }];
+  const projects = [
+    {
+      icon: Bot,
+      title: 'Solution SaaS d\'optimisation logistique',
+      sector: 'Intelligence Artificielle',
+      subvention: '28 000 €',
+      fondsPropres: '28 000 €',
+      description: 'Développement d\'une plateforme basée sur l\'intelligence artificielle pour optimiser les flux logistiques des PME.',
+      depenses: [
+        'R&D : 20 000 €', 
+        'Prototypage : 10 000 €', 
+        'Étude de marché : 6 000 €', 
+        'Accompagnement incubateur : 3 000 €', 
+        'Frais juridiques : 1 000 €'
+      ],
+      color: 'bg-blue-500'
+    },
+    {
+      icon: Heart,
+      title: 'Dispositif médical connecté',
+      sector: 'Santé & Bien-être',
+      subvention: '30 000 €',
+      fondsPropres: '30 000 €',
+      description: 'Création d\'un algorithme IA pour l\'identification précoce des troubles cardiaques des personnes âgées isolées via capteur portable connecté.',
+      depenses: [
+        'Développement par laboratoire IA : 35 000 €', 
+        'Frais de personnel & fonctionnement : 7 000 €', 
+        'Protection propriété intellectuelle : 1 000 €'
+      ],
+      color: 'bg-red-500'
+    },
+    {
+      icon: Lightbulb,
+      title: 'Application mobile écoresponsable',
+      sector: 'Tech & Impact',
+      subvention: '29 000 €',
+      fondsPropres: '18 000 €',
+      description: 'Développement d\'une application pour encourager les comportements écoresponsables via gamification et neurosciences.',
+      depenses: [
+        'Prototypage & tests (CTO ext.) : 20 000 €', 
+        'Partenariat neurosciences : 7 000 €', 
+        'Participation salon : 2 000 €', 
+        'Étude de marché (ChatGPT Pro) : 400 €'
+      ],
+      color: 'bg-green-500'
+    }
+  ];
 
   return (
     <div className="grid lg:grid-cols-3 gap-6">
