@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award, Linkedin, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCircle, MapPin, Phone, Mail, Calendar, Users, Target, Lightbulb, TrendingUp, Shield, Award, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -530,28 +530,20 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+              <Button size="lg" className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-colors duration-300">
                 <Calendar className="mr-3 h-5 w-5" />
-                Accompagnement sur-mesure
+                Réserver un appel
               </Button>
               
-              <Button size="lg" className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden group">
+              <Button size="lg" className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-xl shadow-lg transition-all duration-300 overflow-hidden group">
                 {/* Animated background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                {/* Sparkle animation */}
-                <div className="absolute inset-0 opacity-30">
-                  <Sparkles className="absolute top-2 left-4 h-3 w-3 animate-pulse delay-0" />
-                  <Sparkles className="absolute bottom-2 right-4 h-4 w-4 animate-pulse delay-500" />
-                  <Sparkles className="absolute top-1/2 right-8 h-2 w-2 animate-pulse delay-1000" />
-                </div>
                 
                 {/* Sliding highlight effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 
                 <div className="relative flex items-center">
-                  <Sparkles className="mr-3 h-5 w-5 animate-spin-slow" />
-                  Structurer mon dossier avec l'IA
+                  Générer mon dossier
                 </div>
               </Button>
             </div>
