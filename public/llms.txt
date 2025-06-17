@@ -1,0 +1,60 @@
+
+# Guide Bourse French Tech 2025
+
+## À propos
+Ce site est un guide expert sur la Bourse French Tech (BFT), subvention publique de Bpifrance pour startups innovantes.
+
+## Informations clés
+- Subvention maximum : 50 000€ (en pratique 30 000€)
+- Taux d'intervention : jusqu'à 70% des dépenses éligibles
+- Durée maximum : 24 mois pour la phase de validation
+- Taux de succès : environ 25% des dossiers acceptés
+- Entreprise : moins d'un an d'existence lors du dépôt
+
+## Critères d'éligibilité
+- Entreprise française immatriculée depuis moins d'un an
+- Projet innovant (technologie, usage, service, procédé)
+- Fort potentiel de croissance et de scalabilité
+- Accompagnement par incubateur (obligatoire en Île-de-France)
+
+## Dépenses éligibles
+### Frais externes
+- Conception et prototypage
+- Études de marché ou de faisabilité
+- Prestations de conseil ou d'accompagnement
+- Dépôts de brevet
+- Formations techniques
+- Prestations juridiques
+
+### Frais internes
+- Rémunérations des membres de l'équipe projet
+- Frais généraux forfaitaires (20% des salaires)
+- Frais de déplacement
+
+## Financement
+- Versement en 2 tranches : 70% à la signature, 30% après validation
+- Fonds propres requis pour équilibrer le financement
+- Les dépenses antérieures au dépôt ne sont pas éligibles
+
+## Processus de candidature
+1. Immatriculation de l'entreprise (obligatoire)
+2. Préparation du dossier avec budget prévisionnel
+3. Dépôt en ligne sur le portail Bpifrance
+4. Instruction par la délégation régionale
+5. Passage en comité d'engagement
+6. Signature de la convention si accepté
+
+## Spécificités régionales
+- Paris : Fonds Parisien pour l'Innovation (FPI) remplace la BFT
+- Délégations accessibles vs compétitives selon les régions
+- Enveloppes budgétaires limitées (dépôt recommandé en début d'année)
+
+## Conseils d'experts
+- Capital social recommandé : minimum 5 000€
+- Accompagnement incubateur fortement conseillé
+- Projet software/IA favorisés en 2025
+- Éviter les délégations très compétitives si possible
+
+## Contact
+Expert en financement public des startups innovantes
+LinkedIn : https://taap.it/M96y4a
