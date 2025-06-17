@@ -8,7 +8,7 @@ const ProjectExamples = () => {
     title: 'Solution SaaS d’optimisation logistique',
     sector: 'Intelligence Artificielle',
     subvention: '28 000 €',
-    fondsPropres: '20 000 €',
+    fondsPropres: '28 000 €',
     description: 'Développement d’une plateforme basée sur l’intelligence artificielle pour optimiser les flux logistiques des PME.',
     depenses: ['R&D : 20 000 €', 'Prototypage : 10 000 €', 'Étude de marché : 6 000 €', 'Accompagnement incubateur : 3 000 €', 'Frais juridiques : 1 000 €'],
     color: 'bg-blue-500'
@@ -25,7 +25,7 @@ const ProjectExamples = () => {
     icon: Lightbulb,
     title: 'Application mobile écoresponsable',
     sector: 'Tech & Impact',
-    subvention: '29 400 €',
+    subvention: '29 000 €',
     fondsPropres: '18 000 €',
     description: 'Développement d’une application pour encourager les comportements écoresponsables via gamification et neurosciences.',
     depenses: ['Prototypage & tests (CTO ext.) : 20 000 €', 'Partenariat neurosciences : 7 000 €', 'Participation salon : 2 000 €', 'Étude de marché (ChatGPT Pro) : 400 €'],
