@@ -515,8 +515,7 @@ const Index = () => {
           </h2>
           
           <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
-            Bénéficiez de notre expertise pour structurer un dossier convaincant, répondre aux attentes de Bpifrance, 
-            et maximiser vos chances d'acceptation.
+            Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -534,10 +533,6 @@ const Index = () => {
             <div className="flex items-center">
               <Mail className="h-5 w-5 mr-2" />
               <span>contact@boursefrenchtech.fr</span>
-            </div>
-            <div className="flex items-center">
-              <Phone className="h-5 w-5 mr-2" />
-              <span>01 23 45 67 89</span>
             </div>
           </div>
         </div>
