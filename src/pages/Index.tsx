@@ -8,6 +8,7 @@ import ExpensesSection from '@/components/ExpensesSection';
 import FinancingSection from '@/components/FinancingSection';
 import ApplicationProcessSection from '@/components/ApplicationProcessSection';
 import EvaluationSection from '@/components/EvaluationSection';
+import PracticalAdviceSection from '@/components/PracticalAdviceSection';
 import ProjectExamples from '@/components/ProjectExamples';
 import BenefitsSection from '@/components/BenefitsSection';
 import CTASection from '@/components/CTASection';
@@ -19,7 +20,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['definition', 'criteres', 'depenses', 'financement', 'processus', 'evaluation', 'exemples', 'faq'];
+      const sections = ['definition', 'criteres', 'depenses', 'financement', 'processus', 'evaluation', 'conseils', 'exemples', 'faq'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -59,6 +60,7 @@ const Index = () => {
       <ApplicationProcessSection />
       <CTASection />
       <EvaluationSection />
+      <PracticalAdviceSection />
       
       {/* Exemples de projets */}
       <section id="exemples" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
