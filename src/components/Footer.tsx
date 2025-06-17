@@ -15,7 +15,7 @@ const Footer = () => {
               <span className="text-xl font-bold">Bourse French Tech</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Votre guide complet pour obtenir la subvention Bourse French Tech et développer votre startup innovante.
+              Le guide complet de la Bourse French Tech.
             </p>
           </div>
           
@@ -54,7 +54,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Bourse French Tech. Tous droits réservés.</p>
+          <p>&copy; 2025 Finexov. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
