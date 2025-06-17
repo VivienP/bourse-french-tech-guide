@@ -3,7 +3,6 @@ import { MapPin, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import CriteriaGrid from '@/components/CriteriaGrid';
 import FranceMap from '@/components/FranceMap';
-
 const EligibilitySection = () => {
   return <section id="criteres" className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -37,25 +36,11 @@ const EligibilitySection = () => {
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Users className="h-5 w-5 text-primary mr-2" />
-                    Autres régions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>Accompagnement <strong>fortement recommandé</strong> mais non imposé.</p>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Renforce significativement la crédibilité du dossier.
-                  </p>
-                </CardContent>
-              </Card>
+              
             </div>
           </div>
         </div>
       </div>
     </section>;
 };
-
 export default EligibilitySection;
