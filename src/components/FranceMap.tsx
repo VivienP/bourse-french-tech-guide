@@ -2,122 +2,9 @@ import React from 'react';
 import { MapPin, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+
 const FranceMap = () => {
   const regionDelegations = [{
-    region: 'Hauts-de-France',
-    delegations: [{
-      name: 'Délégation Compiègne',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Amiens',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Lille',
-      difficulty: 'Compétitif'
-    }]
-  }, {
-    region: 'Normandie',
-    delegations: [{
-      name: 'Direction régionale Caen',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Rouen',
-      difficulty: 'Accessible'
-    }]
-  }, {
-    region: 'Bretagne',
-    delegations: [{
-      name: 'Délégation Brest',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Lorient',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Saint-Brieuc',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Rennes',
-      difficulty: 'Accessible'
-    }]
-  }, {
-    region: 'Grand Est',
-    delegations: [{
-      name: 'Délégation Metz',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Troyes',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Nancy',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Reims',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Strasbourg',
-      difficulty: 'Modéré'
-    }]
-  }, {
-    region: 'Île-de-France',
-    delegations: [{
-      name: 'Direction régionale La Défense',
-      difficulty: 'Compétitif'
-    }, {
-      name: 'Direction régionale Val de Fontenay',
-      difficulty: 'Compétitif'
-    }, {
-      name: 'Direction régionale Paris',
-      difficulty: 'Compétitif'
-    }]
-  }, {
-    region: 'Pays de la Loire',
-    delegations: [{
-      name: 'Délégation La Roche-sur-Yon',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Le Mans',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Nantes',
-      difficulty: 'Modéré'
-    }]
-  }, {
-    region: 'Centre-Val de Loire',
-    delegations: [{
-      name: 'Délégation Tours',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Orléans',
-      difficulty: 'Modéré'
-    }]
-  }, {
-    region: 'Bourgogne-Franche-Comté',
-    delegations: [{
-      name: 'Délégation Besançon',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Dijon',
-      difficulty: 'Accessible'
-    }]
-  }, {
-    region: 'Nouvelle-Aquitaine',
-    delegations: [{
-      name: 'Délégation La Rochelle',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Limoges',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Pau',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Direction régionale Bordeaux',
-      difficulty: 'Modéré'
-    }, {
-      name: 'Direction régionale Poitiers',
-      difficulty: 'Accessible'
-    }]
-  }, {
     region: 'Auvergne-Rhône-Alpes',
     delegations: [{
       name: 'Délégation Annecy',
@@ -142,6 +29,114 @@ const FranceMap = () => {
       difficulty: 'Compétitif'
     }]
   }, {
+    region: 'Bourgogne-Franche-Comté',
+    delegations: [{
+      name: 'Délégation Besançon',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Dijon',
+      difficulty: 'Accessible'
+    }]
+  }, {
+    region: 'Bretagne',
+    delegations: [{
+      name: 'Délégation Brest',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Lorient',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Saint-Brieuc',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Rennes',
+      difficulty: 'Accessible'
+    }]
+  }, {
+    region: 'Centre-Val de Loire',
+    delegations: [{
+      name: 'Délégation Tours',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Orléans',
+      difficulty: 'Modéré'
+    }]
+  }, {
+    region: 'Corse',
+    delegations: [{
+      name: 'Direction régionale Ajaccio',
+      difficulty: 'Accessible'
+    }]
+  }, {
+    region: 'Grand Est',
+    delegations: [{
+      name: 'Délégation Metz',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Troyes',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Nancy',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Reims',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Strasbourg',
+      difficulty: 'Modéré'
+    }]
+  }, {
+    region: 'Hauts-de-France',
+    delegations: [{
+      name: 'Délégation Compiègne',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Amiens',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Lille',
+      difficulty: 'Compétitif'
+    }]
+  }, {
+    region: 'Île-de-France',
+    delegations: [{
+      name: 'Direction régionale La Défense',
+      difficulty: 'Compétitif'
+    }, {
+      name: 'Direction régionale Val de Fontenay',
+      difficulty: 'Compétitif'
+    }, {
+      name: 'Direction régionale Paris',
+      difficulty: 'Compétitif'
+    }]
+  }, {
+    region: 'Normandie',
+    delegations: [{
+      name: 'Direction régionale Caen',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Rouen',
+      difficulty: 'Accessible'
+    }]
+  }, {
+    region: 'Nouvelle-Aquitaine',
+    delegations: [{
+      name: 'Délégation La Rochelle',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Limoges',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Pau',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Bordeaux',
+      difficulty: 'Modéré'
+    }, {
+      name: 'Direction régionale Poitiers',
+      difficulty: 'Accessible'
+    }]
+  }, {
     region: 'Occitanie',
     delegations: [{
       name: 'Délégation Perpignan',
@@ -154,24 +149,6 @@ const FranceMap = () => {
       difficulty: 'Modéré'
     }, {
       name: 'Délégation territoriale Aveyron - Lot - Tarn',
-      difficulty: 'Accessible'
-    }]
-  }, {
-    region: 'Provence-Alpes-Côte d\'Azur',
-    delegations: [{
-      name: 'Délégation Avignon',
-      difficulty: 'Accessible'
-    }, {
-      name: 'Délégation Nice',
-      difficulty: 'Modéré'
-    }, {
-      name: 'Direction régionale Marseille',
-      difficulty: 'Compétitif'
-    }]
-  }, {
-    region: 'Corse',
-    delegations: [{
-      name: 'Direction régionale Ajaccio',
       difficulty: 'Accessible'
     }]
   }, {
@@ -194,6 +171,30 @@ const FranceMap = () => {
     }, {
       name: 'Direction régionale Nouvelle-Calédonie',
       difficulty: 'Accessible'
+    }]
+  }, {
+    region: 'Pays de la Loire',
+    delegations: [{
+      name: 'Délégation La Roche-sur-Yon',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Le Mans',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Direction régionale Nantes',
+      difficulty: 'Modéré'
+    }]
+  }, {
+    region: 'Provence-Alpes-Côte d\'Azur',
+    delegations: [{
+      name: 'Délégation Avignon',
+      difficulty: 'Accessible'
+    }, {
+      name: 'Délégation Nice',
+      difficulty: 'Modéré'
+    }, {
+      name: 'Direction régionale Marseille',
+      difficulty: 'Compétitif'
     }]
   }];
   const getDifficultyColor = (difficulty: string) => {
