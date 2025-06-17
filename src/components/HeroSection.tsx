@@ -12,16 +12,16 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
   return (
     <section className="pt-36 sm:pt-44 md:pt-48 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center" style={{ minHeight: '75vh' }}>
       <div className="max-w-7xl mx-auto w-full">
-        <div className="text-center animate-fade-in">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 transition-opacity duration-500">
+        <div className="text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in">
             <span className="whitespace-nowrap">Bourse French Tech</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed transition-opacity duration-500 delay-100">
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
             Subvention publique non remboursable jusqu'à <span className="bg-gradient-to-r from-[#F8D164] to-[#E6B800] bg-clip-text text-transparent font-semibold">30 000 €</span> pour soutenir 
             la création d'entreprises innovantes à fort potentiel de croissance.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards]">
             <Button
               size="lg"
               onClick={() => scrollToSection('definition')}
@@ -40,7 +40,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
             </Button>
           </div>
 
-          <div className="animate-fade-in transition-opacity duration-500 delay-200">
+          <div className="animate-fade-in [animation-delay:600ms] opacity-0 [animation-fill-mode:forwards]">
             <StatsSection />
           </div>
         </div>

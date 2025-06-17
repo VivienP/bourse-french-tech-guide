@@ -2,8 +2,11 @@
 import React from 'react';
 import { Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const CTASection = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Background elements */}
@@ -16,7 +19,10 @@ const CTASection = () => {
       
       <div className="max-w-4xl mx-auto text-center relative z-10">
         {/* Enhanced container with border and shadow */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20">
+        <div 
+          ref={ref}
+          className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
           </h2>
@@ -25,7 +31,7 @@ const CTASection = () => {
             Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '300ms' }}>
             <Button 
               size="lg" 
               className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
