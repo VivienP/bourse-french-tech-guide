@@ -151,7 +151,7 @@ const FranceMap = () => {
   return (
     <div className="relative">
       <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-primary/20">
-        <h4 className="text-lg font-semibold text-center mb-6">Délégations par région et niveau de difficulté</h4>
+        <h3 className="text-lg font-semibold text-center mb-6">Délégations par région et niveau de difficulté</h3>
         
         <div className="space-y-2">
           {regionDelegations.map((regionData, index) => (
