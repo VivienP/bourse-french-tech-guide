@@ -15,10 +15,7 @@ const ExpensesSection = () => {
 
   const internalExpenses = [
     'Rémunérations des membres de l\'équipe projet',
-    'Frais généraux forfaitaires (20% des salaires)',
-    'Frais de déplacement chez les partenaires',
-    'Frais de déplacement chez les utilisateurs',
-    'Frais de déplacement chez les clients'
+    'Frais généraux forfaitaires (20% des salaires)'
   ];
 
   return (
