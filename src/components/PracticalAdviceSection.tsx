@@ -1,12 +1,11 @@
 import React from 'react';
-import { CheckCircle, XCircle, Heart, Users } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+
 const PracticalAdviceSection = () => {
-  const {
-    ref,
-    isVisible
-  } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation();
+
   const goodPractices = [{
     title: "Verrous technologiques réels",
     description: "Assurez-vous de présenter une innovation technique tangible et différenciée."
@@ -33,7 +32,9 @@ const PracticalAdviceSection = () => {
     title: "Négligence relationnelle",
     description: "Accordez une importance particulière à la relation avec votre chargé d'affaires. Le relationnel joue un rôle clé."
   }];
-  return <section id="conseils" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+
+  return (
+    <section id="conseils" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
@@ -85,13 +86,10 @@ const PracticalAdviceSection = () => {
           </div>
 
           {/* Decisive Difference */}
-          <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{
-          transitionDelay: '800ms'
-        }}>
+          <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '800ms' }}>
             <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
               <CardHeader>
                 <CardTitle className="text-2xl text-center flex items-center justify-center text-yellow-600">
-                  <Heart className="h-6 w-6 mr-3" />
                   La différence décisive
                 </CardTitle>
               </CardHeader>
@@ -109,6 +107,8 @@ const PracticalAdviceSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default PracticalAdviceSection;
