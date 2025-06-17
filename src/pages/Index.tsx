@@ -13,12 +13,9 @@ import BenefitsSection from '@/components/BenefitsSection';
 import CTASection from '@/components/CTASection';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('');
-  const { ref: examplesRef, isVisible: examplesVisible } = useScrollAnimation(0.1, 0);
-  const { ref: examplesTitleRef, isVisible: examplesTitleVisible } = useScrollAnimation(0.1, 200);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,28 +61,12 @@ const Index = () => {
       <EvaluationSection />
       
       {/* Exemples de projets */}
-      <section id="exemples" className="py-16 px-4 sm:px-6 lg:px-8 bg-white" ref={examplesRef}>
+      <section id="exemples" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div 
-            ref={examplesTitleRef}
-            className={`transition-all duration-700 ${
-              examplesTitleVisible 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-              Exemples de projets éligibles en 2025
-            </h2>
-          </div>
-          
-          <div className={`transition-all duration-700 delay-300 ${
-            examplesVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`}>
-            <ProjectExamples />
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+            Exemples de projets éligibles en 2025
+          </h2>
+          <ProjectExamples />
         </div>
       </section>
 
