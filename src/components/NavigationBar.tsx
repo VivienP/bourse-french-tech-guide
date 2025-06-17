@@ -25,7 +25,7 @@ const NavigationBar = ({ activeSection, scrollToSection }: NavigationBarProps) =
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <Award className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-gray-900 whitespace-nowrap">Bourse French Tech</span>
+            <span className="text-xl font-bold text-gray-900 whitespace-nowrap hidden sm:inline">Bourse French Tech</span>
           </div>
           
           <div className="hidden md:flex items-center space-x-6">
