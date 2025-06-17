@@ -2,7 +2,6 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Bot, Heart, Recycle } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
@@ -99,33 +98,24 @@ const ProjectExamples = () => {
                 </div>
               </div>
               
-              {/* Accordion for detailed description */}
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="description" className="border-none">
-                  <AccordionTrigger className="text-left hover:no-underline bg-gray-50 px-4 py-3 rounded-lg">
-                    <span className="font-medium text-gray-700">Voir le détail du projet</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-4 pt-4">
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold mb-2 text-gray-800">Description détaillée :</h4>
-                        <p className="text-gray-600 leading-relaxed">{project.description}</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-3 text-gray-800">Répartition des dépenses :</h4>
-                        <ul className="space-y-2">
-                          {project.depenses.map((depense, depenseIndex) => (
-                            <li key={depenseIndex} className="text-sm text-gray-600 flex items-start">
-                              <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3 flex-shrink-0 mt-2"></div>
-                              <span>{depense}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              {/* Description and Expenses in 2 columns */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold mb-3 text-gray-800">Description :</h4>
+                  <p className="text-gray-600 leading-relaxed">{project.description}</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-3 text-gray-800">Répartition des dépenses :</h4>
+                  <ul className="space-y-2">
+                    {project.depenses.map((depense, depenseIndex) => (
+                      <li key={depenseIndex} className="text-sm text-gray-600 flex items-start">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3 flex-shrink-0 mt-2"></div>
+                        <span>{depense}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
