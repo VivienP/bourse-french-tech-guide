@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -123,6 +122,14 @@ export default {
 					'100%': {
 						transform: 'rotate(360deg)'
 					}
+				},
+				'wave-move': {
+					'0%': {
+						transform: 'translateX(-100%)'
+					},
+					'100%': {
+						transform: 'translateX(100%)'
+					}
 				}
 			},
 			animation: {
@@ -131,7 +138,11 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'slide-up': 'slide-up 0.6s ease-out',
 				'scale-in': 'scale-in 0.5s ease-out',
-				'spin-slow': 'spin-slow 3s linear infinite'
+				'spin-slow': 'spin-slow 3s linear infinite',
+				'wave-move': 'wave-move 0.8s ease-in-out',
+				'wave-move-hover': 'wave-move 0.8s ease-in-out',
+				'wave-sweep': 'wave-move 0.8s ease-in-out',
+				'wave-sweep-delayed': 'wave-move 0.8s ease-in-out 2s'
 			}
 		}
 	},
