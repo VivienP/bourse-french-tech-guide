@@ -1,13 +1,10 @@
-
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import StatsSection from '@/components/StatsSection';
-
 interface HeroSectionProps {
   scrollToSection: (sectionId: string) => void;
 }
-
 const HeroSection = ({
   scrollToSection
 }: HeroSectionProps) => {
@@ -20,7 +17,7 @@ const HeroSection = ({
             <span className="whitespace-nowrap">Bourse French Tech</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
-            Subvention publique non remboursable jusqu'à <span className="relative font-semibold text-[#E6B800] overflow-hidden hover:animate-wave-sweep animate-wave-sweep-delayed before:content-['30_000_€'] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:text-[#F8D164] before:translate-x-[-100%] before:animate-wave-move hover:before:animate-wave-move-hover">30 000 €</span> pour soutenir 
+            Subvention publique non remboursable jusqu'à <span className="bg-gradient-to-r from-[#E6B800] to-[#E6B800] bg-clip-text text-transparent font-semibold">30 000 €</span> pour soutenir 
             la création d'entreprises innovantes à fort potentiel de croissance.
           </p>
           
@@ -41,5 +38,4 @@ const HeroSection = ({
       </div>
     </section>;
 };
-
 export default HeroSection;
