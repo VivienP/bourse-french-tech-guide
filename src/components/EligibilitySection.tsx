@@ -10,9 +10,7 @@ const EligibilitySection = () => {
           Critères d'éligibilité
         </h2>
         
-        <p className="text-xl text-gray-600 text-center mb-12">
-          L'éligibilité à la Bourse French Tech repose sur des critères propres à l'entreprise et et propres au projet.
-        </p>
+        <p className="text-xl text-gray-600 text-center mb-12">L'éligibilité à la Bourse French Tech repose sur des critères propres à l'entreprise et au projet.</p>
 
         <CriteriaGrid />
 
