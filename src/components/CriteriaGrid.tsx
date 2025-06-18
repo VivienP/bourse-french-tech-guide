@@ -40,7 +40,7 @@ const CriteriaGrid = () => {
       icon: Building,
       title: 'Secteurs d\'activité',
       requirement: 'Tous secteurs',
-      description: 'Numérique, IA, santé et e-commerce sont fréquents',
+      description: 'Numérique et infrastructures digitales, IA, bioTech, Greentech...',
       status: 'flexible'
     },
     {
