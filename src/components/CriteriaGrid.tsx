@@ -8,8 +8,8 @@ const CriteriaGrid = () => {
     {
       icon: Building,
       title: 'Statut juridique',
-      requirement: 'SAS, SARL uniquement',
-      description: 'Les statuts d\'auto-entrepreneur et d\'EIRL sont exclus',
+      requirement: 'SAS(U), SARL uniquement',
+      description: 'Les auto-entrepreneurs sont exclus',
       status: 'required'
     },
     {
@@ -20,17 +20,10 @@ const CriteriaGrid = () => {
       status: 'required'
     },
     {
-      icon: Circle,
-      title: 'Capital social',
-      requirement: '≥ 5 000 €',
-      description: 'Fortement recommandé pour signaler un engagement sérieux',
-      status: 'recommended'
-    },
-    {
       icon: CheckCircle,
       title: 'Fonds propres',
-      requirement: '10-30k€',
-      description: 'IDF: 20-30k€ • Régions: 10-30k€',
+      requirement: '20-30k€',
+      description: 'Parfois possible 15K€ en région.',
       status: 'required'
     }
   ];
@@ -56,19 +49,12 @@ const CriteriaGrid = () => {
       requirement: '≤ 24 mois',
       description: 'Phase de faisabilité financée limitée à 24 mois',
       status: 'required'
-    },
-    {
-      icon: CheckCircle,
-      title: 'Transfert de technologie',
-      requirement: 'Pleinement éligible',
-      description: 'Projets issus d\'un laboratoire vers une entreprise',
-      status: 'eligible'
     }
   ];
 
   const exclusions = [
-    'les personnes physiques, les entreprises individuelles et EIRL',
-    'les laboratoires publics, les établissements publics',
+    'les personnes physiques, les entreprises individuelles et EURL',
+    'les laboratoires publics et les établissements publics',
     'les associations (sauf si l\'association dispose d\'une activité économique réelle)',
     'les sociétés civiles immobilières (SCI), les activités de promotion immobilière et marchands de biens',
     'les activités d\'intermédiation financière, hors Fintech',
