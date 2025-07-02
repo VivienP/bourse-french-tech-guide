@@ -50,7 +50,7 @@ Ce site est un guide expert sur la Bourse French Tech (BFT), subvention publique
 - Enveloppes budgétaires limitées (dépôt recommandé en début d'année)
 
 ## Conseils d'experts
-- Capital social recommandé : minimum 5 000€
+- Capital social recommandé : minimum 3 000€
 - Accompagnement incubateur fortement conseillé
 - Projet software/IA favorisés en 2025
 - Éviter les délégations très compétitives si possible
