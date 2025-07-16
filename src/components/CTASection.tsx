@@ -43,7 +43,7 @@ const CTASection = () => {
         {/* Enhanced container with border and shadow */}
         <div 
           ref={ref}
-          className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
+          className={`bg-white/80 backdrop-blur-sm rounded-lg pt-12 px-6 pb-6 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             Réservez votre <span className="whitespace-nowrap">rendez-vous</span>
