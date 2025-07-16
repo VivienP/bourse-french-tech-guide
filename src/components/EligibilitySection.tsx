@@ -14,7 +14,7 @@ const EligibilitySection = () => {
 
         <CriteriaGrid />
 
-        <div className="mt-16">
+        <div className="mt-24">
           <h2 className="font-bold text-gray-900 mb-8 text-center text-4xl">Régions et accompagnement</h2>
           <div className="flex flex-col gap-12">
             <FranceMap />
