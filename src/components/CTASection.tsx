@@ -50,7 +50,7 @@ const CTASection = () => {
           </h2>
           
           <p className="text-gray-600 mb-2 max-w-3xl mx-auto text-lg">
-            Choisissez un créneau qui vous convient pour discuter de votre projet Bourse French Tech.
+            Echangeons sur votre projet de financement
           </p>
           
           {/* Cal inline embed code begins */}
