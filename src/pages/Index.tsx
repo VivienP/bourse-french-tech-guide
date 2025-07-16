@@ -12,6 +12,8 @@ import PracticalAdviceSection from '@/components/PracticalAdviceSection';
 import ProjectExamples from '@/components/ProjectExamples';
 import BenefitsSection from '@/components/BenefitsSection';
 import CTASection from '@/components/CTASection';
+import CTASection2 from '@/components/CTASection2';
+import CTASection3 from '@/components/CTASection3';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 
@@ -72,10 +74,10 @@ const Index = () => {
         </div>
       </section>
 
-      <CTASection />
+      <CTASection2 />
       <BenefitsSection />
       <FAQSection />
-      <CTASection />
+      <CTASection3 />
       <Footer />
     </div>
   );
