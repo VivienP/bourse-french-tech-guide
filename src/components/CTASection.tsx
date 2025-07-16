@@ -30,9 +30,9 @@ const CTASection = () => {
   }, []);
 
   return (
-    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <section id="cta" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(248,209,100,0.08),transparent_70%)]"></div>
+      <div className="absolute inset-0 bg-primary/20"></div>
       
       {/* Floating elements */}
       <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
@@ -43,13 +43,13 @@ const CTASection = () => {
         {/* Enhanced container with border and shadow */}
         <div 
           ref={ref}
-          className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
+          className={`bg-white/80 backdrop-blur-sm rounded-xl p-8 lg:p-16 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
             Réservez votre <span className="whitespace-nowrap">rendez-vous</span>
           </h2>
           
-          <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
+          <p className="text-gray-600 mb-12 max-w-3xl mx-auto text-lg leading-relaxed">
             Choisissez un créneau qui vous convient pour discuter de votre projet Bourse French Tech.
           </p>
           
