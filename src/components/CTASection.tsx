@@ -24,41 +24,33 @@ const CTASection = () => {
           className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
+            Réservez votre <span className="whitespace-nowrap">rendez-vous</span>
           </h2>
           
           <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
-            Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
+            Choisissez un créneau qui vous convient pour discuter de votre projet Bourse French Tech.
           </p>
           
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '300ms' }}>
-            <Button 
-              size="lg" 
-              className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
-              onClick={() => window.open('https://tapthe.link/rendez-vous', '_blank')}
-            >
-              <Calendar className="mr-3 h-5 w-5" />
-              Réserver un appel
-            </Button>
-            
-            <Button 
-              size="lg" 
-              className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300 overflow-hidden group"
-              onClick={() => window.open('https://tally.so/r/wQaz5g', '_blank')}
-            >
-              {/* Animated background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              {/* Sliding highlight effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              
-              <div className="relative flex items-center">
-                Générer mon dossier
-              </div>
-            </Button>
+          {/* Cal inline embed code begins */}
+          <div className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-200">
+            <div style={{width:'100%',height:'100%',overflow:'scroll'}} id="my-cal-inline-bft"></div>
           </div>
         </div>
       </div>
+      
+      {/* Cal.com script */}
+      <script type="text/javascript" dangerouslySetInnerHTML={{
+        __html: `
+          (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+          Cal("init", "bft", {origin:"https://app.cal.com"});
+          Cal.ns.bft("inline", {
+            elementOrSelector:"#my-cal-inline-bft",
+            config: {"layout":"month_view","theme":"light"},
+            calLink: "vivienperrelle/bft",
+          });
+          Cal.ns.bft("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#F8D164"},"dark":{"cal-brand":"#FFFFFF"}},"hideEventTypeDetails":true,"layout":"month_view"});
+        `
+      }} />
     </section>
   );
 };
