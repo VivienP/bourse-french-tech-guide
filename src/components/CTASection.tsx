@@ -45,16 +45,16 @@ const CTASection = () => {
           ref={ref}
           className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
             Réservez votre <span className="whitespace-nowrap">rendez-vous</span>
           </h2>
           
-          <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
+          <p className="text-gray-600 mb-12 max-w-3xl mx-auto text-lg">
             Choisissez un créneau qui vous convient pour discuter de votre projet Bourse French Tech.
           </p>
           
           {/* Cal inline embed code begins */}
-          <div className="w-full h-[600px] rounded-lg overflow-hidden">
+          <div className="w-full h-[600px] rounded-lg overflow-hidden mt-4">
             <div style={{width:'100%',height:'100%',overflow:'scroll'}} id="my-cal-inline-bft"></div>
           </div>
         </div>
