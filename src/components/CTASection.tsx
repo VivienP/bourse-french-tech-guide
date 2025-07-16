@@ -54,7 +54,7 @@ const CTASection = () => {
           </p>
           
           {/* Cal inline embed code begins */}
-          <div className="w-full h-[600px] rounded-lg overflow-hidden">
+          <div className="w-full h-[600px] rounded-lg overflow-hidden -mt-4">
             <div style={{width:'100%',height:'100%',overflow:'scroll'}} id="my-cal-inline-bft"></div>
           </div>
         </div>
