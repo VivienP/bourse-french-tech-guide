@@ -46,7 +46,7 @@ const NavigationBar = ({ activeSection, scrollToSection }: NavigationBarProps) =
             onClick={() => scrollToSection('cta')}
             className="bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200"
           >
-            Réserver un créneau
+            Prendre rendez-vous
           </Button>
         </div>
       </div>

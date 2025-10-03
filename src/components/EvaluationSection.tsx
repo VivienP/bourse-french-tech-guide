@@ -28,7 +28,7 @@ const EvaluationSection = () => {
     title: "L'impact global",
     description: "Bénéfices pour les utilisateurs, impact sociétal ou environnemental, potentiel de création d'emplois ou de valeur durable."
   }];
-  return <section id="evaluation" className="py-24 px-4 sm:px-6 lg:px-8">
+  return <section id="evaluation" className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
