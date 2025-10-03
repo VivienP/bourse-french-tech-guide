@@ -35,10 +35,9 @@ const CTASection = () => {
             <Button 
               size="lg" 
               className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
-              onClick={() => window.open('https://tapthe.link/rendez-vous', '_blank')}
+              onClick={() => window.open('https://taap.it/bft-bpifrance-oseille-landing', '_blank')}
             >
-              <Calendar className="mr-3 h-5 w-5" />
-              Réserver un appel
+              En savoir plus
             </Button>
             
             <Button 
