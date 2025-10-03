@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
@@ -21,40 +21,34 @@ const CTASection = () => {
         {/* Enhanced container with border and shadow */}
         <div 
           ref={ref}
-          className={`bg-white/80 backdrop-blur-sm rounded-lg p-12 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
+          className={`bg-white/80 backdrop-blur-sm rounded-lg py-12 px-6 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Prêt à démarrer votre projet ?
           </h2>
           
-          <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-lg">
-            Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto text-lg">
+            Faites-vous accompagner dans votre démarche de financement BFT
           </p>
           
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '300ms' }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
-              size="lg" 
-              className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
-              onClick={() => window.open('https://tapthe.link/rendez-vous', '_blank')}
+              size="lg"
+              className="group relative overflow-hidden"
+              onClick={() => window.open('https://cal.com/vivienperrelle/bft', '_blank')}
             >
-              <Calendar className="mr-3 h-5 w-5" />
-              Réserver un appel
+              <Calendar className="mr-2 h-5 w-5" />
+              Prendre rendez-vous
             </Button>
             
             <Button 
-              size="lg" 
-              className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300 overflow-hidden group"
-              onClick={() => window.open('https://tally.so/r/wQaz5g', '_blank')}
+              size="lg"
+              variant="outline"
+              className="group"
+              onClick={() => window.open('https://your-form-url.com', '_blank')}
             >
-              {/* Animated background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              {/* Sliding highlight effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              
-              <div className="relative flex items-center">
-                Générer mon dossier
-              </div>
+              <FileText className="mr-2 h-5 w-5" />
+              Générer mon dossier
             </Button>
           </div>
         </div>
