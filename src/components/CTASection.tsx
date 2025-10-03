@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Calendar, FileText } from 'lucide-react';
+import { Info, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
@@ -37,6 +37,7 @@ const CTASection = () => {
               className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
               onClick={() => window.open('https://taap.it/bft-bpifrance-oseille-landing', '_blank')}
             >
+              <Info className="mr-3 h-5 w-5" />
               En savoir plus
             </Button>
             
@@ -52,6 +53,7 @@ const CTASection = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               
               <div className="relative flex items-center">
+                <FileText className="mr-3 h-5 w-5" />
                 Constituer mon dossier
               </div>
             </Button>
