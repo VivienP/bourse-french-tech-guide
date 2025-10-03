@@ -53,7 +53,7 @@ const CTASection = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               
               <div className="relative flex items-center">
-                Générer mon dossier
+                Constituer mon dossier
               </div>
             </Button>
           </div>
