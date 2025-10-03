@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Info, FileText } from 'lucide-react';
+import { ArrowRight, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
@@ -37,7 +37,7 @@ const CTASection = () => {
               className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-colors duration-300"
               onClick={() => window.open('https://taap.it/bft-bpifrance-oseille-landing', '_blank')}
             >
-              <Info className="mr-3 h-5 w-5" />
+              <ArrowRight className="mr-3 h-5 w-5" />
               En savoir plus
             </Button>
             
