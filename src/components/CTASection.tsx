@@ -1,33 +1,11 @@
 
-import React, { useEffect } from 'react';
-import { Calendar } from 'lucide-react';
+import React from 'react';
+import { Calendar, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const CTASection = () => {
   const { ref, isVisible } = useScrollAnimation();
-
-  useEffect(() => {
-    // Load Cal.com script
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.innerHTML = `
-      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-      Cal("init", "bft", {origin:"https://app.cal.com"});
-      Cal.ns.bft("inline", {
-        elementOrSelector:"#my-cal-inline-bft",
-        config: {"layout":"month_view","theme":"light"},
-        calLink: "vivienperrelle/bft",
-      });
-      Cal.ns.bft("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#F8D164"},"dark":{"cal-brand":"#FFFFFF"}},"hideEventTypeDetails":true,"layout":"month_view"});
-    `;
-    document.head.appendChild(script);
-
-    return () => {
-      // Cleanup
-      document.head.removeChild(script);
-    };
-  }, []);
 
   return (
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
@@ -43,19 +21,35 @@ const CTASection = () => {
         {/* Enhanced container with border and shadow */}
         <div 
           ref={ref}
-          className={`bg-white/80 backdrop-blur-sm rounded-lg pt-12 px-6 pb-6 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
+          className={`bg-white/80 backdrop-blur-sm rounded-lg py-12 px-6 shadow-2xl border border-white/20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Réservez votre <span className="whitespace-nowrap">rendez-vous</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Prêt à démarrer votre projet ?
           </h2>
           
-          <p className="text-gray-600 mb-2 max-w-3xl mx-auto text-lg">
-            Echangeons sur votre projet de financement
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto text-lg">
+            Faites-vous accompagner dans votre démarche de financement BFT
           </p>
           
-          {/* Cal inline embed code begins */}
-          <div className="w-full h-[600px] rounded-lg overflow-hidden -mt-4">
-            <div style={{width:'100%',height:'100%',overflow:'scroll'}} id="my-cal-inline-bft"></div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button 
+              size="lg"
+              className="group relative overflow-hidden"
+              onClick={() => window.open('https://cal.com/vivienperrelle/bft', '_blank')}
+            >
+              <Calendar className="mr-2 h-5 w-5" />
+              Prendre rendez-vous
+            </Button>
+            
+            <Button 
+              size="lg"
+              variant="outline"
+              className="group"
+              onClick={() => window.open('https://your-form-url.com', '_blank')}
+            >
+              <FileText className="mr-2 h-5 w-5" />
+              Générer mon dossier
+            </Button>
           </div>
         </div>
       </div>
