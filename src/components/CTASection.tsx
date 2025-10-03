@@ -44,7 +44,7 @@ const CTASection = () => {
             <Button 
               size="lg" 
               className="relative bg-gradient-to-r from-primary to-yellow-400 hover:from-yellow-400 hover:to-primary text-gray-900 font-semibold text-lg px-8 py-4 h-auto rounded-lg shadow-lg transition-all duration-300 overflow-hidden group"
-              onClick={() => window.open('https://tally.so/r/wQaz5g', '_blank')}
+              onClick={() => window.open('https://taap.it/bft-bpifrance-oseille-auth', '_blank')}
             >
               {/* Animated background */}
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
