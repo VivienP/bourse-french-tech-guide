@@ -11,15 +11,21 @@ User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
+# OpenAI
 User-agent: ChatGPT-User
 Allow: /
 
 User-agent: GPTBot
 Allow: /
 
-User-agent: PerplexityBot
+User-agent: OAI-SearchBot
 Allow: /
 
+# Google AI
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic
 User-agent: ClaudeBot
 Allow: /
 
@@ -27,6 +33,32 @@ User-agent: anthropic-ai
 Allow: /
 
 User-agent: Claude-Web
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# xAI / Grok
+User-agent: Grok
+Allow: /
+
+User-agent: xAI
+Allow: /
+
+# Mistral
+User-agent: MistralBot
+Allow: /
+
+# Meta
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
 Allow: /
 
 Sitemap: https://boursefrenchtech.fr/sitemap.xml
