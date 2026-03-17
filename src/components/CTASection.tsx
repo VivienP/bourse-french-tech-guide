@@ -17,6 +17,7 @@ const CTASection = () => {
           dark: { 'cal-brand': '#F6F3EC' },
         },
         hideEventTypeDetails: false,
+        hideBranding: true,
         layout: 'month_view',
       });
     })();
