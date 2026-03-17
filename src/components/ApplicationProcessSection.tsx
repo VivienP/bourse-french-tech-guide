@@ -5,7 +5,7 @@ import ProcessTimeline from '@/components/ProcessTimeline';
 
 const ApplicationProcessSection = () => {
   return (
-    <section id="processus" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="processus" className="py-20 px-4 sm:px-6 lg:px-8 bg-card">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />

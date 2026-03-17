@@ -23,7 +23,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 section-warm">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />

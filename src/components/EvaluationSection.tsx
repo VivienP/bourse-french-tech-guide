@@ -14,7 +14,7 @@ const EvaluationSection = () => {
   ];
 
   return (
-    <section id="evaluation" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="evaluation" className="py-20 px-4 sm:px-6 lg:px-8 section-warm">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="flex items-center justify-center gap-3 mb-2">
@@ -28,7 +28,7 @@ const EvaluationSection = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {criteria.map((criterion, index) => (
               <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${index * 100}ms` }}>
-                <Card className="h-full rounded-2xl border border-border hover:-translate-y-1 transition-all duration-300">
+                <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-warm hover:shadow-warm-lg hover:-translate-y-1 transition-all duration-300">
                   <CardHeader>
                     <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                       <criterion.icon className="h-6 w-6 text-primary" />

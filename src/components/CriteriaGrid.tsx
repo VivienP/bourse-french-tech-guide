@@ -7,12 +7,12 @@ const CriteriaGrid = () => {
   const companyCriteria = [
     { icon: Building, title: 'Statut juridique', requirement: 'Société commerciale (SAS, SASU, SARL, EURL…)', description: "Les entreprises individuelles et auto-entrepreneurs sont exclus", status: 'required' },
     { icon: Calendar, title: "Âge de l'entreprise", requirement: '< 1 an', description: "La société doit avoir été créée il y a moins d'un an", status: 'required' },
-    { icon: CheckCircle, title: 'Fonds propres et quasi-fonds propres', requirement: '20-30k€', description: "L'entreprise doit démontrer des fonds propres (apports en compte courant, capital social, BSA Air...) et une trésorerie suffisants.", status: 'required' }
+    { icon: CheckCircle, title: 'Fonds propres', requirement: '20-30k€', description: 'Parfois possible 15K€ en région.', status: 'required' }
   ];
 
   const projectCriteria = [
     { icon: Lightbulb, title: "Type d'innovation", requirement: 'Innovation démontrée', description: "Technologique, d'usage, de procédé ou organisationnelle", status: 'required' },
-    { icon: Building, title: "Effort de développement", requirement: 'Complexité du projet', description: 'Le projet doit nécessiter une phase de maturation technique importante.', status: 'required' },
+    { icon: Building, title: "Secteurs d'activité", requirement: 'Tous secteurs', description: 'Numérique et infrastructures digitales, IA, bioTech, Greentech...', status: 'flexible' },
     { icon: Calendar, title: 'Durée du projet', requirement: '≤ 24 mois', description: 'Phase de faisabilité financée limitée à 24 mois', status: 'required' }
   ];
 
@@ -70,7 +70,7 @@ const CriteriaGrid = () => {
             </div>
             <div className="ml-8">
               <div className="mb-2">
-                <span className="inline-block px-3 py-1 bg-secondary/10 font-semibold text-sm rounded-full text-secondary">
+                <span className="inline-block px-3 py-1 bg-primary/10 font-semibold text-sm rounded-full text-primary">
                   {criterion.requirement}
                 </span>
               </div>
