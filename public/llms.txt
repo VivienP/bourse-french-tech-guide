@@ -12,7 +12,7 @@ Ce site est un guide expert sur la Bourse French Tech (BFT), subvention publique
 - Durée maximum : 24 mois pour la phase de validation
 - Taux de succès : environ 25 % des dossiers acceptés
 - Entreprise : moins d'un an d'existence lors du dépôt
-- Subvention non remboursable
+- Subvention non remboursable, accordée sans sûreté ni caution personnelle
 
 ## Définition
 La Bourse French Tech (BFT) est une subvention publique proposée par Bpifrance, conçue pour accompagner les entreprises innovantes de moins d'un an dans leur phase d'amorçage. Elle finance les premières dépenses liées à la maturation et à la validation technico-économique des projets : R&D, études de faisabilité, prototypage, protection de la propriété intellectuelle. C'est un dispositif clé pour les startups technologiques en France, offrant un soutien financier et une porte d'entrée vers l'écosystème Bpifrance.
@@ -20,12 +20,27 @@ La Bourse French Tech (BFT) est une subvention publique proposée par Bpifrance,
 Bien que le montant maximum théorique puisse atteindre 50 000 €, la majorité des subventions accordées se situent généralement en dessous de 30 000 €.
 
 ## Critères d'éligibilité
-- Entreprise française immatriculée depuis moins d'un an
-- Projet innovant (technologie, usage, service, procédé)
+
+### Critères entreprise
+- Société commerciale (SAS, SASU, SARL, EURL…) — les entreprises individuelles et auto-entrepreneurs sont exclus
+- Entreprise immatriculée depuis moins d'un an au dépôt du dossier
+- Fonds propres suffisants : idéalement 20 000 € à 30 000 €, parfois 15 000 € en région
+
+### Critères projet
+- Innovation démontrée (technologique, d'usage, de procédé ou organisationnelle)
+- Complexité de développement nécessitant une phase de maturation technologique
+- Durée du projet limitée à 24 mois
 - Fort potentiel de croissance et de scalabilité
 - Équipe dédiée avec compétences pertinentes
-- Fonds propres suffisants pour équilibrer le financement
-- Accompagnement par incubateur (obligatoire en Île-de-France)
+
+### Exclusions
+- Personnes physiques, entreprises individuelles et EIRL
+- Laboratoires publics et établissements publics
+- Associations (sauf activité économique réelle)
+- SCI, promotion immobilière, marchands de biens
+- Intermédiation financière (hors Fintech)
+- Entreprises en procédure collective
+- Entreprises non à jour de leurs obligations fiscales et sociales
 
 ### Spécificités régionales
 - Île-de-France : accompagnement par un incubateur référencé obligatoire
@@ -41,10 +56,12 @@ Bien que le montant maximum théorique puisse atteindre 50 000 €, la majorité
 - Dépôts de brevet : rédaction, dépôt et suivi auprès des offices de propriété intellectuelle
 - Formations techniques : formations liées au projet innovant (technologies, outils, méthodologies)
 - Prestations juridiques : structuration, contrats, propriété intellectuelle, conformité réglementaire
+- Frais de déplacement : déplacements chez des design partners, prestataires R&D ou participation à des salons professionnels
 
 ### Frais internes
 - Rémunérations des membres de l'équipe projet : salaires et charges des personnes impliquées (fondateurs, ingénieurs, développeurs)
 - Frais généraux forfaitaires : 20 % des salaires déclarés (loyer, énergie, fournitures)
+- Autres dépenses internes : produits consommables, entretien du matériel, fluides et énergie
 
 ### Non éligible
 - Les dépenses déjà engagées avant le dépôt du dossier
@@ -53,14 +70,15 @@ Bien que le montant maximum théorique puisse atteindre 50 000 €, la majorité
 ## Financement
 - Plafond maximum : 50 000 € (30 000 € en pratique)
 - Taux d'intervention : jusqu'à 70 % des dépenses éligibles
-- Versement en 2 tranches : 70 % à la signature de la convention, 30 % après validation de bonne utilisation
+- Accordée sans sûreté ni caution personnelle
+- Versement en 2 tranches : 70 % à la signature de la convention, 30 % sur présentation des justificatifs des dépenses acquittées
 - L'entreprise doit fournir un justificatif de trésorerie et un plan de trésorerie viable sur la durée du projet et au-delà
 - Fonds propres requis pour équilibrer le financement
 
 ## Processus de candidature
 
 ### Dépôt du dossier
-Le processus est entièrement digitalisé via la plateforme app.bel.bpifrance.fr.
+Le processus est entièrement digitalisé via la plateforme [app.bel.bpifrance.fr](https://app.bel.bpifrance.fr).
 
 ### Contenu du dossier
 - Un pitch deck
