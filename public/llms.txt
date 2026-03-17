@@ -1,6 +1,8 @@
 
 # Guide Bourse French Tech 2025
 
+> Pour une version complète et détaillée de ce guide (exemples de projets, budgets, stratégies régionales), consultez : [llms-full.txt](https://bourse-tech-explorer.lovable.app/llms-full.txt)
+
 ## À propos
 Ce site est un guide expert sur la Bourse French Tech (BFT), subvention publique de Bpifrance pour startups innovantes françaises. Il couvre l'ensemble du dispositif : définition, critères, dépenses, financement, candidature, évaluation, conseils et FAQ.
 
