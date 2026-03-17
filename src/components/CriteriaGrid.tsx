@@ -12,7 +12,7 @@ const CriteriaGrid = () => {
 
   const projectCriteria = [
   { icon: Lightbulb, title: "Type d'innovation", requirement: 'Innovation démontrée', description: "Technologique, d'usage, de procédé ou organisationnelle", status: 'required' },
-  { icon: Building, title: "Secteurs d'activité", requirement: 'Tous secteurs', description: 'Numérique et infrastructures digitales, IA, bioTech, Greentech...', status: 'flexible' },
+  { icon: Building, title: "Complexité de développement", requirement: 'Maturation technologique', description: 'Le projet doit nécessiter une phase de maturation technologique', status: 'required' },
   { icon: Calendar, title: 'Durée du projet', requirement: '≤ 24 mois', description: 'Phase de faisabilité financée limitée à 24 mois', status: 'required' }];
 
 
