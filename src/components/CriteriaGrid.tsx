@@ -82,6 +82,8 @@ const CriteriaGrid = () => {
     </Card>;
 
 
+  const [showExclusions, setShowExclusions] = useState(false);
+
   return (
     <div className="space-y-8">
       <div className="grid lg:grid-cols-2 gap-8">
@@ -90,25 +92,30 @@ const CriteriaGrid = () => {
       </div>
 
       <Card className="border-destructive/20 bg-destructive/5 rounded-2xl">
-        <CardHeader>
+        <CardHeader
+          className="cursor-pointer select-none"
+          onClick={() => setShowExclusions(!showExclusions)}
+        >
           <CardTitle className="flex items-center text-xl text-destructive">
-            
             Exclusions
+            <ChevronDown className={`h-5 w-5 ml-2 transition-transform duration-200 ${showExclusions ? 'rotate-180' : ''}`} />
           </CardTitle>
           <CardDescription className="text-destructive/80">
             Les types d'entreprises et d'activités suivants ne sont pas éligibles à la Bourse French Tech.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ul className="space-y-3">
-            {exclusions.map((exclusion, index) =>
-            <li key={index} className="flex items-start">
-                <X className="h-4 w-4 text-destructive mr-3 mt-1 flex-shrink-0" />
-                <span className="text-destructive/90 text-sm leading-relaxed">{exclusion}</span>
-              </li>
-            )}
-          </ul>
-        </CardContent>
+        {showExclusions && (
+          <CardContent>
+            <ul className="space-y-3">
+              {exclusions.map((exclusion, index) =>
+              <li key={index} className="flex items-start">
+                  <X className="h-4 w-4 text-destructive mr-3 mt-1 flex-shrink-0" />
+                  <span className="text-destructive/90 text-sm leading-relaxed">{exclusion}</span>
+                </li>
+              )}
+            </ul>
+          </CardContent>
+        )}
       </Card>
     </div>);
 
