@@ -120,7 +120,7 @@ Les dépenses financées par la BFT se répartissent en frais externes et frais 
 
 - **Plafond maximum** : 50 000 € (30 000 € en pratique)
 - **Taux d'intervention** : Jusqu'à 70 % des dépenses éligibles
-- L'entreprise doit fournir un probant de trésorerie et un plan de trésorerie viable sur les 24 prochains mois
+- L'entreprise doit fournir un justificatif de trésorerie et un plan de trésorerie viable sur la durée du projet et au-delà
 - Fonds propres requis pour équilibrer le financement
 
 ### Versement en 2 tranches

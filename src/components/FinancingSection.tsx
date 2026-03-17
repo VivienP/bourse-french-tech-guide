@@ -27,7 +27,7 @@ const FinancingSection = () => {
                 <span className="font-medium text-foreground">Taux d'intervention</span>
                 <span className="font-bold text-primary text-lg">70%</span>
               </div>
-              <p className="text-sm text-muted-foreground">L'entreprise doit fournir un justificatif de trésorerie et un plan de trésorerie viable sur les 24 prochains mois.</p>
+              <p className="text-sm text-muted-foreground">L'entreprise doit fournir un justificatif de trésorerie et un plan de trésorerie viable sur la durée du projet et au-delà.</p>
             </CardContent>
           </Card>
 
