@@ -9,7 +9,8 @@ const ExpensesSection = () => {
     { title: "Prestations de conseil ou d'accompagnement", description: "Accompagnement stratégique ou R&D, structuration du projet, mentorat par des incubateurs ou laboratoires de recherche." },
     { title: 'Dépôts de brevet', description: "Frais de rédaction, de dépôt et de suivi de brevets auprès des offices nationaux ou internationaux de propriété intellectuelle." },
     { title: 'Formations techniques', description: "Formations spécifiques nécessaires à la réalisation du projet innovant, à condition qu'elles soient directement liées au projet." },
-    { title: 'Prestations juridiques', description: "Conseil juridique pour la structuration du projet, la rédaction de contrats, la protection de la propriété intellectuelle ou la conformité réglementaire." }
+    { title: 'Prestations juridiques', description: "Conseil juridique pour la structuration du projet, la rédaction de contrats, la protection de la propriété intellectuelle ou la conformité réglementaire." },
+    { title: 'Frais de déplacement', description: "Déplacements chez des design partners, prestataires R&D ou participation à des salons professionnels en lien avec le projet." }
   ];
   const internalExpenses = [
     { title: "Rémunérations des membres de l'équipe projet", description: "Salaires et charges sociales des personnes directement impliquées dans la réalisation du projet innovant." },
