@@ -43,7 +43,7 @@ const FinancingSection = () => {
                   <div className="text-sm text-muted-foreground">À la signature de la convention</div>
                 </div>
               </div>
-              <div className="flex items-center p-4 bg-accent rounded-xl border border-secondary/10">
+              <div className="flex items-center p-4 bg-accent rounded-xl border border-primary/10">
                 <CheckCircle className="h-5 w-5 text-secondary mr-3 shrink-0" />
                 <div>
                   <div className="font-medium text-foreground">Seconde tranche : 30%</div>
