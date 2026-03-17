@@ -29,7 +29,7 @@ const ProcessTimeline = () => {
     {
       icon: FileText,
       title: 'Instruction du dossier',
-      description: 'Réstitution du dossier par le chargé d\'affaire devant le comité',
+      description: 'Restitution du dossier par le chargé d\'affaires devant le comité',
       documents: ['Vérification éligibilité', 'Évaluation technique'],
       color: 'bg-purple-500'
     },
