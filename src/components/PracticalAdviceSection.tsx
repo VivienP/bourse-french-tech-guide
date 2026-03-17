@@ -74,7 +74,7 @@ const PracticalAdviceSection = () => {
           </div>
 
           <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '800ms' }}>
-            <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20 rounded-2xl shadow-warm-lg">
+            <Card className="border border-border rounded-2xl">
               <CardHeader>
                 <CardTitle className="text-2xl text-center text-foreground">La différence décisive</CardTitle>
               </CardHeader>
