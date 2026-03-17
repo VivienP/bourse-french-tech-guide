@@ -53,7 +53,7 @@ const CriteriaGrid = () => {
   ];
 
   const exclusions = [
-    'les personnes physiques, les entreprises individuelles et EURL',
+    'les personnes physiques, les entreprises individuelles et EIRL',
     'les laboratoires publics et les établissements publics',
     'les associations (sauf si l\'association dispose d\'une activité économique réelle)',
     'les sociétés civiles immobilières (SCI), les activités de promotion immobilière et marchands de biens',

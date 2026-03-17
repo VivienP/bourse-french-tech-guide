@@ -35,7 +35,7 @@ const ProcessTimeline = () => {
     },
     {
       icon: CheckCircle,
-      title: 'Réponse de bpifrance',
+      title: 'Réponse de Bpifrance',
       description: 'Décision finale d\'attribution du financement',
       documents: ['Notification de décision', 'Convention de subvention'],
       color: 'bg-primary'
