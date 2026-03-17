@@ -21,7 +21,7 @@ const FinancingSection = () => {
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center p-4 bg-accent rounded-xl">
                 <span className="font-medium text-foreground">Plafond maximum</span>
-                <span className="font-bold text-primary text-lg">50 000 €</span>
+                <span className="font-bold text-secondary text-lg">50 000 €</span>
               </div>
               <div className="flex justify-between items-center p-4 bg-accent rounded-xl">
                 <span className="font-medium text-foreground">Taux d'intervention</span>
