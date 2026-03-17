@@ -70,7 +70,7 @@ const CriteriaGrid = () => {
             </div>
             <div className="ml-8">
               <div className="mb-2">
-                <span className="inline-block px-3 py-1 bg-primary/10 font-semibold text-sm rounded-full text-primary">
+                <span className="inline-block px-3 py-1 bg-secondary/10 font-semibold text-sm rounded-full text-secondary">
                   {criterion.requirement}
                 </span>
               </div>
