@@ -36,7 +36,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button size="lg" variant="outline" onClick={() => scrollToSection('cta')} className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl">
-              Réserver votre rendez-vous
+              Échangez avec un expert
             </Button>
           </div>
 
