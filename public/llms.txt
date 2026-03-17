@@ -1,5 +1,5 @@
 
-# Guide Bourse French Tech 2025
+# Guide Bourse French Tech 2026
 
 > Pour une version complète et détaillée de ce guide (exemples de projets, budgets, stratégies régionales), consultez : [llms-full.txt](https://bourse-tech-explorer.lovable.app/llms-full.txt)
 
@@ -129,7 +129,7 @@ Non, seuls les frais futurs sont éligibles.
 Non. Les personnes physiques, entreprises individuelles et EIRL ne sont pas éligibles.
 
 ### Tous les secteurs sont-ils éligibles ?
-Oui, à condition que le projet soit innovant. En 2025, les projets software et IA dominent les financements.
+Oui, à condition que le projet soit innovant. En 2026, les projets software et IA dominent les financements.
 
 ### Un projet de transfert technologique est-il éligible ?
 Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance.

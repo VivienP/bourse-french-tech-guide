@@ -1,5 +1,5 @@
 
-# Guide Complet — Bourse French Tech 2025
+# Guide Complet — Bourse French Tech 2026
 
 > Ce document est la version exhaustive du guide sur la Bourse French Tech (BFT), subvention publique non remboursable de Bpifrance destinée aux startups innovantes françaises de moins d'un an. Il couvre l'intégralité du dispositif avec un niveau de détail maximal.
 
@@ -60,7 +60,7 @@ Important : Bien que le montant maximum théorique puisse atteindre 50 000 €, 
 ### Critères relatifs au projet
 
 - **Type d'innovation** : Innovation démontrée, pouvant être technologique, d'usage, de procédé ou organisationnelle. L'innovation doit apporter une réelle différenciation et un fort potentiel de croissance. Une simple innovation incrémentale ne suffit pas.
-- **Secteurs d'activité** : Tous secteurs sont éligibles (numérique, infrastructures digitales, IA, biotech, greentech, santé, etc.). En 2025, les projets software et IA dominent les financements.
+- **Secteurs d'activité** : Tous secteurs sont éligibles (numérique, infrastructures digitales, IA, biotech, greentech, santé, etc.). En 2026, les projets software et IA dominent les financements.
 - **Durée du projet** : La phase de faisabilité financée est limitée à 24 mois maximum.
 - **Fort potentiel de croissance et de scalabilité**
 - **Équipe dédiée avec compétences pertinentes**
@@ -371,7 +371,7 @@ Non, seuls les frais futurs sont éligibles. Les dépenses déjà engagées avan
 Non, les personnes physiques, les entreprises individuelles, et les EIRL ne sont pas éligibles.
 
 ### Q8 : Tous les secteurs sont-ils éligibles ?
-Oui, à condition que le projet soit innovant et respecte les critères. En 2025, les projets software, notamment en IA, dominent les financements.
+Oui, à condition que le projet soit innovant et respecte les critères. En 2026, les projets software, notamment en IA, dominent les financements.
 
 ### Q9 : Un projet de transfert technologique est-il éligible ?
 Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance.
@@ -410,4 +410,4 @@ LinkedIn : https://taap.it/M96y4a
 
 ---
 
-*Ce document est généré automatiquement à partir du contenu du site bourse-tech-explorer.lovable.app — Guide Bourse French Tech 2025.*
+*Ce document est généré automatiquement à partir du contenu du site bourse-tech-explorer.lovable.app — Guide Bourse French Tech 2026.*

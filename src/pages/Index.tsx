@@ -67,7 +67,7 @@ const Index = () => {
             <div className="h-1 w-12 rounded-full bg-primary" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
-            Exemples de projets éligibles en 2025
+            Exemples de projets éligibles en 2026
           </h2>
           <ProjectExamples />
         </div>
