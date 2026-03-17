@@ -36,14 +36,14 @@ const FinancingSection = () => {
               <CardTitle className="text-secondary">Tranches de versement</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center p-4 bg-primary/5 rounded-xl border border-primary/10">
+              <div className="flex items-center p-4 bg-accent rounded-xl border border-primary/10">
                 <CheckCircle className="h-5 w-5 text-primary mr-3 shrink-0" />
                 <div>
                   <div className="font-medium text-foreground">Première tranche : 70%</div>
                   <div className="text-sm text-muted-foreground">À la signature de la convention</div>
                 </div>
               </div>
-              <div className="flex items-center p-4 bg-secondary/5 rounded-xl border border-secondary/10">
+              <div className="flex items-center p-4 bg-muted rounded-xl border border-secondary/10">
                 <CheckCircle className="h-5 w-5 text-secondary mr-3 shrink-0" />
                 <div>
                   <div className="font-medium text-foreground">Seconde tranche : 30%</div>
