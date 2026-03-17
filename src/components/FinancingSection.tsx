@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ShieldCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const FinancingSection = () => {
@@ -12,9 +12,14 @@ const FinancingSection = () => {
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">Financement et tranches de versement</h2>
+
+        <div className="flex items-center justify-center gap-3 p-4 mb-8 rounded-xl bg-accent border border-primary/15">
+          <ShieldCheck className="h-6 w-6 text-primary flex-shrink-0" />
+          <span className="font-semibold text-foreground">Accordée sans sûreté ni caution personnelle</span>
+        </div>
         
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card className="border-t-4 border-t-primary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
+          <Card className="border-t-4 border-t-primary rounded-2xl transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-primary">Conditions de financement</CardTitle>
             </CardHeader>
@@ -31,7 +36,7 @@ const FinancingSection = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-t-4 border-t-secondary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
+          <Card className="border-t-4 border-t-secondary rounded-2xl transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-secondary">Versement en 2 tranches</CardTitle>
             </CardHeader>
@@ -47,7 +52,7 @@ const FinancingSection = () => {
                 <CheckCircle className="h-5 w-5 text-secondary mr-3" />
                 <div>
                   <div className="font-medium text-foreground">Seconde tranche : 30%</div>
-                  <div className="text-sm text-muted-foreground">Sous réserve de bonne utilisation de la 1ère tranche</div>
+                  <div className="text-sm text-muted-foreground">Sur présentation des justificatifs des dépenses acquittées</div>
                 </div>
               </div>
             </CardContent>
