@@ -25,7 +25,7 @@ const EligibilitySection = () => {
           <div className="flex flex-col gap-12">
             <FranceMap />
             <div className="space-y-6">
-              <Card className="border-t-4 border-t-primary rounded-2xl shadow-warm">
+              <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <MapPin className="h-5 w-5 text-primary mr-2" />

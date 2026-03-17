@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 40 33% 99%;
+    --background: 0 0% 99%;
     --foreground: 220 40% 13%;
 
     --card: 0 0% 100%;
@@ -19,23 +19,20 @@
     --secondary: 220 44% 18%;
     --secondary-foreground: 40 33% 99%;
 
-    --muted: 38 30% 96%;
+    --muted: 220 10% 96%;
     --muted-foreground: 220 15% 46%;
 
-    --accent: 43 70% 96%;
+    --accent: 43 60% 96%;
     --accent-foreground: 220 40% 13%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 38 20% 90%;
-    --input: 38 20% 90%;
+    --border: 220 10% 90%;
+    --input: 220 10% 90%;
     --ring: 43 92% 68%;
 
     --radius: 0.75rem;
-
-    --warm-bg: 38 30% 97%;
-    --warm-bg-alt: 35 25% 96%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -94,14 +91,5 @@
 
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-@layer utilities {
-  .section-warm {
-    background-color: hsl(var(--warm-bg));
-  }
-  .section-warm-alt {
-    background-color: hsl(var(--warm-bg-alt));
   }
 }

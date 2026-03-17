@@ -17,7 +17,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-foreground mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-primary/20 text-sm font-medium text-foreground mb-8 animate-fade-in">
             <Sparkles className="h-4 w-4 text-primary" />
             Subvention Bpifrance 2026
           </div>
@@ -31,7 +31,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards]">
-            <Button size="lg" onClick={() => scrollToSection('definition')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl shadow-warm-lg hover:shadow-warm-hover">
+            <Button size="lg" onClick={() => scrollToSection('definition')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg">
               Découvrir le dispositif
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

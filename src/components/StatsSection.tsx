@@ -18,7 +18,7 @@ const StatsSection = () => {
       {stats.map((stat, index) => (
         <div 
           key={index} 
-          className={`text-center p-6 rounded-2xl bg-card border border-border shadow-warm hover:shadow-warm-lg transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`text-center p-6 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           style={{ transitionDelay: `${index * 100}ms` }}
         >
           <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-3">
