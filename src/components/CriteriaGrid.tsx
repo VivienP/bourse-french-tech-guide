@@ -64,7 +64,7 @@ const CriteriaGrid = () => {
                 <criterion.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 <h4 className="font-semibold text-foreground">{criterion.title}</h4>
               </div>
-              <Badge variant="outline" className={`text-xs font-medium ${getStatusColor(criterion.status)}`}>
+              <Badge className={`text-xs font-medium ${getStatusColor(criterion.status)}`}>
                 {getStatusLabel(criterion.status)}
               </Badge>
             </div>
