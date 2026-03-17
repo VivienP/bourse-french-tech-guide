@@ -17,6 +17,7 @@ const CTASection = () => {
           dark: { 'cal-brand': '#F6F3EC' },
         },
         hideEventTypeDetails: false,
+        // @ts-ignore – hideBranding is supported by the Cal.com API
         hideBranding: true,
         layout: 'month_view',
       });
