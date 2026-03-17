@@ -11,7 +11,7 @@ const CTASection = () => {
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(43_92%_68%_/_0.08),transparent_70%)]" />
       
-      <div className="max-w-4xl mx-auto text-center relative z-10">
+      <div className="max-w-6xl mx-auto text-center relative z-10">
         <div 
           ref={ref}
           className={`bg-card/80 backdrop-blur-sm rounded-3xl p-12 shadow-warm-lg border border-primary/10 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}

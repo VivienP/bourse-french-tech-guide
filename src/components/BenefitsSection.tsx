@@ -31,7 +31,7 @@ const BenefitsSection = () => {
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div 
           ref={ref}
           className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
