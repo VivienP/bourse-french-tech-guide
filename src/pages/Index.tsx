@@ -75,7 +75,6 @@ const Index = () => {
 
       <BenefitsSection />
       <FAQSection />
-      <CTASection />
       <Footer />
     </div>
   );
