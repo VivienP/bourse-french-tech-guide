@@ -371,7 +371,7 @@ Non, seuls les frais futurs sont éligibles. Les dépenses déjà engagées avan
 Non, les personnes physiques, les entreprises individuelles, et les EIRL ne sont pas éligibles.
 
 ### Q8 : Tous les secteurs sont-ils éligibles ?
-Oui, à condition que le projet soit innovant et respecte les critères. En 2025, les projets software, notamment en IA, dominent les financements.
+Oui, à condition que le projet soit innovant et respecte les critères. En 2026, les projets software, notamment en IA, dominent les financements.
 
 ### Q9 : Un projet de transfert technologique est-il éligible ?
 Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance.
