@@ -42,15 +42,12 @@ const Index = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-background">
       <NavigationBar activeSection={activeSection} scrollToSection={scrollToSection} />
       <HeroSection scrollToSection={scrollToSection} />
       <DefinitionSection />
@@ -62,17 +59,20 @@ const Index = () => {
       <EvaluationSection />
       <PracticalAdviceSection />
       
-      {/* Exemples de projets */}
-      <section id="exemples" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="exemples" className="py-20 px-4 sm:px-6 lg:px-8 bg-card">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <div className="h-1 w-12 rounded-full bg-primary" />
+            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Exemples</span>
+            <div className="h-1 w-12 rounded-full bg-primary" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
             Exemples de projets éligibles en 2025
           </h2>
           <ProjectExamples />
         </div>
       </section>
 
-      <CTASection />
       <BenefitsSection />
       <FAQSection />
       <CTASection />
