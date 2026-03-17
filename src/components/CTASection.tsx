@@ -25,7 +25,7 @@ const CTASection = () => {
   }, []);
 
   return (
-    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-primary/10">
+    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-primary/20">
       <div className="max-w-6xl mx-auto relative z-10">
         <div
           ref={ref}
