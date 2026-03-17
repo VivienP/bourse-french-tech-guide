@@ -13,6 +13,17 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === 'development' &&
     componentTagger(),
+    {
+      name: 'txt-charset',
+      configureServer(server: any) {
+        server.middlewares.use((req: any, res: any, next: any) => {
+          if (req.url && req.url.endsWith('.txt')) {
+            res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+          }
+          next();
+        });
+      },
+    },
   ].filter(Boolean),
   resolve: {
     alias: {
