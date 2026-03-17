@@ -18,23 +18,25 @@ const NavigationBar = ({ activeSection, scrollToSection }: NavigationBarProps) =
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-card/80 backdrop-blur-md border-b border-border shadow-warm z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-warm">
               <Award className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-gray-900 whitespace-nowrap hidden sm:inline">Bourse French Tech</span>
+            <span className="text-xl font-bold text-foreground whitespace-nowrap hidden sm:inline">Bourse French Tech</span>
           </div>
           
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map(item => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-primary ${
-                  activeSection === item.id ? 'text-primary' : 'text-gray-600'
+                className={`relative text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 ${
+                  activeSection === item.id 
+                    ? 'text-primary-foreground bg-primary shadow-warm' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 }`}
               >
                 {item.label}
@@ -44,7 +46,7 @@ const NavigationBar = ({ activeSection, scrollToSection }: NavigationBarProps) =
 
           <Button
             onClick={() => scrollToSection('cta')}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200"
+            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-all duration-200 shadow-warm"
           >
             Réserver un créneau
           </Button>
