@@ -1,31 +1,16 @@
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import Cal, { getCalApi } from '@calcom/embed-react';
+import { useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const CTASection = () => {
   const { ref, isVisible } = useScrollAnimation();
-  const calInitialized = useRef(false);
 
   useEffect(() => {
-    if (calInitialized.current) return;
-    calInitialized.current = true;
-
-    const script = document.createElement('script');
-    script.src = 'https://app.cal.eu/embed/embed.js';
-    script.async = true;
-    script.onload = () => {
-      const Cal = (window as any).Cal;
-      if (!Cal) return;
-
-      Cal('init', 'decouverte', { origin: 'https://app.cal.eu' });
-
-      Cal.ns.decouverte('inline', {
-        elementOrSelector: '#my-cal-inline-decouverte',
-        config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'light' },
-        calLink: 'boursefrenchtech/decouverte',
-      });
-
-      Cal.ns.decouverte('ui', {
+    (async function () {
+      const cal = await getCalApi({ namespace: 'decouverte', embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
+      cal('ui', {
         theme: 'light',
         cssVarsPerTheme: {
           light: { 'cal-brand': '#1B2A4A' },
@@ -34,8 +19,7 @@ const CTASection = () => {
         hideEventTypeDetails: false,
         layout: 'month_view',
       });
-    };
-    document.head.appendChild(script);
+    })();
   }, []);
 
   return (
@@ -61,7 +45,13 @@ const CTASection = () => {
           </p>
 
           <div className="bg-card rounded-2xl border border-border shadow-warm-lg overflow-hidden" style={{ minHeight: 600 }}>
-            <div id="my-cal-inline-decouverte" style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }} />
+            <Cal
+              namespace="decouverte"
+              calLink="boursefrenchtech/decouverte"
+              calOrigin="https://app.cal.eu"
+              style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }}
+              config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'light' }}
+            />
           </div>
         </div>
       </div>
