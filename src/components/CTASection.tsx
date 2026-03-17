@@ -1,55 +1,54 @@
 
 import React from 'react';
-import { ArrowRight, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Cal, { getCalApi } from '@calcom/embed-react';
+import { useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const CTASection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: 'decouverte', embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
+      cal('ui', {
+        theme: 'light',
+        cssVarsPerTheme: {
+          light: { 'cal-brand': '#1B2A4A' },
+          dark: { 'cal-brand': '#F6F3EC' },
+        },
+        hideEventTypeDetails: false,
+        // @ts-ignore – hideBranding is supported by the Cal.com API
+        hideBranding: true,
+        layout: 'month_view',
+      });
+    })();
+  }, []);
+
   return (
-    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(43_92%_68%_/_0.08),transparent_70%)]" />
-      
-      <div className="max-w-6xl mx-auto text-center relative z-10">
+    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-primary/10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <div
           ref={ref}
-          className={`bg-card/80 backdrop-blur-sm rounded-3xl p-12 shadow-warm-lg border border-primary/10 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}>
-          
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Vous envisagez de candidater à la <span className="whitespace-nowrap">Bourse French Tech</span> ?
+          className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">
+            Échangez avec un expert
           </h2>
-          
-          <p className="text-muted-foreground mb-8 max-w-3xl mx-auto text-lg">
-            Structurer votre dossier et maximiser vos chances de financement grâce à l'IA.
+          <p className="text-muted-foreground mb-10 max-w-2xl mx-auto text-lg text-center">
+            Réservez un créneau de découverte directement en ligne.
           </p>
-          
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '300ms' }}>
-            <Button
-              size="lg"
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground text-lg px-8 py-4 h-auto rounded-xl shadow-warm transition-all duration-300"
-              onClick={() => window.open('https://taap.it/bft-bpifrance-oseille-landing', '_blank')}>
-              
-              <ArrowRight className="mr-3 h-5 w-5" />
-              En savoir plus
-            </Button>
-            
-            
 
-
-
-
-
-
-
-
-
-            
-          </div>
+          <Cal
+            namespace="decouverte"
+            calLink="boursefrenchtech/decouverte"
+            calOrigin="https://app.cal.eu"
+            style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }}
+            config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'light' }}
+          />
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default CTASection;
