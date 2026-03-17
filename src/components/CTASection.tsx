@@ -35,7 +35,7 @@ const CTASection = () => {
             Échangez avec un expert
           </h2>
           <p className="text-muted-foreground mb-10 max-w-2xl mx-auto text-lg text-center">
-            Déléguez la constitution de votre dossier à un expert pour maximiser vos chances de financement.
+            Déléguez la constitution de votre dossier et maximisez vos chances de financement.
           </p>
 
           <Cal
