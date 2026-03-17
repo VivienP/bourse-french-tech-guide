@@ -21,8 +21,8 @@ const ProcessTimeline = () => {
     },
     {
       icon: Users,
-      title: 'Etude du dossier par le chargé d\'affaire ou le Pré-comité',
-      description: 'Etude préliminaire du dossier',
+      title: 'Étude du dossier par le chargé d\'affaires ou le Pré-comité',
+      description: 'Étude préliminaire du dossier',
       documents: ['Avis favorable requis', 'Recommandations éventuelles'],
       color: 'bg-yellow-500'
     },
