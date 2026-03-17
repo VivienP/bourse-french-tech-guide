@@ -30,7 +30,7 @@ const ExpensesSection = () => {
         <p className="text-xl text-muted-foreground text-center mb-12">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
 
         <div className="flex flex-col gap-8">
-          <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
+          <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-xl text-primary">Frais externes</CardTitle>
             </CardHeader>
@@ -49,7 +49,7 @@ const ExpensesSection = () => {
             </CardContent>
           </Card>
 
-          <Card className="h-full border-t-4 border-t-secondary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
+          <Card className="h-full border-t-4 border-t-secondary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-xl text-secondary">Frais internes</CardTitle>
             </CardHeader>

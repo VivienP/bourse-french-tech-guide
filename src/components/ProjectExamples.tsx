@@ -48,7 +48,7 @@ const ProjectExamples = () => {
           className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           style={{ transitionDelay: `${index * 150}ms` }}
         >
-          <Card className="border-t-4 border-t-primary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
+          <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
@@ -66,11 +66,11 @@ const ProjectExamples = () => {
                   <p className="text-sm font-medium text-muted-foreground">Montant total</p>
                   <p className="text-xl font-bold text-primary">{project.montantTotal}</p>
                 </div>
-                <div className="p-4 bg-primary/5 rounded-xl text-center border border-primary/10">
+                <div className="p-4 bg-accent rounded-xl text-center border border-primary/10">
                   <p className="text-sm font-medium text-muted-foreground">Subvention</p>
                   <p className="text-xl font-bold text-primary">{project.subvention}</p>
                 </div>
-                <div className="p-4 bg-accent rounded-xl text-center border border-border">
+                <div className="p-4 bg-muted rounded-xl text-center border border-border">
                   <p className="text-sm font-medium text-muted-foreground">Fonds propres</p>
                   <p className="text-xl font-bold text-foreground">{project.fondsPropres}</p>
                 </div>
