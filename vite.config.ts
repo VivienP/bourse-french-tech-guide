@@ -8,11 +8,27 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    headers: {
+      "*.txt": {
+        "Content-Type": "text/plain; charset=utf-8",
+      },
+    },
   },
   plugins: [
     react(),
     mode === 'development' &&
     componentTagger(),
+    {
+      name: 'txt-charset',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url && req.url.endsWith('.txt')) {
+            res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+          }
+          next();
+        });
+      },
+    },
   ].filter(Boolean),
   resolve: {
     alias: {
