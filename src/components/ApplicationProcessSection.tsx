@@ -18,7 +18,7 @@ const ApplicationProcessSection = () => {
             <h3 className="text-2xl font-bold text-foreground mb-4">Dépôt du dossier</h3>
             <p className="mb-6">
               L'ensemble du processus de candidature est digitalisé. La demande de financement s'effectue en ligne via
-              la plateforme de Bpifrance app.bel.bpifrance.fr.
+              la plateforme de Bpifrance <a href="https://app.bel.bpifrance.fr" target="_blank" rel="noopener noreferrer" className="underline decoration-primary/40 underline-offset-2 hover:decoration-primary transition-colors">app.bel.bpifrance.fr</a>.
             </p>
 
             <h3 className="text-2xl font-bold text-foreground mb-4">Contenu du dossier</h3>
