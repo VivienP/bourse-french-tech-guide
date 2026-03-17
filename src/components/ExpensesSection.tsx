@@ -29,7 +29,7 @@ const ExpensesSection = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Dépenses éligibles</h2>
         <p className="text-xl text-muted-foreground text-center mb-12">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="flex flex-col gap-8">
           <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-xl text-primary">Frais externes</CardTitle>
