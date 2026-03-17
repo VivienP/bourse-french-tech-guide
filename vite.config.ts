@@ -15,8 +15,8 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
     {
       name: 'txt-charset',
-      configureServer(server) {
-        server.middlewares.use((req, res, next) => {
+      configureServer(server: any) {
+        server.middlewares.use((req: any, res: any, next: any) => {
           if (req.url && req.url.endsWith('.txt')) {
             res.setHeader('Content-Type', 'text/plain; charset=utf-8');
           }
