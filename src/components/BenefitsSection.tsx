@@ -22,7 +22,7 @@ const BenefitsSection = () => {
             Importance de la BFT dans le parcours de financement
           </h2>
           
-          <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/15 shadow-warm">
+          <div className="p-8 rounded-2xl border border-border">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-primary/15 rounded-xl flex items-center justify-center flex-shrink-0">
                 <Rocket className="h-6 w-6 text-primary" />
