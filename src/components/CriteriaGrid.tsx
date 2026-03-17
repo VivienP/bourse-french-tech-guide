@@ -9,12 +9,10 @@ const CriteriaGrid = () => {
   { icon: Calendar, title: "Âge de l'entreprise", requirement: '< 1 an', description: "La société doit avoir été créée il y a moins d'un an", status: 'required' },
   { icon: CheckCircle, title: 'Fonds propres', requirement: '20-30k€', description: 'Parfois possible 15K€ en région.', status: 'required' }];
 
-
   const projectCriteria = [
   { icon: Lightbulb, title: "Type d'innovation", requirement: 'Innovation démontrée', description: "Technologique, d'usage, de procédé ou organisationnelle", status: 'required' },
   { icon: Building, title: "Complexité de développement", requirement: 'Maturation technologique', description: 'Le projet doit nécessiter une phase de maturation technologique', status: 'required' },
   { icon: Calendar, title: 'Durée du projet', requirement: '≤ 24 mois', description: 'Phase de faisabilité financée limitée à 24 mois', status: 'required' }];
-
 
   const exclusions = [
   'les personnes physiques, les entreprises individuelles et EIRL',
@@ -24,7 +22,6 @@ const CriteriaGrid = () => {
   "les activités d'intermédiation financière, hors Fintech",
   'les entreprises en procédure collective ouverte',
   'les entreprises qui ne sont pas à jour de leurs obligations fiscales et sociales'];
-
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -43,7 +40,7 @@ const CriteriaGrid = () => {
   };
 
   const CriteriaCard = ({ title, criteria, icon: Icon }: {title: string;criteria: typeof companyCriteria;icon: typeof Building;}) =>
-  <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-warm hover:shadow-warm-lg transition-all duration-300">
+  <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center text-xl mb-2">
           <Icon className="h-6 w-6 text-primary mr-3" />
@@ -81,7 +78,6 @@ const CriteriaGrid = () => {
       </CardContent>
     </Card>;
 
-
   const [showExclusions, setShowExclusions] = useState(false);
 
   return (
@@ -118,7 +114,6 @@ const CriteriaGrid = () => {
         )}
       </Card>
     </div>);
-
 };
 
 export default CriteriaGrid;

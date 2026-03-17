@@ -22,7 +22,7 @@ const DefinitionSection = () => {
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-primary/5 border border-primary/15 flex items-start gap-3 md:max-w-xs">
+          <div className="p-5 rounded-2xl bg-accent border border-primary/15 flex items-start gap-3 md:max-w-xs">
             <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
             <p className="text-foreground text-base">
               <strong>Important :</strong> La majorité des subventions accordées se situent généralement en dessous de <strong>30 000 €</strong>.

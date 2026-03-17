@@ -53,8 +53,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				'warm-bg': 'hsl(var(--warm-bg))',
-				'warm-bg-alt': 'hsl(var(--warm-bg-alt))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -65,11 +63,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
-			},
-			boxShadow: {
-				'warm': '0 4px 20px -4px hsl(43 92% 68% / 0.15)',
-				'warm-lg': '0 10px 40px -10px hsl(43 92% 68% / 0.25)',
-				'warm-hover': '0 8px 30px -6px hsl(43 92% 68% / 0.3)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
