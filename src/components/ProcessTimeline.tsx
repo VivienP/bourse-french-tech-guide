@@ -14,28 +14,28 @@ const ProcessTimeline = () => {
     },
     {
       icon: Phone,
-      title: 'Entretien avec le chargé d\'affaire',
+      title: 'Entretien avec le chargé d\'affaires',
       description: 'Échange de 30-60min. avec un chargé d\'affaires Bpifrance',
       documents: ['Pitch du projet','Question sur l\'équipe (expérience, complémentarité)', 'Questions sur l\'innovation (verrous tech, applications)','Question sur la finance (tréso, traction, cash burn)'],
       color: 'bg-green-500'
     },
     {
       icon: Users,
-      title: 'Etude du dossier par le chargé d\'affaire ou le Pré-comité',
-      description: 'Etude préliminaire du dossier',
+      title: 'Étude du dossier par le chargé d\'affaires ou le Pré-comité',
+      description: 'Étude préliminaire du dossier',
       documents: ['Avis favorable requis', 'Recommandations éventuelles'],
       color: 'bg-yellow-500'
     },
     {
       icon: FileText,
       title: 'Instruction du dossier',
-      description: 'Réstitution du dossier par le chargé d\'affaire devant le comité',
+      description: 'Restitution du dossier par le chargé d\'affaires devant le comité',
       documents: ['Vérification éligibilité', 'Évaluation technique'],
       color: 'bg-purple-500'
     },
     {
       icon: CheckCircle,
-      title: 'Réponse de bpifrance',
+      title: 'Réponse de Bpifrance',
       description: 'Décision finale d\'attribution du financement',
       documents: ['Notification de décision', 'Convention de subvention'],
       color: 'bg-primary'
