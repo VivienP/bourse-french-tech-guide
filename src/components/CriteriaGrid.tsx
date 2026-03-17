@@ -8,8 +8,8 @@ const CriteriaGrid = () => {
     {
       icon: Building,
       title: 'Statut juridique',
-      requirement: 'SAS(U), SARL uniquement',
-      description: 'Les auto-entrepreneurs sont exclus',
+      requirement: 'Société commerciale (SAS, SASU, SARL, EURL…)',
+      description: 'Les entreprises individuelles et auto-entrepreneurs sont exclus',
       status: 'required'
     },
     {
