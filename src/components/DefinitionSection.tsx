@@ -4,7 +4,7 @@ import { Info, AlertTriangle } from 'lucide-react';
 
 const DefinitionSection = () => {
   return (
-    <section id="definition" className="py-20 px-4 sm:px-6 lg:px-8 bg-card">
+    <section id="definition" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />
@@ -24,14 +24,14 @@ const DefinitionSection = () => {
 
           <div className="p-5 rounded-2xl bg-primary/5 border border-primary/15 flex items-start gap-3 md:max-w-xs">
             <AlertTriangle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-foreground">
+            <p className="text-foreground text-base">
               <strong>Important :</strong> La majorité des subventions accordées se situent généralement en dessous de <strong>30 000 €</strong>.
             </p>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default DefinitionSection;

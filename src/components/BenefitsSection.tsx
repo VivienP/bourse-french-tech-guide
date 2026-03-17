@@ -1,14 +1,37 @@
 
 import React from 'react';
-import { Rocket, ArrowRight } from 'lucide-react';
+import { Rocket, Handshake, TrendingUp, BadgeCheck } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const BenefitsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
+  const benefits = [
+    {
+      icon: Rocket,
+      title: 'Financer l\'amorçage',
+      description: 'Couvrir les premières étapes du développement technologique sans dilution de capital.',
+    },
+    {
+      icon: Handshake,
+      title: 'Premier lien avec Bpifrance',
+      description: 'Établir une relation privilégiée qui facilitera vos futurs financements.',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Accélérer la croissance',
+      description: 'Accéder ensuite aux prêts RDI, avances remboursables et dispositifs d\'investissement.',
+    },
+    {
+      icon: BadgeCheck,
+      title: 'Crédibiliser le projet',
+      description: 'Le label Bpifrance renforce votre crédibilité auprès des investisseurs et partenaires.',
+    },
+  ];
+
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
         <div 
           ref={ref}
           className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
@@ -18,24 +41,29 @@ const BenefitsSection = () => {
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">Stratégie</span>
             <div className="h-1 w-12 rounded-full bg-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">
             Importance de la BFT dans le parcours de financement
           </h2>
+          <p className="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+            Un tremplin stratégique pour les startups innovantes en phase d'amorçage.
+          </p>
           
-          <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/15 shadow-warm">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Rocket className="h-6 w-6 text-primary" />
+          <div className="grid sm:grid-cols-2 gap-6">
+            {benefits.map((benefit, index) => (
+              <div
+                key={index}
+                className={`flex items-start gap-4 p-6 rounded-2xl border border-border hover:-translate-y-1 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="w-11 h-11 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <benefit.icon className="h-5 w-5 text-secondary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
+                </div>
               </div>
-              <div className="text-muted-foreground leading-relaxed">
-                <p className="text-base mb-4">
-                  La BFT et la BFTE sont des dispositifs clés pour les startups innovantes en phase d'amorçage. Elles permettent non seulement de financer les premières étapes du développement technologique, mais aussi d'établir un premier lien privilégié avec Bpifrance.
-                </p>
-                <p className="text-base">
-                  Ce contact facilite l'accès futur à d'autres solutions de financement adaptées à la croissance de l'entreprise, telles que les prêts RDI, les avances remboursables, ou encore des dispositifs d'accompagnement et d'investissement plus conséquents.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

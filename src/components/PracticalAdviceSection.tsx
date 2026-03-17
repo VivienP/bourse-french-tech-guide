@@ -19,7 +19,7 @@ const PracticalAdviceSection = () => {
   ];
 
   return (
-    <section id="conseils" className="py-20 px-4 sm:px-6 lg:px-8 section-warm-alt">
+    <section id="conseils" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="flex items-center justify-center gap-3 mb-2">
@@ -74,7 +74,7 @@ const PracticalAdviceSection = () => {
           </div>
 
           <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '800ms' }}>
-            <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20 rounded-2xl shadow-warm-lg">
+            <Card className="border border-border rounded-2xl">
               <CardHeader>
                 <CardTitle className="text-2xl text-center text-foreground">La différence décisive</CardTitle>
               </CardHeader>
