@@ -14,7 +14,7 @@ const ProcessTimeline = () => {
     },
     {
       icon: Phone,
-      title: 'Entretien avec le chargé d\'affaire',
+      title: 'Entretien avec le chargé d\'affaires',
       description: 'Échange de 30-60min. avec un chargé d\'affaires Bpifrance',
       documents: ['Pitch du projet','Question sur l\'équipe (expérience, complémentarité)', 'Questions sur l\'innovation (verrous tech, applications)','Question sur la finance (tréso, traction, cash burn)'],
       color: 'bg-green-500'
