@@ -45,7 +45,7 @@ const Footer = () => {
         
         <div className="border-t border-secondary-foreground/10 mt-12 pt-8 text-center text-secondary-foreground/50">
           <p>
-            &copy; 2025 <a href="https://www.finexov.com/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">Finexov</a>. 
+            &copy; 2026 <a href="https://www.finexov.com/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">Finexov</a>. 
             Tous droits réservés. | 
             <a href="/mentions-legales" className="hover:text-primary transition-colors duration-200 ml-1">Mentions légales</a>
           </p>
