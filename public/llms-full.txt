@@ -60,7 +60,7 @@ Important : Bien que le montant maximum théorique puisse atteindre 50 000 €, 
 ### Critères relatifs au projet
 
 - **Type d'innovation** : Innovation démontrée, pouvant être technologique, d'usage, de procédé ou organisationnelle. L'innovation doit apporter une réelle différenciation et un fort potentiel de croissance. Une simple innovation incrémentale ne suffit pas.
-- **Secteurs d'activité** : Tous secteurs sont éligibles (numérique, infrastructures digitales, IA, biotech, greentech, santé, etc.). En 2025, les projets software et IA dominent les financements.
+- **Secteurs d'activité** : Tous secteurs sont éligibles (numérique, infrastructures digitales, IA, biotech, greentech, santé, etc.). En 2026, les projets software et IA dominent les financements.
 - **Durée du projet** : La phase de faisabilité financée est limitée à 24 mois maximum.
 - **Fort potentiel de croissance et de scalabilité**
 - **Équipe dédiée avec compétences pertinentes**
