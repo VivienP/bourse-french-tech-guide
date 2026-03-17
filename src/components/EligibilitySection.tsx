@@ -29,7 +29,9 @@ const EligibilitySection = () => {
                 <CardContent>
                   <p>Accompagnement par un incubateur référencé ou une structure labellisée <strong>obligatoire</strong>.</p>
                   <p className="mt-2 text-sm text-gray-600">
-                    À Paris intra-muros (75), seule les incubateurs labellisés donne accès au dispositif Fonds Parisien pour l'Innovation (FPI).
+                  <p className="mt-2 text-sm text-gray-600">
+                    À Paris intra-muros (75), seuls les incubateurs labellisés donnent accès au dispositif Fonds Parisien pour l'Innovation (FPI).
+                  </p>
                   </p>
                 </CardContent>
               </Card>
