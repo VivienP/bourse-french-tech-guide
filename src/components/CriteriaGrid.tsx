@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Building, Lightbulb, Calendar, CheckCircle, X } from 'lucide-react';
+import { Building, Lightbulb, Calendar, CheckCircle, X, ChevronDown } from 'lucide-react';
 
 const CriteriaGrid = () => {
   const companyCriteria = [
