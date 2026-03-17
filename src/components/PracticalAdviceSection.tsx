@@ -82,7 +82,8 @@ const PracticalAdviceSection = () => {
                 <p className="text-lg text-muted-foreground">
                   Développez une relation de confiance avec votre chargé d'affaires. Celui-ci deviendra votre principal soutien et pourra défendre activement votre dossier.
                 </p>
-                <div className="p-4 bg-card/50 rounded-xl border border-primary/20">
+                <div className="flex items-start gap-3 p-4 bg-primary/10 rounded-xl">
+                  <Lightbulb className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                   <p className="text-xl font-semibold text-primary">Une bonne relation avec votre chargé d'affaires est tout aussi importante que la qualité de votre dossier.</p>
                 </div>
               </CardContent>
