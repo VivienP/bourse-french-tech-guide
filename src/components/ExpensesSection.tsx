@@ -13,7 +13,8 @@ const ExpensesSection = () => {
   ];
   const internalExpenses = [
     { title: "Rémunérations des membres de l'équipe projet", description: "Salaires et charges sociales des personnes directement impliquées dans la réalisation du projet innovant." },
-    { title: 'Frais généraux forfaitaires (20% des salaires)', description: "Produits consommables, entretien du matériel, fluides et énergie, autres frais généraux et achats. Pris en compte forfaitairement à hauteur de 20 % des salaires déclarés sur le projet." }
+    { title: 'Frais généraux forfaitaires (20 % des salaires)', description: "Pris en compte forfaitairement à hauteur de 20 % des salaires déclarés sur le projet." },
+    { title: 'Autres dépenses internes', description: "Produits consommables, entretien du matériel, fluides et énergie, autres frais généraux et achats." }
   ];
 
   return (
