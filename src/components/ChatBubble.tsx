@@ -293,7 +293,7 @@ const ChatBubble: React.FC = () => {
               {['Évaluer mon éligibilité ?', 'Dois-je avoir déjà immatriculé mon entreprise ?', 'Comment augmenter mes fonds propres ?'].map((prompt) => (
                 <button
                   key={prompt}
-                  onClick={() => { setInput(prompt); }}
+                  onClick={() => { setInput(prompt); setTimeout(() => { const btn = document.querySelector('[data-send-btn]') as HTMLButtonElement; btn?.click(); }, 0); }}
                   className="text-xs border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
                 >
                   {prompt}
