@@ -44,7 +44,7 @@ const PracticalAdviceSection = () => {
                       <CardTitle className="text-lg text-foreground">{practice.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{practice.description}</p>
+                      <p className="text-sm text-muted-foreground">{practice.description}</p>
                     </CardContent>
                   </Card>
                 </div>
