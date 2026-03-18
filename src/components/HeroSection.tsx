@@ -23,7 +23,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 animate-fade-in tracking-tight">
-            <span className="whitespace-nowrap">Bourse French Tech</span>
+            <span className="whitespace-nowrap text-6xl">Bourse French Tech</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards] md:text-xl">
             Subvention publique non remboursable jusqu'à <span className="text-primary font-bold">50 000 €</span> pour soutenir 
