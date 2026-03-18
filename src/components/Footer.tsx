@@ -14,7 +14,7 @@ const Footer = () => {
               </div>
               <span className="text-xl font-bold">Bourse French Tech</span>
             </div>
-            <p className="text-secondary-foreground/70">
+            <p className="text-secondary-foreground/80">
               Le guide complet de la Bourse French Tech.
             </p>
           </div>
