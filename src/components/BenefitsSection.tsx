@@ -52,7 +52,7 @@ const BenefitsSection = () => {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className={`flex items-start gap-4 p-6 rounded-2xl border border-border hover:-translate-y-1 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`flex items-start gap-4 p-6 rounded-2xl border border-border hover:bg-muted/50 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="w-11 h-11 bg-secondary/10 rounded-xl flex items-center justify-center flex-shrink-0">
