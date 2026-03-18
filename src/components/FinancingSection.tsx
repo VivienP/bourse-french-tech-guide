@@ -6,7 +6,7 @@ const FinancingSection = () => {
   return (
     <section id="financement" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-2">
+        <div className="flex items-center justify-center gap-3 mb-[1rem]">
           <div className="h-1 w-12 rounded-full bg-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Financement</span>
           <div className="h-1 w-12 rounded-full bg-primary" />
