@@ -96,7 +96,7 @@ const CriteriaGrid = () => {
             <ChevronDown className={`h-5 w-5 mr-2 transition-transform duration-200 ${showExclusions ? 'rotate-0' : '-rotate-90'}`} />
             Exclusions
           </CardTitle>
-          <CardDescription className="text-destructive/80">
+          <CardDescription className="text-destructive/70">
             Les types d'entreprises et d'activités suivants ne sont pas éligibles à la Bourse French Tech.
           </CardDescription>
         </CardHeader>
