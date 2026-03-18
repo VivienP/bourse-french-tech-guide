@@ -89,9 +89,10 @@ const ChatBubble: React.FC = () => {
     setIsLoading(false);
   }, []);
 
-  const sendMessage = useCallback(async () => {
-    const trimmed = input.trim();
+  const sendMessage = useCallback(async (directText?: string) => {
+    const trimmed = (directText ?? input).trim();
     if (!trimmed || isLoading) return;
+    setInput('');
 
     if (remaining <= 0) {
       setError("Vous avez atteint la limite de messages pour aujourd'hui. Revenez demain !");
@@ -102,7 +103,6 @@ const ChatBubble: React.FC = () => {
     const userMsg: Message = { role: 'user', content: trimmed };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
-    setInput('');
     setIsLoading(true);
     incrementQuota();
 
@@ -293,7 +293,7 @@ const ChatBubble: React.FC = () => {
               {['Évaluer mon éligibilité ?', 'Dois-je avoir déjà immatriculé mon entreprise ?', 'Comment augmenter mes fonds propres ?'].map((prompt) => (
                 <button
                   key={prompt}
-                  onClick={() => { setInput(prompt); }}
+                  onClick={() => sendMessage(prompt)}
                   className="text-xs border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
                 >
                   {prompt}
@@ -323,7 +323,7 @@ const ChatBubble: React.FC = () => {
                   </button>
                 ) : (
                   <button
-                    onClick={sendMessage}
+                    onClick={() => sendMessage()}
                     disabled={!input.trim()}
                     className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
