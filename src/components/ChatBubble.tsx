@@ -30,7 +30,7 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 const WELCOME_MESSAGE: Message = {
   role: 'assistant',
   content:
-    "👋 Bonjour ! Je suis l'assistant **Bourse French Tech**. Posez-moi vos questions sur la BFT, le FPI, les critères d'éligibilité, le dossier de candidature ou le financement Bpifrance.",
+    "Bonjour, posez vos questions sur la Bourse French Tech / subvention innovation de Bpifrance.",
 };
 
 const ChatBubble: React.FC = () => {
