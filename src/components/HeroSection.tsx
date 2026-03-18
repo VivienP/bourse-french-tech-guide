@@ -17,7 +17,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/60 backdrop-blur-md text-sm font-medium text-foreground mb-8 animate-fade-in border-primary/40 hover:shadow-[0_0_15px_hsl(var(--primary)/0.4)] transition-shadow duration-300 border-2">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/60 backdrop-blur-md font-medium text-foreground mb-8 animate-fade-in border-primary/40 hover:shadow-[0_0_15px_hsl(var(--primary)/0.4)] transition-shadow duration-300 border-2 text-xs">
             <Sparkles className="h-4 w-4 text-primary" />
             Subvention Innovation
           </div>
