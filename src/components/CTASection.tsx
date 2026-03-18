@@ -39,7 +39,7 @@ const CTASection = ({ namespace = 'decouverte' }: { namespace?: string }) => {
           </p>
 
           <Cal
-            namespace="decouverte"
+            namespace={namespace}
             calLink="boursefrenchtech/decouverte"
             calOrigin="https://app.cal.eu"
             style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }}

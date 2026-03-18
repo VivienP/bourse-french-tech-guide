@@ -76,7 +76,7 @@ const Index = () => {
       <EvaluationSection />
       <PracticalAdviceSection />
       <FAQSection />
-      <CTASection />
+      <CTASection namespace="decouverte-2" />
       <Footer />
       <ChatBubble />
     </div>
