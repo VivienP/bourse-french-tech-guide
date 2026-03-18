@@ -225,8 +225,8 @@ const ChatBubble: React.FC = () => {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-secondary text-secondary-foreground">
             <div className="flex items-center gap-2">
-              <MessageCircle className="h-5 w-5" />
-              <span className="font-semibold text-sm">Assistant IA BFT</span>
+              <MessageCircle className="h-4 w-4" />
+              <span className="font-semibold text-xs">Assistant IA BFT</span>
             </div>
             <div className="flex items-center gap-3">
               <button
@@ -247,7 +247,7 @@ const ChatBubble: React.FC = () => {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-xs ${
                     msg.role === 'user'
                       ? 'bg-primary text-primary-foreground rounded-br-md'
                       : 'bg-muted text-foreground rounded-bl-md'
@@ -255,7 +255,7 @@ const ChatBubble: React.FC = () => {
                 >
                   {msg.role === 'assistant' ? (
                     <>
-                    <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&>li]:my-1 [&_*]:font-[inherit] [&>p]:leading-relaxed">
+                    <div className="prose prose-xs max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&>li]:my-1 [&_*]:font-[inherit] [&>p]:leading-relaxed [&_*]:text-xs">
                         <ReactMarkdown>{msg.content.replace(/—/g, '\n\n—')}</ReactMarkdown>
                       </div>
                       {msg.intent && (
@@ -304,7 +304,7 @@ const ChatBubble: React.FC = () => {
                 <button
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
-                  className="text-xs border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                  className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
                 >
                   {prompt}
                 </button>
@@ -322,7 +322,7 @@ const ChatBubble: React.FC = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Posez votre question..."
-                  className="flex-1 bg-muted rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
+                  className="flex-1 bg-muted rounded-xl px-3 py-2 text-xs outline-none placeholder:text-muted-foreground"
                 />
                 {isLoading ? (
                   <button
@@ -343,12 +343,12 @@ const ChatBubble: React.FC = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center gap-3 py-2">
-                <p className="text-sm text-muted-foreground text-center">Vous avez atteint la limite de messages.</p>
+                <p className="text-xs text-muted-foreground text-center">Vous avez atteint la limite de messages.</p>
                 <a
                   href="https://www.cal.eu/boursefrenchtech/decouverte"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-sm hover:opacity-90 transition-opacity"
+                  className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-xs hover:opacity-90 transition-opacity"
                 >
                   Prendre rendez-vous avec un expert
                 </a>
