@@ -31,7 +31,7 @@ const ProcessTimeline = () => {
                   <step.icon className="h-5 w-5 text-primary" />
                 </div>
               </div>
-              <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+              <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:bg-muted/50 transition-all duration-300">
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-lg mb-2 text-foreground">{step.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{step.description}</p>
@@ -50,7 +50,7 @@ const ProcessTimeline = () => {
             {/* Desktop left */}
             {index % 2 === 0 && (
               <div className="hidden lg:block w-5/12 pr-8">
-                <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:bg-muted/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center mb-4">
                       <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
@@ -83,7 +83,7 @@ const ProcessTimeline = () => {
             {/* Desktop right */}
             {index % 2 !== 0 && (
               <div className="hidden lg:block w-5/12 pl-8">
-                <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:bg-muted/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center mb-4">
                       <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
