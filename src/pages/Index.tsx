@@ -77,6 +77,7 @@ const Index = () => {
       <BenefitsSection />
       <FAQSection />
       <Footer />
+      <ChatBubble />
     </div>
   );
 };
