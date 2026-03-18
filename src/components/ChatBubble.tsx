@@ -238,12 +238,6 @@ const ChatBubble: React.FC = () => {
             )}
           </div>
 
-          {/* Error */}
-          {error && (
-            <div className="px-4 py-2 text-xs text-destructive bg-destructive/10 text-center">
-              {error}
-            </div>
-          )}
 
           {/* Footer */}
           <div className="border-t border-border p-3">
