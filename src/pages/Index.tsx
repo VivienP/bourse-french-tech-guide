@@ -14,6 +14,7 @@ import BenefitsSection from '@/components/BenefitsSection';
 import CTASection from '@/components/CTASection';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
+import ChatBubble from '@/components/ChatBubble';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('');
