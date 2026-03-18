@@ -228,7 +228,7 @@ const ChatBubble: React.FC = () => {
               <MessageCircle className="h-5 w-5" />
               <span className="font-semibold text-sm">Assistant IA BFT</span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="hidden sm:flex hover:opacity-70 transition-opacity"
