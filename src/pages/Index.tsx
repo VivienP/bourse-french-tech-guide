@@ -70,7 +70,7 @@ const Index = () => {
         </div>
       </section>
 
-      <CTASection />
+      <CTABanner />
       <ExpensesSection />
       <FinancingSection />
       <ApplicationProcessSection />
