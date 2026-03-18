@@ -34,7 +34,7 @@ const FAQSection = () => {
           Questions fréquentes sur la BFT
         </h2>
         
-        <Accordion type="single" collapsible className="space-y-3">
+        <Accordion type="multiple" className="space-y-3">
           {faqData.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`} className="bg-card rounded-2xl border border-border px-2 shadow-sm">
               <AccordionTrigger className="text-left text-foreground hover:text-primary transition-colors">
