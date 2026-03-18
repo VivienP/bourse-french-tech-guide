@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
-const DAILY_LIMIT = 10;
+const DAILY_LIMIT = 7;
 const STORAGE_KEY = 'bft_chat_quota';
 
 function getQuota(): { date: string; count: number } {
@@ -242,48 +242,43 @@ const ChatBubble: React.FC = () => {
           {/* Footer */}
           <div className="border-t border-border p-3">
             {currentRemaining > 0 ? (
-              <>
-                <div className="flex gap-2">
-                  <input
-                    ref={inputRef}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Posez votre question..."
-                    className="flex-1 bg-muted rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
-                  />
-                  {isLoading ? (
-                    <button
-                      onClick={stopGeneration}
-                      className="flex items-center justify-center w-9 h-9 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity"
-                    >
-                      <Square className="h-4 w-4" />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={sendMessage}
-                      disabled={!input.trim()}
-                      className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
-                    >
-                      <Send className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-                <p className="text-xs text-muted-foreground text-center mt-2">
-                  {currentRemaining} message{currentRemaining > 1 ? 's' : ''} restant{currentRemaining > 1 ? 's' : ''} aujourd'hui
-                </p>
-              </>
+              <div className="flex gap-2">
+                <input
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Posez votre question..."
+                  className="flex-1 bg-muted rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted-foreground"
+                />
+                {isLoading ? (
+                  <button
+                    onClick={stopGeneration}
+                    className="flex items-center justify-center w-9 h-9 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity"
+                  >
+                    <Square className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={sendMessage}
+                    disabled={!input.trim()}
+                    className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
+                  >
+                    <Send className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             ) : (
-              <div className="flex flex-col items-center gap-2 py-1">
+              <div className="flex flex-col items-center gap-3 py-2">
+                <p className="text-sm text-muted-foreground text-center">Vous avez atteint la limite de messages.</p>
                 <a
-                  href="https://cal.eu/boursefrenchtech/decouverte"
+                  href="https://www.cal.eu/boursefrenchtech/decouverte"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-sm hover:opacity-90 transition-opacity"
                 >
-                  Vous avez atteint la limite de messages.
+                  Prendre rendez-vous avec un expert
                 </a>
-                <p className="text-xs text-muted-foreground">Prenez rendez-vous avec un expert</p>
               </div>
             )}
           </div>
