@@ -12,7 +12,6 @@ import PracticalAdviceSection from '@/components/PracticalAdviceSection';
 import ProjectExamples from '@/components/ProjectExamples';
 import BenefitsSection from '@/components/BenefitsSection';
 import CTASection from '@/components/CTASection';
-import CTABanner from '@/components/CTABanner';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 import ChatBubble from '@/components/ChatBubble';
@@ -70,7 +69,7 @@ const Index = () => {
         </div>
       </section>
 
-      <CTABanner />
+      <CTASection />
       <ExpensesSection />
       <FinancingSection />
       <ApplicationProcessSection />
