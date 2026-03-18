@@ -23,7 +23,7 @@ const EvaluationSection = () => {
             <div className="h-1 w-12 rounded-full bg-primary" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Critères d'évaluation</h2>
-          <p className="text-xl text-muted-foreground text-center mb-12">Cinq axes principaux guident l'évaluation de votre dossier</p>
+          <p className="text-lg text-muted-foreground text-center mb-12">Cinq axes principaux guident l'évaluation de votre dossier</p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {criteria.map((criterion, index) => (
@@ -36,7 +36,7 @@ const EvaluationSection = () => {
                     <CardTitle className="text-lg text-foreground">{criterion.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{criterion.description}</p>
+                    <p className="text-sm text-muted-foreground">{criterion.description}</p>
                   </CardContent>
                 </Card>
               </div>

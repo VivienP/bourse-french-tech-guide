@@ -14,14 +14,14 @@ const Footer = () => {
               </div>
               <span className="text-xl font-bold">Bourse French Tech</span>
             </div>
-            <p className="text-secondary-foreground/70">
+            <p className="text-secondary-foreground/80">
               Le guide complet de la Bourse French Tech.
             </p>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Liens utiles</h4>
-            <ul className="space-y-3 text-secondary-foreground/70">
+            <ul className="space-y-3 text-secondary-foreground/80">
               <li><a href="#definition" className="hover:text-primary transition-colors duration-200">Qu'est-ce que la BFT ?</a></li>
               <li><a href="#criteres" className="hover:text-primary transition-colors duration-200">Critères d'éligibilté</a></li>
               <li><a href="#processus" className="hover:text-primary transition-colors duration-200">Processus de candidature</a></li>
@@ -35,14 +35,14 @@ const Footer = () => {
               href="https://cal.eu/boursefrenchtech/decouverte" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center text-secondary-foreground/70 hover:text-primary transition-colors duration-200"
+              className="inline-flex items-center text-secondary-foreground/80 hover:text-primary transition-colors duration-200"
             >
               Prendre rendez-vous
             </a>
           </div>
         </div>
         
-        <div className="border-t border-secondary-foreground/10 mt-12 pt-8 text-center text-secondary-foreground/50">
+        <div className="border-t border-secondary-foreground/10 mt-12 pt-8 text-center text-secondary-foreground/60">
           <p>
             &copy; 2026 <a href="https://www.finexov.com/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">Finexov</a>. 
             Tous droits réservés. | 

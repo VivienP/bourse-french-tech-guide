@@ -27,7 +27,7 @@ const ExpensesSection = () => {
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Dépenses éligibles</h2>
-        <p className="text-xl text-muted-foreground text-center mb-12">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
+        <p className="text-lg text-muted-foreground text-center mb-12">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
 
         <div className="flex flex-col gap-8">
           <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
@@ -74,7 +74,7 @@ const ExpensesSection = () => {
             <Shield className="h-5 w-5 text-destructive mr-2" />
             <h4 className="font-semibold text-destructive">Important</h4>
           </div>
-          <p className="mt-2 text-destructive/80">Les dépenses déjà engagées avant le dépôt du dossier ne peuvent pas être couvertes. Les dépenses liées à la communication ou à l'activité commerciale ne sont pas éligibles.</p>
+          <p className="mt-2 text-destructive/70">Les dépenses déjà engagées avant le dépôt du dossier ne peuvent pas être couvertes. Les dépenses liées à la communication ou à l'activité commerciale ne sont pas éligibles.</p>
         </div>
       </div>
     </section>

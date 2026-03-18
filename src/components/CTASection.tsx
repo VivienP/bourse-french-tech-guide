@@ -34,7 +34,7 @@ const CTASection = ({ namespace = 'decouverte' }: { namespace?: string }) => {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">
             Échangez avec un expert
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-2xl mx-auto text-lg text-center">
+          <p className="text-muted-foreground mb-10 max-w-2xl mx-auto text-base text-center">
             Déléguez la constitution de votre dossier et maximisez vos chances de financement.
           </p>
 

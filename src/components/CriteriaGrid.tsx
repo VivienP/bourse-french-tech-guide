@@ -42,11 +42,11 @@ const CriteriaGrid = () => {
   const CriteriaCard = ({ title, criteria, icon: Icon }: {title: string;criteria: typeof companyCriteria;icon: typeof Building;}) =>
   <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center text-xl mb-2">
+        <CardTitle className="flex items-center text-lg mb-2">
           <Icon className="h-6 w-6 text-primary mr-3" />
           {title}
         </CardTitle>
-        <CardDescription className="text-base text-muted-foreground">
+        <CardDescription className="text-sm text-muted-foreground">
           {criteria === companyCriteria ?
         "Conditions relatives à la structure juridique et financière de votre société." :
         "Conditions relatives au caractère innovant et au potentiel de votre projet."
@@ -92,11 +92,11 @@ const CriteriaGrid = () => {
           className="cursor-pointer select-none"
           onClick={() => setShowExclusions(!showExclusions)}
         >
-          <CardTitle className="flex items-center text-xl text-destructive">
+          <CardTitle className="flex items-center text-lg text-destructive">
             <ChevronDown className={`h-5 w-5 mr-2 transition-transform duration-200 ${showExclusions ? 'rotate-0' : '-rotate-90'}`} />
             Exclusions
           </CardTitle>
-          <CardDescription className="text-destructive/80">
+          <CardDescription className="text-destructive/70">
             Les types d'entreprises et d'activités suivants ne sont pas éligibles à la Bourse French Tech.
           </CardDescription>
         </CardHeader>
@@ -106,7 +106,7 @@ const CriteriaGrid = () => {
               {exclusions.map((exclusion, index) =>
               <li key={index} className="flex items-start">
                   <X className="h-4 w-4 text-destructive mr-3 mt-1 flex-shrink-0" />
-                  <span className="text-destructive/90 text-sm leading-relaxed">{exclusion}</span>
+                  <span className="text-destructive text-sm leading-relaxed">{exclusion}</span>
                 </li>
               )}
             </ul>

@@ -32,7 +32,7 @@ const PracticalAdviceSection = () => {
           </h2>
           
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center">
+            <h3 className="text-xl font-bold text-foreground mb-6 flex items-center">
               <CheckCircle className="h-6 w-6 text-primary mr-3" />
               Les bonnes pratiques
             </h3>
@@ -44,7 +44,7 @@ const PracticalAdviceSection = () => {
                       <CardTitle className="text-lg text-foreground">{practice.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{practice.description}</p>
+                      <p className="text-sm text-muted-foreground">{practice.description}</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -53,7 +53,7 @@ const PracticalAdviceSection = () => {
           </div>
 
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center">
+            <h3 className="text-xl font-bold text-foreground mb-6 flex items-center">
               <XCircle className="h-6 w-6 text-destructive mr-3" />
               Les pièges à éviter
             </h3>
@@ -65,7 +65,7 @@ const PracticalAdviceSection = () => {
                       <CardTitle className="text-lg text-foreground">{trap.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{trap.description}</p>
+                      <p className="text-sm text-muted-foreground">{trap.description}</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -76,15 +76,15 @@ const PracticalAdviceSection = () => {
           <div className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '800ms' }}>
             <Card className="border border-border rounded-2xl">
               <CardHeader>
-                <CardTitle className="text-2xl text-center text-foreground">La différence décisive</CardTitle>
+                <CardTitle className="text-xl text-center text-foreground">La différence décisive</CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-4">
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   Développez une relation de confiance avec votre chargé d'affaires. Celui-ci deviendra votre principal soutien et pourra défendre activement votre dossier.
                 </p>
                 <div className="flex items-start gap-3 p-4 bg-accent rounded-xl">
                   <Lightbulb className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                  <p className="text-xl font-semibold text-primary">Une bonne relation avec votre chargé d'affaires est tout aussi importante que la qualité de votre dossier.</p>
+                  <p className="text-lg font-semibold text-primary">Une bonne relation avec votre chargé d'affaires est tout aussi importante que la qualité de votre dossier.</p>
                 </div>
               </CardContent>
             </Card>
