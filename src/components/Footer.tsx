@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Award, Linkedin } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -32,13 +32,12 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <a 
-              href="https://taap.it/M96y4a" 
+              href="https://cal.eu/boursefrenchtech/decouverte" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="inline-flex items-center text-secondary-foreground/70 hover:text-primary transition-colors duration-200"
             >
-              <Linkedin className="h-5 w-5 mr-2" />
-              LinkedIn
+              Prendre rendez-vous
             </a>
           </div>
         </div>
