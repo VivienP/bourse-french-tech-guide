@@ -42,7 +42,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-secondary-foreground/10 mt-12 pt-8 text-center text-secondary-foreground/50">
+        <div className="border-t border-secondary-foreground/10 mt-12 pt-8 text-center text-secondary-foreground/60">
           <p>
             &copy; 2026 <a href="https://www.finexov.com/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-200">Finexov</a>. 
             Tous droits réservés. | 

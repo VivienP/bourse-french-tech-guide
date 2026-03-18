@@ -25,8 +25,8 @@ const StatsSection = () => {
             <stat.icon className="h-6 w-6 text-primary" />
           </div>
           <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
-          <div className="text-sm font-medium text-foreground/80 mb-1">{stat.label}</div>
-          <div className="text-xs text-muted-foreground">{stat.sublabel}</div>
+          <div className="text-sm font-medium text-muted-foreground mb-1">{stat.label}</div>
+          <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
         </div>
       ))}
     </div>

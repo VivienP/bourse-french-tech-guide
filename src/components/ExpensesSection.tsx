@@ -74,7 +74,7 @@ const ExpensesSection = () => {
             <Shield className="h-5 w-5 text-destructive mr-2" />
             <h4 className="font-semibold text-destructive">Important</h4>
           </div>
-          <p className="mt-2 text-destructive/80">Les dépenses déjà engagées avant le dépôt du dossier ne peuvent pas être couvertes. Les dépenses liées à la communication ou à l'activité commerciale ne sont pas éligibles.</p>
+          <p className="mt-2 text-destructive/70">Les dépenses déjà engagées avant le dépôt du dossier ne peuvent pas être couvertes. Les dépenses liées à la communication ou à l'activité commerciale ne sont pas éligibles.</p>
         </div>
       </div>
     </section>

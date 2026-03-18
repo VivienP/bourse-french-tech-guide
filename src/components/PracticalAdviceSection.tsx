@@ -84,7 +84,7 @@ const PracticalAdviceSection = () => {
                 </p>
                 <div className="flex items-start gap-3 p-4 bg-accent rounded-xl">
                   <Lightbulb className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                  <p className="text-xl font-semibold text-primary">Une bonne relation avec votre chargé d'affaires est tout aussi importante que la qualité de votre dossier.</p>
+                  <p className="text-lg font-semibold text-primary">Une bonne relation avec votre chargé d'affaires est tout aussi importante que la qualité de votre dossier.</p>
                 </div>
               </CardContent>
             </Card>

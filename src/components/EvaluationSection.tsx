@@ -36,7 +36,7 @@ const EvaluationSection = () => {
                     <CardTitle className="text-lg text-foreground">{criterion.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{criterion.description}</p>
+                    <p className="text-sm text-muted-foreground">{criterion.description}</p>
                   </CardContent>
                 </Card>
               </div>

@@ -106,7 +106,7 @@ const CriteriaGrid = () => {
               {exclusions.map((exclusion, index) =>
               <li key={index} className="flex items-start">
                   <X className="h-4 w-4 text-destructive mr-3 mt-1 flex-shrink-0" />
-                  <span className="text-destructive/90 text-sm leading-relaxed">{exclusion}</span>
+                  <span className="text-destructive text-sm leading-relaxed">{exclusion}</span>
                 </li>
               )}
             </ul>

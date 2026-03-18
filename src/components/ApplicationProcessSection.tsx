@@ -47,7 +47,7 @@ const ApplicationProcessSection = () => {
               ))}
             </div>
 
-            <h3 className="text-2xl font-bold text-foreground mb-4">Étude du dossier en 5 phases :</h3>
+            <h3 className="text-xl font-bold text-foreground mb-4">Étude du dossier en 5 phases :</h3>
             <ol className="list-decimal list-inside space-y-2 mb-8 text-muted-foreground">
               <li>
                 <strong className="text-foreground">Ouverture d'une demande</strong> et transmission du pitch deck et du
