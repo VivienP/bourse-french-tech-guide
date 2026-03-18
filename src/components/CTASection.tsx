@@ -4,12 +4,12 @@ import Cal, { getCalApi } from '@calcom/embed-react';
 import { useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
-const CTASection = () => {
+const CTASection = ({ namespace = 'decouverte' }: { namespace?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
 
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({ namespace: 'decouverte', embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
+      const cal = await getCalApi({ namespace, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
       cal('ui', {
         theme: 'light',
         cssVarsPerTheme: {
@@ -22,7 +22,7 @@ const CTASection = () => {
         layout: 'month_view',
       });
     })();
-  }, []);
+  }, [namespace]);
 
   return (
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-primary/15">
@@ -39,7 +39,7 @@ const CTASection = () => {
           </p>
 
           <Cal
-            namespace="decouverte"
+            namespace={namespace}
             calLink="boursefrenchtech/decouverte"
             calOrigin="https://app.cal.eu"
             style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }}
