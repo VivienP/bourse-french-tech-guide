@@ -103,7 +103,6 @@ const ChatBubble: React.FC = () => {
     const userMsg: Message = { role: 'user', content: trimmed };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
-    setInput('');
     setIsLoading(true);
     incrementQuota();
 
