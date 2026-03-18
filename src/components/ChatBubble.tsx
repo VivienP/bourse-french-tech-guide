@@ -348,7 +348,7 @@ const ChatBubble: React.FC = () => {
                   href="https://www.cal.eu/boursefrenchtech/decouverte"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-sm hover:opacity-90 transition-opacity"
+                  className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-xs hover:opacity-90 transition-opacity"
                 >
                   Prendre rendez-vous avec un expert
                 </a>
