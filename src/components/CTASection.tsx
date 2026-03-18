@@ -4,12 +4,12 @@ import Cal, { getCalApi } from '@calcom/embed-react';
 import { useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
-const CTASection = () => {
+const CTASection = ({ namespace = 'decouverte' }: { namespace?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
 
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({ namespace: 'decouverte', embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
+      const cal = await getCalApi({ namespace, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
       cal('ui', {
         theme: 'light',
         cssVarsPerTheme: {
