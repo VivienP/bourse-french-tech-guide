@@ -216,7 +216,7 @@ const ChatBubble: React.FC = () => {
                   }`}
                 >
                   {msg.role === 'assistant' ? (
-                    <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1 [&>li]:my-0.5">
+                    <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1 [&>li]:my-0.5 [&_*]:font-[inherit]">
                       <ReactMarkdown>{msg.content}</ReactMarkdown>
                     </div>
                   ) : (
