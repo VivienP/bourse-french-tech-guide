@@ -25,16 +25,16 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
           <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 animate-fade-in tracking-tight">
             <span className="whitespace-nowrap">Bourse French Tech</span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards] md:text-xl">
             Subvention publique non remboursable jusqu'à <span className="text-primary font-bold">50 000 €</span> pour soutenir 
             la création d'entreprises innovantes à fort potentiel de croissance.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards]">
-            <Button size="lg" variant="outline" onClick={() => scrollToSection('definition')} className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl">
+            <Button size="lg" variant="outline" onClick={() => scrollToSection('definition')} className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground px-8 py-3 transition-all duration-200 rounded-xl text-base">
               Découvrir le dispositif
             </Button>
-            <Button size="lg" onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg">
+            <Button size="lg" onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg text-base">
               Échangez avec un expert
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
