@@ -53,7 +53,7 @@ const PracticalAdviceSection = () => {
           </div>
 
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center">
+            <h3 className="text-xl font-bold text-foreground mb-6 flex items-center">
               <XCircle className="h-6 w-6 text-destructive mr-3" />
               Les pièges à éviter
             </h3>
