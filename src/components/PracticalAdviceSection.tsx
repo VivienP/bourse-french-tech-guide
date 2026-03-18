@@ -79,7 +79,7 @@ const PracticalAdviceSection = () => {
                 <CardTitle className="text-xl text-center text-foreground">La différence décisive</CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-4">
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   Développez une relation de confiance avec votre chargé d'affaires. Celui-ci deviendra votre principal soutien et pourra défendre activement votre dossier.
                 </p>
                 <div className="flex items-start gap-3 p-4 bg-accent rounded-xl">
