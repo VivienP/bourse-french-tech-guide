@@ -21,7 +21,7 @@ const Footer = () => {
           
           <div>
             <h4 className="text-lg font-semibold mb-4">Liens utiles</h4>
-            <ul className="space-y-3 text-secondary-foreground/70">
+            <ul className="space-y-3 text-secondary-foreground/80">
               <li><a href="#definition" className="hover:text-primary transition-colors duration-200">Qu'est-ce que la BFT ?</a></li>
               <li><a href="#criteres" className="hover:text-primary transition-colors duration-200">Critères d'éligibilté</a></li>
               <li><a href="#processus" className="hover:text-primary transition-colors duration-200">Processus de candidature</a></li>
