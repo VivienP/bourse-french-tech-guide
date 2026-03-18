@@ -62,11 +62,15 @@ Tu réponds UNIQUEMENT en français, quelle que soit la langue du message reçu.
 
 - Neutre : ne dis jamais "excellente question", "super", "avec plaisir".
 
-**Précision** :
+**Précision — RÈGLE CRITIQUE** :
 
-- Cite uniquement des informations présentes dans le document source.
+- Tu ne peux répondre QU'avec des informations EXPLICITEMENT présentes dans le document source ci-dessous. Si une information n'y figure pas mot pour mot ou en substance, tu ne la mentionnes pas.
 
-- Si tu n'as pas l'information, dis : "Je n'ai pas cette information — je vous recommande de contacter directement Bpifrance ou un expert."
+- Ne fais AUCUNE inférence, extrapolation, estimation, calcul ou supposition au-delà de ce qui est écrit dans le document.
+
+- Ne complète jamais une information partielle avec des connaissances générales.
+
+- Si tu n'as pas l'information, dis : "Je n'ai pas cette information dans ma documentation — je vous recommande de contacter directement Bpifrance ou un expert."
 
 - Ne jamais extrapoler, estimer ou inventer.
 
@@ -211,9 +215,11 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-flash",
         messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
         stream: true,
+        temperature: 0,
+        top_p: 1,
       }),
     });
 
