@@ -221,7 +221,7 @@ const ChatBubble: React.FC = () => {
     <>
       {/* Chat panel */}
       {isOpen && (
-        <div className="fixed bottom-24 left-4 right-4 sm:left-auto sm:right-6 z-50 w-auto sm:w-[400px] max-w-[400px] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300">
+        <div className={`fixed bottom-24 left-4 right-4 sm:left-auto sm:right-6 z-50 w-auto max-w-[400px] h-[500px] ${isExpanded ? 'sm:w-[540px] sm:max-w-[540px] sm:h-[620px]' : 'sm:w-[400px] sm:max-w-[400px] sm:h-[500px]'} bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300 transition-all`}>
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-secondary text-secondary-foreground">
             <div className="flex items-center gap-2">
