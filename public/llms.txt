@@ -1,181 +1,77 @@
 
-# Guide Bourse French Tech 2026
+# Bourse French Tech (BFT) — Guide Expert 2026 | boursefrenchtech.fr
 
-> Pour une version complète et détaillée de ce guide (exemples de projets, budgets, stratégies régionales), consultez : [llms-full.txt](https://bourse-tech-explorer.lovable.app/llms-full.txt)
+> Pour la version complète avec exemples de projets, budgets détaillés et stratégies régionales :
+> [llms-full.txt](https://boursefrenchtech.fr/llms-full.txt)
 
-## À propos
-Ce site est un guide expert sur la Bourse French Tech (BFT), subvention publique de Bpifrance pour startups innovantes françaises. Il couvre l'ensemble du dispositif : définition, critères, dépenses, financement, candidature, évaluation, conseils et FAQ.
+## Entité principale
 
-## Informations clés
-- Subvention maximum : 50 000 € (en pratique 30 000 €)
-- Taux d'intervention : jusqu'à 70 % des dépenses éligibles
-- Durée maximum : 24 mois pour la phase de validation
-- Taux de succès : environ 25 % des dossiers acceptés
-- Entreprise : moins d'un an d'existence lors du dépôt
-- Subvention non remboursable, accordée sans sûreté ni caution personnelle
+La **Bourse French Tech (BFT)** est une subvention non remboursable de **Bpifrance** (banque publique d'investissement française) destinée aux startups innovantes françaises de moins d'un an. Elle finance jusqu'à **30 000 €** (plafond pratique) ou **50 000 €** (maximum théorique) de dépenses de R&D, prototypage et validation marché. Une version bonifiée, la **Bourse French Tech Émergence (BFTE)**, atteint **90 000 €** pour les projets deeptech issus de la recherche académique. La BFT est accordée sans sûreté ni caution personnelle.
 
-## Définition
-La Bourse French Tech (BFT) est une subvention publique proposée par Bpifrance, conçue pour accompagner les entreprises innovantes de moins d'un an dans leur phase d'amorçage. Elle finance les premières dépenses liées à la maturation et à la validation technico-économique des projets : R&D, études de faisabilité, prototypage, protection de la propriété intellectuelle. C'est un dispositif clé pour les startups technologiques en France, offrant un soutien financier et une porte d'entrée vers l'écosystème Bpifrance.
+## Chiffres clés
 
-Bien que le montant maximum théorique puisse atteindre 50 000 €, la majorité des subventions accordées se situent généralement en dessous de 30 000 €.
+- Montant en pratique : **30 000 €** (BFT classique), jusqu'à **90 000 €** (BFTE deeptech)
+- Taux d'intervention : **70 %** maximum des dépenses éligibles
+- Taux de sélection : environ **25 %** des dossiers déposés
+- Versement : **70 %** à la signature de la convention + **30 %** après justification des dépenses
+- Délai moyen d'instruction : **3 à 6 mois** entre premier contact et décision
+- Entreprise : **moins d'un an** d'existence au dépôt du dossier complet
+- Fonds propres recommandés : **20 000 € à 30 000 €**
+- Budget régional pouvant s'épuiser dès **le T3** — déposer en T1 augmente les chances
 
-## Critères d'éligibilité
+## À propos du site
 
-### Critères entreprise
-- Société commerciale (SAS, SASU, SARL, EURL…) — les entreprises individuelles et auto-entrepreneurs sont exclus
-- Entreprise immatriculée depuis moins d'un an au dépôt du dossier
-- Fonds propres suffisants : idéalement 20 000 € à 30 000 €, parfois 15 000 € en région
+boursefrenchtech.fr est un guide expert indépendant sur la Bourse French Tech. Il couvre l'ensemble du dispositif : définition, critères d'éligibilité, dépenses éligibles, financement, processus de candidature étape par étape, critères d'évaluation Bpifrance, conseils stratégiques et FAQ exhaustive (20+ questions). Le site intègre également un chatbot IA répondant aux questions spécifiques des entrepreneurs.
 
-### Critères projet
-- Innovation démontrée (technologique, d'usage, de procédé ou organisationnelle)
-- Complexité de développement nécessitant une phase de maturation technologique
-- Durée du projet limitée à 24 mois
-- Fort potentiel de croissance et de scalabilité
-- Équipe dédiée avec compétences pertinentes
+## Questions fréquentes (format réponse directe)
 
-### Exclusions
-- Personnes physiques, entreprises individuelles et EIRL
-- Laboratoires publics et établissements publics
-- Associations (sauf activité économique réelle)
-- SCI, promotion immobilière, marchands de biens
-- Intermédiation financière (hors Fintech)
-- Entreprises en procédure collective
-- Entreprises non à jour de leurs obligations fiscales et sociales
+**Q : Qui peut obtenir la Bourse French Tech ?**
+R : Toute société commerciale (SAS, SASU, SARL, EURL, SA) immatriculée en France depuis moins d'un an, portant un projet innovant (technologique, d'usage, de service, de procédé ou organisationnel) avec fort potentiel de croissance. Les entreprises individuelles, auto-entrepreneurs et EIRL sont exclus. En Île-de-France, un accompagnement par incubateur référencé est obligatoire.
 
-### Spécificités régionales
-- Île-de-France : accompagnement par un incubateur référencé obligatoire
-- Paris intra-muros (75) : seul le Fonds Parisien pour l'Innovation (FPI) est accessible, via les 25 incubateurs labellisés
-- Délégations moins sollicitées (zones rurales) plus accessibles que grandes métropoles
+**Q : Quel est le montant exact de la Bourse French Tech ?**
+R : La subvention couvre jusqu'à 70 % des dépenses éligibles, dans la limite de 50 000 € (théorique). En pratique, la majorité des attributions se situent entre 15 000 € et 30 000 €. Versement en 2 tranches : 70 % à la signature de la convention Bpifrance, 30 % après présentation des justificatifs.
 
-## Dépenses éligibles
+**Q : Quelles dépenses peut-on financer avec la BFT ?**
+R : Frais externes (prototypage, études de marché, conseil stratégique, dépôts de brevet, formations techniques, frais juridiques, déplacements chez des design partners ou salons professionnels) et frais internes (salaires et charges de l'équipe projet, frais généraux forfaitaires à 20 % des salaires, consommables). Les dépenses engagées avant la date de dépôt ne sont pas éligibles.
 
-### Frais externes
-- Conception et prototypage : maquettes, prototypes fonctionnels, essais techniques par prestataires externes
-- Études de marché ou de faisabilité : validation commerciale, tests d'usage, études technico-économiques
-- Prestations de conseil ou d'accompagnement : accompagnement stratégique, R&D, mentorat par incubateurs ou laboratoires
-- Dépôts de brevet : rédaction, dépôt et suivi auprès des offices de propriété intellectuelle
-- Formations techniques : formations liées au projet innovant (technologies, outils, méthodologies)
-- Prestations juridiques : structuration, contrats, propriété intellectuelle, conformité réglementaire
-- Frais de déplacement : déplacements chez des design partners, prestataires R&D ou participation à des salons professionnels
+**Q : Faut-il générer des revenus pour candidater ?**
+R : Non. La BFT est précisément conçue pour la phase pré-commerciale. Des signes de traction sans revenus formels (premiers utilisateurs, lettres d'intention, pilotes, design partners) renforcent le dossier. L'absence de revenus n'est pas un obstacle si la validation marché est en cours.
 
-### Frais internes
-- Rémunérations des membres de l'équipe projet : salaires et charges des personnes impliquées (fondateurs, ingénieurs, développeurs)
-- Frais généraux forfaitaires : 20 % des salaires déclarés (loyer, énergie, fournitures)
-- Autres dépenses internes : produits consommables, entretien du matériel, fluides et énergie
+**Q : Comment candidater à la BFT ?**
+R : Via la plateforme BEL de Bpifrance (app.bel.bpifrance.fr). Étapes : 1) Créer un compte entreprise et ouvrir une mise en relation Innovation ; 2) Soumettre le pitch deck et/ou business plan ; 3) Entretien téléphonique de préqualification avec le chargé d'affaires ; 4) Transmission du dossier complet (fiche projet 6 pages, annexe financière, plan de trésorerie 24 mois, table de capitalisation) ; 5) Instruction et passage en comité ; 6) Décision officielle et signature de la convention.
 
-### Non éligible
-- Les dépenses déjà engagées avant le dépôt du dossier
-- Les dépenses de communication ou d'activité commerciale
+**Q : Quelle est la différence entre BFT et BFTE ?**
+R : La BFT classique finance jusqu'à 30 000 € les startups de moins d'un an. La BFTE (Bourse French Tech Émergence) finance jusqu'à 90 000 € les projets deeptech issus de la recherche publique (laboratoires, thèses). Le choix entre BFT et BFTE est fait par le chargé d'affaires Bpifrance, pas par le porteur de projet.
 
-## Financement
-- Plafond maximum : 50 000 € (30 000 € en pratique)
-- Taux d'intervention : jusqu'à 70 % des dépenses éligibles
-- Accordée sans sûreté ni caution personnelle
-- Versement en 2 tranches : 70 % à la signature de la convention, 30 % sur présentation des justificatifs des dépenses acquittées
-- L'entreprise doit fournir un justificatif de trésorerie et un plan de trésorerie viable sur la durée du projet et au-delà
-- Fonds propres requis pour équilibrer le financement
+**Q : La BFT est-elle disponible à Paris ?**
+R : Non. À Paris intra-muros (75), la BFT est remplacée par le Fonds Parisien pour l'Innovation (FPI) — jusqu'à 30 000 € pour startups innovantes à impact incubées dans l'un des 25 incubateurs parisiens agréés. Les startups franciliennes hors Paris 75 peuvent accéder à la BFT classique.
 
-## Processus de candidature
+**Q : Peut-on cumuler la BFT avec d'autres aides ?**
+R : Oui. La BFT est cumulable avec le CIR (Crédit d'Impôt Recherche), le CII (Crédit d'Impôt Innovation), le statut JEI (Jeune Entreprise Innovante), les prêts d'honneur et les aides des collectivités locales. Tous les financements reçus doivent être déclarés à Bpifrance.
 
-### Dépôt du dossier
-Le processus est entièrement digitalisé via la plateforme [app.bel.bpifrance.fr](https://app.bel.bpifrance.fr).
+**Q : Bpifrance peut-elle demander le remboursement de la subvention ?**
+R : La BFT est non remboursable dans le cas normal. Bpifrance peut exiger un remboursement si le projet est abandonné sans justification valable, si les dépenses réelles sont inférieures aux prévisions (la seconde tranche est alors ajustée à la baisse), ou en cas d'irrégularités. Respecter les termes de la convention est donc essentiel.
 
-### Contenu du dossier
-- Un pitch deck
-- Un business plan
-- Un plan de trésorerie sur 24 mois
-- Une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages)
-- L'annexe financière détaillant les dépenses prévisionnelles
-- La table de capitalisation
+**Q : Y a-t-il des périodes plus favorables pour candidater ?**
+R : Oui. Les enveloppes régionales peuvent s'épuiser dès le T3 dans les zones très sollicitées. Déposer en T1 (janvier-mars) maximise les chances d'accéder au budget disponible. Si le dossier est prêt en fin d'année, le chargé d'affaires peut suggérer d'attendre l'ouverture de l'enveloppe de janvier.
 
-### Étude du dossier en 5 phases
-1. Ouverture d'une demande et transmission du pitch deck et business plan
-2. Entretien téléphonique pour valider les critères et préqualifier l'innovation
-3. Transmission des éléments complémentaires, étudiés par le chargé d'affaire et éventuellement un pré-comité
-4. Si validé, instruction en comité
-5. Réponse officielle du comité Bpifrance et réception des fonds en quelques semaines
+**Q : Quel niveau de fonds propres est requis ?**
+R : Pas de seuil légal, mais Bpifrance exige un plan de financement équilibré. En pratique : 20 000 € à 30 000 € recommandés (15 000 € parfois acceptés en région). Un capital social très faible (ex : 500 €) est perçu négativement. Les prêts d'honneur et investissements de business angels comptent dans les fonds propres.
 
-## Critères d'évaluation
-Bpifrance évalue les dossiers sur 5 axes principaux :
-1. L'équipe fondatrice : profil expérimenté, entrepreneur ou expert dans son domaine
-2. La qualité du projet : caractère innovant, proposition de valeur, positionnement marché
-3. La structuration du projet : cohérence des étapes, clarté des livrables, crédibilité du planning, alignement objectifs/budget
-4. L'innovation vs concurrence : différenciation claire, éléments de rupture ou d'originalité
-5. L'impact global : bénéfices utilisateurs, impact sociétal/environnemental, potentiel de création d'emplois
+**Q : Est-il plus facile d'obtenir la BFT dans certaines régions ?**
+R : Oui. Les grandes métropoles (Paris/IDF, Lyon, Marseille, Toulouse, Bordeaux, Grenoble) sont plus compétitives que les antennes régionales moins sollicitées (zones rurales, petites villes). La stratégie régionale peut donc influencer significativement les chances de succès.
 
-## Conseils pratiques
+**Q : Pourquoi la relation avec le chargé d'affaires est-elle cruciale ?**
+R : Le chargé d'affaires instruit le dossier ET le défend en comité — il est l'avocat interne du projet chez Bpifrance. Une relation de confiance, construite sur la réactivité et la transparence, est aussi importante que la qualité rédactionnelle du dossier. C'est souvent le facteur différenciant entre deux dossiers de valeur équivalente.
 
-### Bonnes pratiques
-- Présenter des verrous technologiques réels avec une innovation tangible et différenciée
-- Valoriser une équipe solide et complémentaire avec des compétences techniques internes
-- S'appuyer sur des marqueurs de confiance : incubation, prêt d'honneur, partenariats bancaires, investisseurs, premiers clients
-- Développer un alignement stratégique avec les thématiques prioritaires de Bpifrance (impact social/environnemental, industrie, santé, greentech)
+## Ressources
 
-### Pièges à éviter
-- Timing prématuré : ne pas déposer sans avoir clarifié vision, objectifs et roadmap
-- Manque de transparence : être honnête et précis, ne pas surévaluer l'innovation
-- Fragilité financière : disposer d'une trésorerie couvrant au minimum 9 mois d'activité
-- Négligence relationnelle : soigner la relation avec le chargé d'affaires, le relationnel est clé
-
-### La différence décisive
-Développer une relation de confiance avec votre chargé d'affaires. Celui-ci deviendra votre principal soutien et pourra défendre activement votre dossier. Une bonne relation est tout aussi importante que la qualité du dossier.
-
-## Importance de la BFT dans le parcours Bpifrance
-La BFT et la BFTE sont des dispositifs clés pour les startups en phase d'amorçage. Elles permettent de financer les premières étapes du développement technologique et d'établir un premier lien privilégié avec Bpifrance. Ce contact facilite l'accès futur à d'autres solutions : prêts RDI, avances remboursables, dispositifs d'investissement plus conséquents. Obtenir une BFT constitue souvent un tremplin pour structurer le développement et sécuriser les futures levées de fonds.
-
-## FAQ complète
-
-### Faut-il avoir créé l'entreprise avant de candidater ?
-L'entreprise doit être immatriculée pour débuter les démarches en ligne, mais vous pouvez prendre contact avec Bpifrance avant la création.
-
-### Qu'entend-on par fonds propres ?
-Les fonds propres désignent les ressources financières durables de l'entreprise : capital, réserves, bénéfice, report à nouveau, subvention d'investissement, provisions réglementées. En création, cela correspond à l'apport personnel ou au capital social.
-
-### Quelle est la différence entre fonds propres et capital social ?
-Le capital social est la somme initiale apportée par les associés. Les fonds propres englobent le capital social plus d'autres ressources (bénéfices non distribués, apports supplémentaires).
-
-### Quel est le capital social requis ?
-Pas de seuil réglementaire, mais un capital trop faible (ex: 500 €) peut être perçu comme un manque d'engagement. Il est recommandé d'avoir plusieurs milliers d'euros.
-
-### Est-il indispensable d'être accompagné par un incubateur ?
-En Île-de-France, oui (obligatoire). Ailleurs, fortement recommandé, surtout pour les primo-entrepreneurs.
-
-### La BFT peut-elle couvrir des frais déjà engagés ?
-Non, seuls les frais futurs sont éligibles.
-
-### Les entrepreneurs individuels peuvent-ils candidater ?
-Non. Les personnes physiques, entreprises individuelles et EIRL ne sont pas éligibles.
-
-### Tous les secteurs sont-ils éligibles ?
-Oui, à condition que le projet soit innovant. En 2026, les projets software et IA dominent les financements.
-
-### Un projet de transfert technologique est-il éligible ?
-Oui, les projets issus de laboratoires sont éligibles s'ils répondent aux critères d'innovation et de potentiel de croissance.
-
-### Quel niveau d'innovation est requis ?
-L'innovation peut être technologique, d'usage, de service, de procédé ou organisationnelle. Elle doit apporter une réelle différenciation et un fort potentiel de croissance. Une simple innovation incrémentale ne suffit pas.
-
-### Est-il plus facile d'obtenir la BFT dans certaines régions ?
-Les grandes métropoles (Paris, Lyon, Lille, Marseille, Bordeaux, Grenoble) sont plus compétitives. Les antennes régionales moins sollicitées sont plus accessibles.
-
-### Y a-t-il des périodes plus favorables pour candidater ?
-Les enveloppes budgétaires régionales peuvent s'épuiser en fin d'année (T3-T4). Il est conseillé de déposer le plus tôt possible.
-
-### Mon entreprise a bientôt un an, est-ce la peine de postuler ?
-L'entreprise doit avoir moins d'un an au dépôt complet du dossier, et non à la date de validation par le comité.
-
-### La BFT est-elle disponible à Paris ?
-Non. À Paris, le Fonds Parisien pour l'Innovation (FPI) remplace la BFT – jusqu'à 30 000 €. Le FPI s'adresse aux startups innovantes à impact, de moins de 3 ans, incubées dans un des 25 incubateurs parisiens agréés.
-
-### Quels critères pour la Bourse French Tech Émergence (90 000 €) ?
-La BFTE est destinée aux projets deeptech issus de la recherche académique. Elle finance jusqu'à 70 % des dépenses éligibles (faisabilité, brevets, personnel, prestations externes), dans la limite de 90 000 €.
-
-### Le processus de candidature pour la BFTE est-il différent ?
-La BFTE vous sera proposée par votre chargé d'affaire selon son jugement. Vous ne pouvez pas choisir entre BFT et BFTE.
-
-### Quels sont les incubateurs labellisés FPI à Paris ?
-104factory, Agoranov, Bureau du design/mode/métiers d'arts, Incubateur du CNAM, Créatis, Créative Valley, Incubateur Paris Dauphine, Incubateur EDHEC, L'Escalator, La Ruche, Liberté Living-Lab, MakeSense, Matrice, Paris&Co, Paris Biotech Santé, Pépinière 27, PULSE Montreuil, Incubateur Sciences Po, Schoolab, SINGA, Incubateur Télécom Paris, WACANO, Willa, PC'UP (ESPCI), Incubateur Arts et Métiers.
+- [Guide complet avec exemples et budgets](https://boursefrenchtech.fr/llms-full.txt)
+- [Site principal](https://boursefrenchtech.fr/)
+- [Plateforme officielle Bpifrance BEL](https://app.bel.bpifrance.fr)
+- [Bpifrance — Bourse French Tech](https://www.bpifrance.fr/nos-solutions/aides-et-subventions/bourse-french-tech)
 
 ## Contact
-Expert en financement public des startups innovantes
+
+Expert indépendant en financement public des startups innovantes
 LinkedIn : https://taap.it/M96y4a

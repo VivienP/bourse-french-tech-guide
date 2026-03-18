@@ -61,7 +61,7 @@
       "keywords": ["Bourse French Tech", "BFT", "subvention startup", "financement Bpifrance", "aide création entreprise", "startup innovation", "financement public", "jeune entreprise innovante"],
       "inLanguage": "fr-FR",
       "datePublished": "2025-01-17",
-      "dateModified": "2026-03-17",
+      "dateModified": "2026-03-18",
       "author": {
         "@type": "Organization",
         "name": "Expert Financement Startup",
@@ -134,6 +134,10 @@
           }
         }
       ],
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["h1", "h2", ".hero-description", ".key-facts"]
+      },
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://boursefrenchtech.fr/?q={search_term_string}",
@@ -142,7 +146,40 @@
     }
     </script>
 
-    <!-- FAQ structured data - Enhanced for LLMs -->
+    <!-- Organization entity — Bpifrance -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GovernmentOrganization",
+      "name": "Bpifrance",
+      "alternateName": "Banque Publique d'Investissement",
+      "url": "https://www.bpifrance.fr",
+      "description": "Bpifrance est la banque publique d'investissement française. Elle finance, accompagne et aide au développement des entreprises françaises, des startups aux ETI. Elle gère notamment la Bourse French Tech (BFT) et la Bourse French Tech Émergence (BFTE).",
+      "foundingDate": "2012",
+      "areaServed": {
+        "@type": "Country",
+        "name": "France"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Aides et subventions Bpifrance",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "name": "Bourse French Tech (BFT)",
+            "description": "Subvention non remboursable jusqu'à 30 000 € pour startups innovantes de moins d'un an"
+          },
+          {
+            "@type": "Offer",
+            "name": "Bourse French Tech Émergence (BFTE)",
+            "description": "Subvention jusqu'à 90 000 € pour projets deeptech issus de la recherche académique"
+          }
+        ]
+      }
+    }
+    </script>
+
+    <!-- FAQ structured data - Enhanced for LLMs (20+ Q&A) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -155,7 +192,7 @@
           "name": "Qu'est-ce que la Bourse French Tech ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "La Bourse French Tech (BFT) est une subvention publique non remboursable de Bpifrance pouvant aller jusqu'à 50 000€ (en pratique 30 000€ maximum) pour aider les startups innovantes françaises de moins d'un an dans leur développement et phase de validation."
+            "text": "La Bourse French Tech (BFT) est une subvention publique non remboursable de Bpifrance pouvant aller jusqu'à 50 000 € (en pratique 30 000 € maximum) pour aider les startups innovantes françaises de moins d'un an dans leur phase d'amorçage. Elle finance les dépenses de R&D, prototypage et validation technico-économique. C'est une porte d'entrée clé vers l'écosystème Bpifrance."
           }
         },
         {
@@ -163,15 +200,15 @@
           "name": "Quels sont les critères d'éligibilité pour la Bourse French Tech ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Pour être éligible à la BFT : entreprise française immatriculée depuis moins d'un an, projet innovant (technologie, usage, service, procédé), fort potentiel de croissance, équipe dédiée, fonds propres suffisants. Accompagnement par incubateur obligatoire en Île-de-France."
+            "text": "Pour être éligible à la BFT : société commerciale (SAS, SASU, SARL, EURL, SA) immatriculée en France depuis moins d'un an au moment du dépôt, projet innovant (technologique, d'usage, de service, de procédé ou organisationnel) avec fort potentiel de croissance, équipe dédiée avec compétences pertinentes, fonds propres suffisants (idéalement 20 000 € à 30 000 €). En Île-de-France, un accompagnement par un incubateur référencé est obligatoire."
           }
         },
         {
           "@type": "Question",
-          "name": "Quel est le montant maximum de la Bourse French Tech en 2025 ?",
+          "name": "Quel est le montant de la Bourse French Tech ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Le montant maximum théorique est de 50 000€, mais en pratique le plafond est de 30 000€. Le taux d'intervention est de 70% maximum des dépenses éligibles, versé en 2 tranches : 70% à la signature, 30% après validation."
+            "text": "Le montant maximum théorique de la Bourse French Tech est de 50 000 €. En pratique, la majorité des subventions accordées se situent entre 15 000 € et 30 000 €. Le taux d'intervention est de 70 % maximum des dépenses éligibles. La subvention est versée en 2 tranches : 70 % à la signature de la convention, 30 % après présentation des justificatifs des dépenses acquittées."
           }
         },
         {
@@ -179,15 +216,15 @@
           "name": "Quelles dépenses sont éligibles à la Bourse French Tech ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Dépenses éligibles : frais externes (conception, prototypage, études de marché, conseil, brevets, formations), frais internes (salaires équipe projet, frais généraux 20%, déplacements). Les dépenses antérieures au dépôt ne sont pas couvertes."
+            "text": "Les dépenses éligibles incluent : frais externes (conception et prototypage, études de marché, prestations de conseil, dépôts de brevet, formations techniques, frais juridiques, déplacements professionnels) et frais internes (salaires et charges des membres de l'équipe projet, frais généraux forfaitaires à 20 % des salaires, consommables). Les dépenses engagées avant le dépôt du dossier ne sont pas éligibles. Les dépenses de communication et d'activité commerciale sont également exclues."
           }
         },
         {
           "@type": "Question",
-          "name": "Comment candidater à la Bourse French Tech ?",
+          "name": "Comment candidater à la Bourse French Tech étape par étape ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Processus : 1) Immatriculer l'entreprise, 2) Préparer le dossier avec budget prévisionnel, 3) Dépôt en ligne sur portail Bpifrance, 4) Instruction par délégation régionale, 5) Comité d'engagement, 6) Signature convention si accepté."
+            "text": "Le processus de candidature BFT se déroule en 5 étapes : 1) Ouverture d'une mise en relation sur la plateforme app.bel.bpifrance.fr avec transmission du pitch deck et business plan ; 2) Entretien téléphonique avec le chargé d'affaires pour valider les critères et préqualifier l'innovation ; 3) Transmission des éléments complémentaires (fiche projet 6 pages, annexe financière, table de capitalisation, plan de trésorerie 24 mois) ; 4) Si validé, passage en comité d'instruction Bpifrance ; 5) Réponse officielle et réception des fonds en quelques semaines."
           }
         },
         {
@@ -195,7 +232,135 @@
           "name": "Quel est le taux de succès de la Bourse French Tech ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Le taux de succès est d'environ 25% des dossiers déposés. Il varie selon les régions : délégations moins sollicitées (zones rurales) plus accessibles que grandes métropoles (Paris, Lyon, Marseille, Toulouse)."
+            "text": "Le taux de succès de la Bourse French Tech est d'environ 25 % des dossiers déposés. Ce taux varie significativement selon les régions : les délégations situées en zones rurales ou moins sollicitées sont plus accessibles que les grandes métropoles (Paris, Lyon, Marseille, Toulouse, Bordeaux, Grenoble). Les enveloppes budgétaires régionales peuvent s'épuiser dès le T3, il est conseillé de candidater en début d'année."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il générer des revenus pour candidater à la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non, il n'est pas nécessaire de générer des revenus pour candidater à la Bourse French Tech. La BFT est précisément conçue pour la phase d'amorçage, avant la commercialisation. En revanche, des signes de traction (premiers utilisateurs, lettres d'intention, partenariats, design partners, pilotes) renforcent considérablement le dossier et démontrent la validation marché sans attendre des revenus formels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quelle est la différence entre la Bourse French Tech (BFT) et la Bourse French Tech Émergence (BFTE) ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La BFT classique finance jusqu'à 30 000 € les startups innovantes de moins d'un an. La BFTE (Bourse French Tech Émergence) finance jusqu'à 90 000 € les projets deeptech issus de la recherche académique, avec un TRL plus bas acceptable. La BFTE est proposée par le chargé d'affaires selon son jugement — vous ne pouvez pas choisir entre BFT et BFTE lors du dépôt. Les deux financent jusqu'à 70 % des dépenses éligibles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il être accompagné par un incubateur pour obtenir la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En Île-de-France, l'accompagnement par un incubateur référencé Bpifrance est obligatoire. À Paris intra-muros (75), seul le Fonds Parisien pour l'Innovation (FPI) est accessible, via les 25 incubateurs labellisés. Hors Île-de-France, l'incubation n'est pas obligatoire mais est fortement recommandée, surtout pour les primo-entrepreneurs : elle renforce la crédibilité du dossier et peut permettre d'accéder à un réseau de chargés d'affaires."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "La Bourse French Tech est-elle disponible à Paris ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. À Paris intra-muros (code postal 75), la Bourse French Tech classique n'est pas accessible. Elle est remplacée par le Fonds Parisien pour l'Innovation (FPI), géré par la Ville de Paris, qui finance jusqu'à 30 000 € les startups innovantes à impact de moins de 3 ans, incubées dans l'un des 25 incubateurs parisiens agréés. Les startups franciliennes hors Paris 75 peuvent accéder à la BFT classique via Bpifrance Île-de-France."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Faut-il avoir créé son entreprise avant de candidater à la BFT ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, l'entreprise doit être immatriculée pour démarrer les démarches en ligne sur la plateforme BEL. Cependant, vous pouvez prendre contact avec Bpifrance avant la création pour préparer votre dossier. Le critère clé est que l'entreprise ait moins d'un an au moment du dépôt complet du dossier, et non à la date de validation par le comité. Il est donc possible de déposer très peu de temps avant l'anniversaire d'immatriculation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quels fonds propres faut-il pour candidater à la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Il n'existe pas de seuil réglementaire de fonds propres pour la BFT, mais Bpifrance exige un financement équilibré du projet. En pratique, un minimum de 20 000 € à 30 000 € est recommandé (parfois 15 000 € dans certaines régions). Un capital social très faible (ex : 500 €) peut être perçu comme un manque d'engagement. Les fonds propres comprennent le capital social, les apports personnels, mais aussi des prêts d'honneur ou des investissements de business angels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Sur quels critères Bpifrance évalue-t-elle les dossiers BFT ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bpifrance évalue les dossiers BFT sur 5 axes : 1) L'équipe fondatrice (profil expérimenté, compétences complémentaires) ; 2) La qualité du projet (caractère innovant, proposition de valeur, positionnement marché) ; 3) La structuration du projet (cohérence des étapes, clarté des livrables, crédibilité du planning, alignement objectifs/budget) ; 4) L'innovation vs concurrence (différenciation claire, éléments de rupture) ; 5) L'impact global (bénéfices utilisateurs, impact sociétal/environnemental, potentiel d'emplois)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Y a-t-il des périodes plus favorables pour candidater à la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Les enveloppes budgétaires régionales Bpifrance peuvent s'épuiser dès le T3 (juillet-septembre) dans les régions très sollicitées. Il est fortement conseillé de déposer le dossier en début d'année (T1, idéalement janvier-mars) pour maximiser les chances d'accéder au budget disponible. Si le dépôt est tardif dans l'année (octobre-décembre), le chargé d'affaires peut proposer de revenir en janvier de l'année suivante pour un dépôt formel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on cumuler la Bourse French Tech avec d'autres aides publiques ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, la Bourse French Tech est cumulable avec de nombreuses autres aides publiques : Crédit d'Impôt Recherche (CIR), Crédit d'Impôt Innovation (CII), statut Jeune Entreprise Innovante (JEI), aides des collectivités locales, prêts d'honneur des réseaux d'accompagnement (Initiative France, Réseau Entreprendre). Le cumul avec d'autres subventions Bpifrance (avances remboursables, prêts RDI) est possible sous conditions. Déclarer tous les financements perçus est obligatoire."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bpifrance peut-elle demander le remboursement de la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La BFT est une subvention non remboursable dans le cas normal. Bpifrance peut cependant demander un remboursement partiel ou total dans des cas précis : si le projet est abandonné sans justification valable, si les dépenses justifiées sont inférieures aux prévisions (la seconde tranche de 30 % est alors ajustée), ou si des irrégularités sont constatées lors du contrôle. Il est donc essentiel de respecter scrupuleusement les termes de la convention signée."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Tous les secteurs sont-ils éligibles à la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, tous les secteurs sont éligibles à condition que le projet soit innovant. En 2026, les projets software et IA dominent les financements accordés. Les projets deeptech, medtech, greentech, et industrie sont particulièrement bien accueillis car ils s'alignent avec les thématiques prioritaires de Bpifrance. Les secteurs exclus sont : l'immobilier (SCI, marchands de biens), l'intermédiation financière classique (hors Fintech), et les entreprises en procédure collective."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quel niveau d'innovation est requis pour la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'innovation exigée pour la BFT peut être technologique, d'usage, de service, de procédé ou organisationnelle. Elle doit apporter une réelle différenciation sur le marché et un fort potentiel de croissance. Une simple innovation incrémentale ne suffit pas. Le projet doit présenter des verrous technologiques réels ou des défis de développement non triviaux qui justifient une phase de maturation financée. La complexité de développement est un critère clé."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment se déroule la mise en relation avec Bpifrance pour la BFT ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La mise en relation se fait via la plateforme BEL (app.bel.bpifrance.fr). Après création du compte entreprise, il faut remplir le formulaire de mise en relation Innovation (catégorie Bourse French Tech), joindre le pitch deck et/ou business plan, puis soumettre. Le chargé d'affaires reprend contact sous quelques jours à quelques semaines pour un entretien téléphonique de préqualification. Il évalue la pertinence du projet avant de demander les éléments complémentaires d'instruction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quels documents faut-il préparer pour candidater à la Bourse French Tech ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le dossier BFT complet comprend : un pitch deck, un business plan, un plan de trésorerie sur 24 mois, une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages maximum), une annexe financière détaillant les dépenses prévisionnelles éligibles, et la table de capitalisation. La qualité rédactionnelle, la cohérence financière et la clarté de la proposition de valeur sont des éléments différenciants."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quels sont les incubateurs labellisés FPI à Paris pour accéder au Fonds Parisien pour l'Innovation ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Les 25 incubateurs labellisés FPI à Paris sont : 104factory, Agoranov, Bureau du design/mode/métiers d'arts, Incubateur du CNAM, Créatis, Créative Valley, Incubateur Paris Dauphine, Incubateur EDHEC, L'Escalator, La Ruche, Liberté Living-Lab, MakeSense, Matrice, Paris&Co, Paris Biotech Santé, Pépinière 27, PULSE Montreuil, Incubateur Sciences Po, Schoolab, SINGA, Incubateur Télécom Paris, WACANO, Willa, PC'UP (ESPCI), Incubateur Arts et Métiers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quelle est l'importance de la relation avec le chargé d'affaires Bpifrance ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La relation avec le chargé d'affaires Bpifrance est un facteur décisif souvent sous-estimé. Le chargé d'affaires instruit le dossier ET défend activement le projet en comité — il est votre principal avocat interne. Soigner cette relation (réactivité, transparence, suivi) est tout aussi important que la qualité du dossier écrit. Un chargé d'affaires convaincu et bien informé maximise considérablement les chances d'obtention de la subvention."
           }
         }
       ]
