@@ -197,7 +197,7 @@ const ChatBubble: React.FC = () => {
           <div className="flex items-center justify-between px-4 py-3 bg-secondary text-secondary-foreground">
             <div className="flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />
-              <span className="font-semibold text-sm">Assistant Bourse French Tech</span>
+              <span className="font-semibold text-sm">Assistant IA BFT</span>
             </div>
             <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
               <X className="h-5 w-5" />
