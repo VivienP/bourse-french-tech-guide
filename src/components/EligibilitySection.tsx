@@ -8,12 +8,12 @@ const EligibilitySection = () => {
   return (
     <section id="criteres" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
+        <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Éligibilité</span>
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">
+        <h2 className="text-3xl font-bold text-foreground mb-4 text-center md:text-3xl">
           Critères d'éligibilité
         </h2>
         <p className="text-lg text-muted-foreground text-center mb-12">L'éligibilité à la Bourse French Tech repose sur des critères propres à l'entreprise et au projet.</p>
@@ -21,7 +21,7 @@ const EligibilitySection = () => {
         <CriteriaGrid />
 
         <div className="mt-24">
-          <h2 className="font-bold text-foreground mb-8 text-center text-4xl">Régions et accompagnement</h2>
+          <h2 className="font-bold text-foreground mb-8 text-center text-3xl">Régions et accompagnement</h2>
           <div className="flex flex-col gap-12">
             <FranceMap />
             <div className="space-y-6">
@@ -43,8 +43,8 @@ const EligibilitySection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default EligibilitySection;

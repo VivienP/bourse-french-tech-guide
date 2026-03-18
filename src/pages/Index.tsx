@@ -57,12 +57,12 @@ const Index = () => {
       
       <section id="exemples" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
+          <div className="flex items-center justify-center gap-3 mb-2">
             <div className="h-1 w-12 rounded-full bg-primary" />
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">Exemples</span>
             <div className="h-1 w-12 rounded-full bg-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-10 text-center md:text-3xl">
             Exemples de projets éligibles en 2026
           </h2>
           <ProjectExamples />
@@ -79,8 +79,8 @@ const Index = () => {
       <FAQSection />
       <Footer />
       <ChatBubble />
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;

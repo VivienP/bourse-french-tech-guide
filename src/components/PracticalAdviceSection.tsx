@@ -6,28 +6,28 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 const PracticalAdviceSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const goodPractices = [
-    { title: "Verrous technologiques réels", description: "Assurez-vous de présenter une innovation technique tangible et différenciée." },
-    { title: "Équipe solide et complémentaire", description: "Valorisez les compétences techniques internes et la complémentarité des profils." },
-    { title: "Marqueurs de confiance", description: "Appuyez-vous sur des signaux forts comme une incubation, un prêt d'honneur, des partenariats bancaires." },
-    { title: "Alignement stratégique", description: "Développez une proposition clairement alignée aux thématiques prioritaires de Bpifrance." }
-  ];
+  { title: "Verrous technologiques réels", description: "Assurez-vous de présenter une innovation technique tangible et différenciée." },
+  { title: "Équipe solide et complémentaire", description: "Valorisez les compétences techniques internes et la complémentarité des profils." },
+  { title: "Marqueurs de confiance", description: "Appuyez-vous sur des signaux forts comme une incubation, un prêt d'honneur, des partenariats bancaires." },
+  { title: "Alignement stratégique", description: "Développez une proposition clairement alignée aux thématiques prioritaires de Bpifrance." }];
+
   const trapsToAvoid = [
-    { title: "Timing prématuré", description: "Ne déposez pas un dossier trop tôt sans avoir clarifié votre vision, vos objectifs et votre roadmap." },
-    { title: "Manque de transparence", description: "Soyez honnête et précis, évitez d'inventer ou de surévaluer l'innovation." },
-    { title: "Fragilité financière", description: "Disposez d'une trésorerie couvrant au minimum 9 mois d'activité." },
-    { title: "Négligence relationnelle", description: "Accordez une importance particulière à la relation avec votre chargé d'affaires." }
-  ];
+  { title: "Timing prématuré", description: "Ne déposez pas un dossier trop tôt sans avoir clarifié votre vision, vos objectifs et votre roadmap." },
+  { title: "Manque de transparence", description: "Soyez honnête et précis, évitez d'inventer ou de surévaluer l'innovation." },
+  { title: "Fragilité financière", description: "Disposez d'une trésorerie couvrant au minimum 9 mois d'activité." },
+  { title: "Négligence relationnelle", description: "Accordez une importance particulière à la relation avec votre chargé d'affaires." }];
+
 
   return (
     <section id="conseils" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
+          <div className="flex items-center justify-center gap-3 mb-2">
             <div className="h-1 w-12 rounded-full bg-primary" />
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">Conseils</span>
             <div className="h-1 w-12 rounded-full bg-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-10 text-center md:text-3xl">
             Conseils pratiques pour réussir votre demande
           </h2>
           
@@ -37,8 +37,8 @@ const PracticalAdviceSection = () => {
               Les bonnes pratiques
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
-              {goodPractices.map((practice, index) => (
-                <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${index * 100}ms` }}>
+              {goodPractices.map((practice, index) =>
+              <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${index * 100}ms` }}>
                   <Card className="h-full border-l-4 border-l-primary rounded-2xl shadow-sm hover:bg-muted/50 transition-all duration-300">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg text-foreground">{practice.title}</CardTitle>
@@ -48,7 +48,7 @@ const PracticalAdviceSection = () => {
                     </CardContent>
                   </Card>
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
@@ -58,8 +58,8 @@ const PracticalAdviceSection = () => {
               Les pièges à éviter
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
-              {trapsToAvoid.map((trap, index) => (
-                <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${(index + 4) * 100}ms` }}>
+              {trapsToAvoid.map((trap, index) =>
+              <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${(index + 4) * 100}ms` }}>
                   <Card className="h-full border-l-4 border-l-destructive rounded-2xl shadow-sm hover:bg-muted/50 transition-all duration-300">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg text-foreground">{trap.title}</CardTitle>
@@ -69,7 +69,7 @@ const PracticalAdviceSection = () => {
                     </CardContent>
                   </Card>
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
@@ -91,8 +91,8 @@ const PracticalAdviceSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default PracticalAdviceSection;

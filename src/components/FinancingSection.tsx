@@ -6,12 +6,12 @@ const FinancingSection = () => {
   return (
     <section id="financement" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
+        <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Financement</span>
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">Financement et tranches de versement</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-10 text-center md:text-3xl">Financement et tranches de versement</h2>
         
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <Card className="border-t-4 border-t-primary rounded-2xl transition-all duration-300">
@@ -54,8 +54,8 @@ const FinancingSection = () => {
           </Card>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default FinancingSection;

@@ -21,12 +21,12 @@ const ExpensesSection = () => {
   return (
     <section id="depenses" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
+        <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Budget</span>
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Dépenses éligibles</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-4 text-center md:text-3xl">Dépenses éligibles</h2>
         <p className="text-muted-foreground text-center mb-12 text-base">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
 
         <div className="flex flex-col gap-8">

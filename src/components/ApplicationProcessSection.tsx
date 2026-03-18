@@ -6,12 +6,12 @@ const ApplicationProcessSection = () => {
   return (
     <section id="processus" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
+        <div className="flex items-center justify-center gap-3 mb-2">
           <div className="h-1 w-12 rounded-full bg-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Candidature</span>
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">Processus de candidature</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-10 text-center md:text-3xl">Processus de candidature</h2>
 
         <div className="max-w-4xl mx-auto mb-16">
           <div className="prose prose-lg max-w-none text-muted-foreground leading-relaxed">
@@ -25,31 +25,31 @@ const ApplicationProcessSection = () => {
             <p className="mb-4 text-muted-foreground">Le dossier pour la BFT se compose de :</p>
             <div className="space-y-3 mb-8 p-6 rounded-2xl bg-accent border border-border">
               {[
-                { id: "pitch-deck", label: "Un pitch deck" },
-                { id: "business-plan", label: "Un business plan" },
-                { id: "tresorerie", label: "Un plan de trésorerie sur 24 mois" },
-                {
-                  id: "fiche-presentation",
-                  label: "Une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages)",
-                },
-                { id: "annexe-financiere", label: "L'annexe financière détaillant les dépenses prévisionnelles" },
-                { id: "table-capitalisation", label: "La table de capitalisation" },
-              ].map((item) => (
-                <div key={item.id} className="flex items-center space-x-3">
+              { id: "pitch-deck", label: "Un pitch deck" },
+              { id: "business-plan", label: "Un business plan" },
+              { id: "tresorerie", label: "Un plan de trésorerie sur 24 mois" },
+              {
+                id: "fiche-presentation",
+                label: "Une fiche de présentation de l'entreprise, du projet et des porteurs (6 pages)"
+              },
+              { id: "annexe-financiere", label: "L'annexe financière détaillant les dépenses prévisionnelles" },
+              { id: "table-capitalisation", label: "La table de capitalisation" }].
+              map((item) =>
+              <div key={item.id} className="flex items-center space-x-3">
                   <Checkbox id={item.id} />
                   <label
-                    htmlFor={item.id}
-                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground"
-                  >
+                  htmlFor={item.id}
+                  className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground text-sm">
+                  
                     {item.label}
                   </label>
                 </div>
-              ))}
+              )}
             </div>
 
             <h3 className="text-xl font-bold text-foreground mb-4">Étude du dossier en 5 phases :</h3>
             <ol className="list-decimal list-inside space-y-2 mb-8 text-muted-foreground">
-              <li>
+              <li className="text-sm">
                 <strong className="text-foreground">Ouverture d'une demande</strong> et transmission du pitch deck et du
                 business plan
               </li>
@@ -74,8 +74,8 @@ const ApplicationProcessSection = () => {
 
         <ProcessTimeline />
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default ApplicationProcessSection;
