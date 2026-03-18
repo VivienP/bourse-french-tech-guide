@@ -287,6 +287,21 @@ const ChatBubble: React.FC = () => {
           </div>
 
 
+          {/* Predefined prompts */}
+          {currentRemaining > 0 && !messages.some((m) => m.role === 'user') && !isLoading && (
+            <div className="px-3 pb-1 flex flex-wrap gap-1.5">
+              {['Évaluer mon éligibilité ?', 'Dois-je avoir déjà immatriculé mon entreprise ?', 'Comment augmenter mes fonds propres ?'].map((prompt) => (
+                <button
+                  key={prompt}
+                  onClick={() => { setInput(prompt); }}
+                  className="text-xs border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Footer */}
           <div className="border-t border-border p-3">
             {currentRemaining > 0 ? (
