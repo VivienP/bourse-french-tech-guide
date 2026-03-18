@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, X, Send, Square } from 'lucide-react';
+import { MessageCircle, X, Send, Square, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 type Intent = 'bft' | 'non_dilutif';
