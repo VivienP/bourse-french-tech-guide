@@ -22,7 +22,7 @@ const CTASection = ({ namespace = 'decouverte' }: { namespace?: string }) => {
         layout: 'month_view',
       });
     })();
-  }, []);
+  }, [namespace]);
 
   return (
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-primary/15">
