@@ -2,7 +2,33 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageCircle, X, Send, Square } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
-type Message = { role: 'user' | 'assistant'; content: string };
+type Intent = 'bft' | 'non_dilutif';
+type Message = { role: 'user' | 'assistant'; content: string; intent?: Intent };
+
+function detectIntent(messages: Message[]): Intent {
+  const recentUserText = messages
+    .filter((m) => m.role === 'user')
+    .slice(-3)
+    .map((m) => m.content.toLowerCase())
+    .join(' ');
+
+  const ndKeywords = [
+    'financement non dilutif', 'non-dilutif', 'subvention', 'aide publique',
+    'crédit impôt', 'cir ', 'cii ', 'jei ',
+    'jeune entreprise innovante', "prêt d'honneur", 'financement public',
+    'autres aides', 'en dehors de la bft', 'alternatives', 'autres dispositifs',
+    'quel financement', 'comment financer',
+  ];
+
+  const bftKeywords = [
+    'bft', 'bourse french tech', 'bfte', 'fpi', 'fonds parisien',
+    'éligible', 'éligibilité', 'dossier', 'candidature',
+  ];
+
+  const ndScore = ndKeywords.filter((kw) => recentUserText.includes(kw)).length;
+  const bftScore = bftKeywords.filter((kw) => recentUserText.includes(kw)).length;
+  return ndScore > bftScore ? 'non_dilutif' : 'bft';
+}
 
 const DAILY_LIMIT = 7;
 const STORAGE_KEY = 'bft_chat_quota';
@@ -80,6 +106,8 @@ const ChatBubble: React.FC = () => {
     setIsLoading(true);
     incrementQuota();
 
+    const intent = detectIntent(newMessages.filter((m) => m !== WELCOME_MESSAGE));
+
     const controller = new AbortController();
     abortRef.current = controller;
 
@@ -118,7 +146,7 @@ const ChatBubble: React.FC = () => {
               i === prev.length - 1 ? { ...m, content: assistantContent } : m
             );
           }
-          return [...prev, { role: 'assistant', content: assistantContent }];
+          return [...prev, { role: 'assistant', content: assistantContent, intent }];
         });
       };
 
@@ -216,9 +244,29 @@ const ChatBubble: React.FC = () => {
                   }`}
                 >
                   {msg.role === 'assistant' ? (
-                    <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1 [&>li]:my-0.5 [&_*]:font-[inherit]">
-                      <ReactMarkdown>{msg.content}</ReactMarkdown>
-                    </div>
+                    <>
+                      <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1 [&>li]:my-0.5 [&_*]:font-[inherit]">
+                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      </div>
+                      {msg.intent && (
+                        <div className="mt-2">
+                          {msg.intent === 'non_dilutif' ? (
+                            <a
+                              href="https://vivienperrelle.notion.site/tout-sur-le-financement-non-dilutif-pour-l-innovation"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center text-[10px] text-muted-foreground border border-gray-200 rounded-full px-2 py-0.5 hover:bg-gray-100 transition-colors"
+                            >
+                              Tout sur le financement non dilutif
+                            </a>
+                          ) : (
+                            <span className="inline-flex items-center text-[10px] text-muted-foreground border border-gray-200 rounded-full px-2 py-0.5 hover:bg-gray-100 transition-colors cursor-default">
+                              Boursefrenchtech.fr
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </>
                   ) : (
                     msg.content
                   )}

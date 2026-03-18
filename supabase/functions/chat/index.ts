@@ -6,16 +6,21 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Read llms-full.txt once at cold start — never rewrite this content inline
-const KNOWLEDGE_BASE = Deno.readTextFileSync(new URL("./llms-full.txt", import.meta.url).pathname);
+// Read knowledge files once at cold start — never rewrite this content inline
+const KNOWLEDGE_BFT = Deno.readTextFileSync(new URL("./llms-full.txt", import.meta.url).pathname);
+const KNOWLEDGE_ND = Deno.readTextFileSync(
+  new URL("./financement-non-dilutif.md", import.meta.url).pathname
+);
 
-const SYSTEM_PROMPT = `Tu es BFT Assistant, un expert en financement public de l'innovation pour startups françaises, spécialisé sur la Bourse French Tech (BFT), la BFTE et le Fonds Parisien pour l'Innovation (FPI).
+const SYSTEM_PROMPT_TEMPLATE = `Tu es BFT Assistant, un expert en financement public de l'innovation pour startups françaises, spécialisé sur la Bourse French Tech (BFT), la BFTE et le Fonds Parisien pour l'Innovation (FPI).
 
 ━━━ IDENTITÉ ET PÉRIMÈTRE ━━━
 
 Tu travailles exclusivement pour bourse-tech-explorer.lovable.app.
 
 Tu ne réponds qu'aux questions portant sur : la BFT, la BFTE, le FPI, l'éligibilité, le dossier de candidature, le processus Bpifrance, et le financement public de l'innovation en France.
+
+Si un contexte complémentaire sur le financement non dilutif est fourni dans ce prompt, tu peux répondre aux questions générales sur les dispositifs publics d'aide à l'innovation en France (subventions, CIR, CII, JEI, prêts d'honneur, autres dispositifs Bpifrance). Si la question porte à la fois sur la BFT et le financement non dilutif en général, priorise la BFT.
 
 Toute autre question est hors périmètre.
 
@@ -95,7 +100,45 @@ Si un visiteur veut savoir s'il est éligible :
 
 Tu bases TOUTES tes réponses exclusivement sur ce document :
 
-${KNOWLEDGE_BASE}`;
+{{KNOWLEDGE}}`;
+
+type Intent = "bft" | "non_dilutif";
+
+function detectIntent(messages: { role: string; content: string }[]): Intent {
+  const recentUserText = messages
+    .filter((m) => m.role === "user")
+    .slice(-3)
+    .map((m) => m.content.toLowerCase())
+    .join(" ");
+
+  const ndKeywords = [
+    "financement non dilutif", "non-dilutif", "subvention", "aide publique",
+    "crédit impôt", "cir ", "cii ", "jei ",
+    "jeune entreprise innovante", "prêt d'honneur", "financement public",
+    "autres aides", "en dehors de la bft", "alternatives", "autres dispositifs",
+    "quel financement", "comment financer",
+  ];
+
+  const bftKeywords = [
+    "bft", "bourse french tech", "bfte", "fpi", "fonds parisien",
+    "éligible", "éligibilité", "dossier", "candidature",
+  ];
+
+  const ndScore = ndKeywords.filter((kw) => recentUserText.includes(kw)).length;
+  const bftScore = bftKeywords.filter((kw) => recentUserText.includes(kw)).length;
+
+  return ndScore > bftScore ? "non_dilutif" : "bft";
+}
+
+function buildSystemPrompt(intent: Intent): string {
+  const knowledgeSection =
+    intent === "non_dilutif"
+      ? `${KNOWLEDGE_BFT}\n\n---\n\nCONTEXTE COMPLÉMENTAIRE — FINANCEMENT NON DILUTIF EN FRANCE :\n${KNOWLEDGE_ND}`
+      : KNOWLEDGE_BFT;
+
+  // Use a function replacer to prevent JS from interpreting $ sequences in knowledgeSection
+  return SYSTEM_PROMPT_TEMPLATE.replace("{{KNOWLEDGE}}", () => knowledgeSection);
+}
 
 // In-memory rate limiter by IP — with periodic cleanup to prevent memory leak
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -155,8 +198,11 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    // Truncate history to last 10 messages to stay within context window
-    const truncatedMessages = messages.slice(-10);
+    // Truncate history to last 8 messages to stay within context window
+    const truncatedMessages = messages.slice(-8);
+
+    const intent = detectIntent(truncatedMessages);
+    const systemPrompt = buildSystemPrompt(intent);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -166,7 +212,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...truncatedMessages],
+        messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
         stream: true,
       }),
     });
