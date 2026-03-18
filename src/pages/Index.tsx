@@ -21,7 +21,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['definition', 'criteres', 'depenses', 'financement', 'processus', 'evaluation', 'conseils', 'exemples', 'avantages', 'faq'];
+      const sections = ['definition', 'avantages', 'criteres', 'exemples', 'depenses', 'financement', 'processus', 'evaluation', 'conseils', 'faq'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -52,13 +52,8 @@ const Index = () => {
       <NavigationBar activeSection={activeSection} scrollToSection={scrollToSection} />
       <HeroSection scrollToSection={scrollToSection} />
       <DefinitionSection />
+      <BenefitsSection />
       <EligibilitySection />
-      <ExpensesSection />
-      <FinancingSection />
-      <ApplicationProcessSection />
-      <CTASection />
-      <EvaluationSection />
-      <PracticalAdviceSection />
       
       <section id="exemples" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -74,8 +69,14 @@ const Index = () => {
         </div>
       </section>
 
-      <BenefitsSection />
+      <CTASection />
+      <ExpensesSection />
+      <FinancingSection />
+      <ApplicationProcessSection />
+      <EvaluationSection />
+      <PracticalAdviceSection />
       <FAQSection />
+      <CTASection />
       <Footer />
       <ChatBubble />
     </div>
