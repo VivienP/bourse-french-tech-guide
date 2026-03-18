@@ -35,7 +35,7 @@ const Footer = () => {
               href="https://cal.eu/boursefrenchtech/decouverte" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center text-secondary-foreground/70 hover:text-primary transition-colors duration-200"
+              className="inline-flex items-center text-secondary-foreground/80 hover:text-primary transition-colors duration-200"
             >
               Prendre rendez-vous
             </a>
