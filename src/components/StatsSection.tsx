@@ -7,30 +7,30 @@ const StatsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   const stats = [
-    { icon: TrendingUp, value: '50 000 €', label: 'Montant maximum', sublabel: '30 000€ en pratique' },
-    { icon: Target, value: '70%', label: "Taux d'intervention", sublabel: 'Maximum des dépenses' },
-    { icon: Award, value: '~25%', label: 'Taux de succès', sublabel: 'Dossiers acceptés' },
-    { icon: Users, value: '24 mois', label: 'Durée maximum', sublabel: 'Phase de validation' }
-  ];
+  { icon: TrendingUp, value: '50 000 €', label: 'Montant maximum', sublabel: '30 000€ en pratique' },
+  { icon: Target, value: '70%', label: "Taux d'intervention", sublabel: 'Maximum des dépenses' },
+  { icon: Award, value: '~25%', label: 'Taux de succès', sublabel: 'Dossiers acceptés' },
+  { icon: Users, value: '24 mois', label: 'Durée maximum', sublabel: 'Phase de validation' }];
+
 
   return (
     <div ref={ref} className={`grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-      {stats.map((stat, index) => (
-        <div 
-          key={index} 
-          className={`text-center p-6 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-          style={{ transitionDelay: `${index * 100}ms` }}
-        >
+      {stats.map((stat, index) =>
+      <div
+        key={index}
+        className={`text-center p-6 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        style={{ transitionDelay: `${index * 100}ms` }}>
+        
           <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-3">
             <stat.icon className="h-6 w-6 text-primary" />
           </div>
-          <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+          <div className="text-2xl font-bold text-foreground mb-1 md:text-xl">{stat.value}</div>
           <div className="text-sm font-medium text-muted-foreground mb-1">{stat.label}</div>
-          <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
+          <div className="text-muted-foreground text-xs">{stat.sublabel}</div>
         </div>
-      ))}
-    </div>
-  );
+      )}
+    </div>);
+
 };
 
 export default StatsSection;
