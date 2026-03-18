@@ -27,7 +27,7 @@ const ExpensesSection = () => {
           <div className="h-1 w-12 rounded-full bg-primary" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Dépenses éligibles</h2>
-        <p className="text-xl text-muted-foreground text-center mb-12">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
+        <p className="text-lg text-muted-foreground text-center mb-12">Les dépenses financées par la BFT se répartissent en frais externes et frais internes.</p>
 
         <div className="flex flex-col gap-8">
           <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
