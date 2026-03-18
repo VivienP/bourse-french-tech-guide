@@ -39,7 +39,7 @@ const PracticalAdviceSection = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {goodPractices.map((practice, index) => (
                 <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${index * 100}ms` }}>
-                  <Card className="h-full border-l-4 border-l-primary rounded-2xl shadow-sm hover:shadow-md hover:bg-muted/50 hover:border-border/80 transition-all duration-200">
+                  <Card className="h-full border-l-4 border-l-primary rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg text-foreground">{practice.title}</CardTitle>
                     </CardHeader>
@@ -60,7 +60,7 @@ const PracticalAdviceSection = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {trapsToAvoid.map((trap, index) => (
                 <div key={index} className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: `${(index + 4) * 100}ms` }}>
-                  <Card className="h-full border-l-4 border-l-destructive rounded-2xl shadow-sm hover:shadow-md hover:bg-muted/50 hover:border-border/80 transition-all duration-200">
+                  <Card className="h-full border-l-4 border-l-destructive rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg text-foreground">{trap.title}</CardTitle>
                     </CardHeader>
