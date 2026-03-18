@@ -26,7 +26,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
             <span className="whitespace-nowrap text-5xl">Bourse French Tech</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards] md:text-lg">
-            Subvention publique non remboursable jusqu'à <span className="text-primary font-bold">50 000 €</span> pour soutenir 
+            Subvention publique jusqu'à <span className="text-primary font-bold">50 000 €</span>, pour soutenir 
             la création d'entreprises innovantes à fort potentiel de croissance.
           </p>
           
