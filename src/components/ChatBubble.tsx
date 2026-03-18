@@ -228,10 +228,18 @@ const ChatBubble: React.FC = () => {
               <MessageCircle className="h-5 w-5" />
               <span className="font-semibold text-sm">Assistant IA BFT</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="hidden sm:flex hover:opacity-70 transition-opacity"
+                aria-label={isExpanded ? 'Réduire' : 'Agrandir'}
+              >
+                {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              </button>
+              <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
 
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3">
