@@ -7,9 +7,9 @@ const corsHeaders = {
 };
 
 // Read knowledge files once at cold start — never rewrite this content inline
-const KNOWLEDGE_BFT = Deno.readTextFileSync(new URL("./llms-full.txt", import.meta.url).pathname);
+const KNOWLEDGE_BFT = Deno.readTextFileSync(new URL("./llms-full.txt", import.meta.url));
 const KNOWLEDGE_ND = Deno.readTextFileSync(
-  new URL("./financement-non-dilutif.md", import.meta.url).pathname
+  new URL("./financement-non-dilutif.md", import.meta.url)
 );
 
 const SYSTEM_PROMPT_TEMPLATE = `Tu es BFT Assistant, un expert en financement public de l'innovation pour startups françaises, spécialisé sur la Bourse French Tech (BFT), la BFTE et le Fonds Parisien pour l'Innovation (FPI).
