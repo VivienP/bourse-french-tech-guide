@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, X, Send, Square } from 'lucide-react';
+import { MessageCircle, X, Send, Square, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 type Intent = 'bft' | 'non_dilutif';
@@ -61,6 +61,7 @@ const WELCOME_MESSAGE: Message = {
 
 const ChatBubble: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -220,16 +221,25 @@ const ChatBubble: React.FC = () => {
     <>
       {/* Chat panel */}
       {isOpen && (
-        <div className="fixed bottom-24 left-4 right-4 sm:left-auto sm:right-6 z-50 w-auto sm:w-[400px] max-w-[400px] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300">
+        <div className={`fixed bottom-24 left-4 right-4 sm:left-auto sm:right-6 z-50 w-auto max-w-[400px] h-[500px] ${isExpanded ? 'sm:w-[540px] sm:max-w-[540px] sm:h-[620px]' : 'sm:w-[400px] sm:max-w-[400px] sm:h-[500px]'} bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300 transition-all`}>
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-secondary text-secondary-foreground">
             <div className="flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />
               <span className="font-semibold text-sm">Assistant IA BFT</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
-              <X className="h-5 w-5" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="hidden sm:flex hover:opacity-70 transition-opacity"
+                aria-label={isExpanded ? 'Réduire' : 'Agrandir'}
+              >
+                {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              </button>
+              <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
