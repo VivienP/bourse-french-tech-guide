@@ -31,12 +31,12 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards]">
+            <Button size="lg" variant="outline" onClick={() => scrollToSection('definition')} className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl">
+              Découvrir le dispositif
+            </Button>
             <Button size="lg" onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg">
               Échangez avec un expert
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" onClick={() => scrollToSection('definition')} className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground text-lg px-8 py-3 transition-all duration-200 rounded-xl">
-              Découvrir le dispositif
             </Button>
           </div>
 
