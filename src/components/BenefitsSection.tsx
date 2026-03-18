@@ -36,7 +36,7 @@ const BenefitsSection = () => {
           ref={ref}
           className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           
-          <div className="flex items-center justify-center gap-3 mb-[2rem]">
+          <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
             <div className="h-1 w-12 rounded-full bg-primary" />
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">Stratégie</span>
             <div className="h-1 w-12 rounded-full bg-primary" />

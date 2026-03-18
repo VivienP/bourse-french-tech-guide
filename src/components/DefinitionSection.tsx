@@ -4,7 +4,7 @@ const DefinitionSection = () => {
   return (
     <section id="definition" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-center gap-3 mb-[2rem]">
+        <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
           <div className="h-1 w-12 rounded-full bg-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">Présentation</span>
           <div className="h-1 w-12 rounded-full bg-primary" />

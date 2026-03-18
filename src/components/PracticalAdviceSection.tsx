@@ -22,7 +22,7 @@ const PracticalAdviceSection = () => {
     <section id="conseils" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center justify-center gap-3 mb-[2rem]">
+          <div className="flex items-center justify-center gap-3 mb-[1.5rem]">
             <div className="h-1 w-12 rounded-full bg-primary" />
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">Conseils</span>
             <div className="h-1 w-12 rounded-full bg-primary" />
