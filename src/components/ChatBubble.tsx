@@ -240,6 +240,7 @@ const ChatBubble: React.FC = () => {
                 <X className="h-5 w-5" />
               </button>
             </div>
+          </div>
 
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3">
