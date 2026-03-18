@@ -21,7 +21,7 @@ const ApplicationProcessSection = () => {
               la plateforme de Bpifrance <a href="https://app.bel.bpifrance.fr" target="_blank" rel="noopener noreferrer" className="underline decoration-primary/40 underline-offset-2 hover:decoration-primary transition-colors">app.bel.bpifrance.fr</a>.
             </p>
 
-            <h3 className="text-2xl font-bold text-foreground mb-4">Contenu du dossier</h3>
+            <h3 className="text-xl font-bold text-foreground mb-4">Contenu du dossier</h3>
             <p className="mb-4 text-muted-foreground">Le dossier pour la BFT se compose de :</p>
             <div className="space-y-3 mb-8 p-6 rounded-2xl bg-accent border border-border">
               {[
