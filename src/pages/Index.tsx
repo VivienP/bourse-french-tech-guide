@@ -52,13 +52,8 @@ const Index = () => {
       <NavigationBar activeSection={activeSection} scrollToSection={scrollToSection} />
       <HeroSection scrollToSection={scrollToSection} />
       <DefinitionSection />
+      <BenefitsSection />
       <EligibilitySection />
-      <ExpensesSection />
-      <FinancingSection />
-      <ApplicationProcessSection />
-      <CTASection />
-      <EvaluationSection />
-      <PracticalAdviceSection />
       
       <section id="exemples" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -74,8 +69,14 @@ const Index = () => {
         </div>
       </section>
 
-      <BenefitsSection />
+      <CTASection />
+      <ExpensesSection />
+      <FinancingSection />
+      <ApplicationProcessSection />
+      <EvaluationSection />
+      <PracticalAdviceSection />
       <FAQSection />
+      <CTASection />
       <Footer />
       <ChatBubble />
     </div>
