@@ -32,7 +32,7 @@ const PracticalAdviceSection = () => {
           </h2>
           
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center">
+            <h3 className="text-xl font-bold text-foreground mb-6 flex items-center">
               <CheckCircle className="h-6 w-6 text-primary mr-3" />
               Les bonnes pratiques
             </h3>
