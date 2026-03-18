@@ -21,7 +21,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['definition', 'criteres', 'depenses', 'financement', 'processus', 'evaluation', 'conseils', 'exemples', 'faq'];
+      const sections = ['definition', 'criteres', 'depenses', 'financement', 'processus', 'evaluation', 'conseils', 'exemples', 'avantages', 'faq'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
