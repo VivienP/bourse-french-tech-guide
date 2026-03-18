@@ -324,7 +324,7 @@ const ChatBubble: React.FC = () => {
                   </button>
                 ) : (
                   <button
-                    onClick={sendMessage}
+                    onClick={() => sendMessage()}
                     disabled={!input.trim()}
                     className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
