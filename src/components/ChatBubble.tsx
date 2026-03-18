@@ -238,47 +238,54 @@ const ChatBubble: React.FC = () => {
             )}
           </div>
 
-          {/* Error */}
-          {error && (
-            <div className="px-4 py-2 text-xs text-destructive bg-destructive/10 text-center">
-              {error}
-            </div>
-          )}
 
           {/* Footer */}
           <div className="border-t border-border p-3">
-            <div className="flex gap-2">
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={currentRemaining > 0 ? 'Posez votre question...' : 'Limite atteinte pour aujourd\'hui'}
-                disabled={currentRemaining <= 0}
-                className="flex-1 bg-muted rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground disabled:opacity-50"
-              />
-              {isLoading ? (
-                <button
-                  onClick={stopGeneration}
-                  className="flex items-center justify-center w-9 h-9 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity"
+            {currentRemaining > 0 ? (
+              <>
+                <div className="flex gap-2">
+                  <input
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Posez votre question..."
+                    className="flex-1 bg-muted rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
+                  />
+                  {isLoading ? (
+                    <button
+                      onClick={stopGeneration}
+                      className="flex items-center justify-center w-9 h-9 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity"
+                    >
+                      <Square className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={sendMessage}
+                      disabled={!input.trim()}
+                      className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
+                    >
+                      <Send className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  {currentRemaining} message{currentRemaining > 1 ? 's' : ''} restant{currentRemaining > 1 ? 's' : ''} aujourd'hui
+                </p>
+              </>
+            ) : (
+              <div className="flex flex-col items-center gap-2 py-1">
+                <a
+                  href="https://cal.eu/boursefrenchtech/decouverte"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-sm hover:opacity-90 transition-opacity"
                 >
-                  <Square className="h-4 w-4" />
-                </button>
-              ) : (
-                <button
-                  onClick={sendMessage}
-                  disabled={!input.trim() || currentRemaining <= 0}
-                  className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-            <p className="text-xs text-muted-foreground text-center mt-2">
-              {currentRemaining > 0
-                ? `${currentRemaining} message${currentRemaining > 1 ? 's' : ''} restant${currentRemaining > 1 ? 's' : ''} aujourd'hui`
-                : "Limite atteinte — revenez demain ou prenez RDV via le lien LinkedIn"}
-            </p>
+                  Vous avez atteint la limite de messages.
+                </a>
+                <p className="text-xs text-muted-foreground">Prenez rendez-vous avec un expert</p>
+              </div>
+            )}
           </div>
         </div>
       )}
