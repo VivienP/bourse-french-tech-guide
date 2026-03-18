@@ -92,7 +92,7 @@ const CriteriaGrid = () => {
           className="cursor-pointer select-none"
           onClick={() => setShowExclusions(!showExclusions)}
         >
-          <CardTitle className="flex items-center text-xl text-destructive">
+          <CardTitle className="flex items-center text-lg text-destructive">
             <ChevronDown className={`h-5 w-5 mr-2 transition-transform duration-200 ${showExclusions ? 'rotate-0' : '-rotate-90'}`} />
             Exclusions
           </CardTitle>
