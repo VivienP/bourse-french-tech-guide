@@ -65,7 +65,7 @@ const PracticalAdviceSection = () => {
                       <CardTitle className="text-lg text-foreground">{trap.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{trap.description}</p>
+                      <p className="text-sm text-muted-foreground">{trap.description}</p>
                     </CardContent>
                   </Card>
                 </div>
