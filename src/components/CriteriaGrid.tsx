@@ -46,7 +46,7 @@ const CriteriaGrid = () => {
           <Icon className="h-6 w-6 text-primary mr-3" />
           {title}
         </CardTitle>
-        <CardDescription className="text-base text-muted-foreground">
+        <CardDescription className="text-sm text-muted-foreground">
           {criteria === companyCriteria ?
         "Conditions relatives à la structure juridique et financière de votre société." :
         "Conditions relatives au caractère innovant et au potentiel de votre projet."
