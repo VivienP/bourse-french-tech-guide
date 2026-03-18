@@ -343,7 +343,7 @@ const ChatBubble: React.FC = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center gap-3 py-2">
-                <p className="text-sm text-muted-foreground text-center">Vous avez atteint la limite de messages.</p>
+                <p className="text-xs text-muted-foreground text-center">Vous avez atteint la limite de messages.</p>
                 <a
                   href="https://www.cal.eu/boursefrenchtech/decouverte"
                   target="_blank"
