@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Award, Linkedin } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 const Footer = () => {
   return (
