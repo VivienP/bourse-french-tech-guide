@@ -67,7 +67,7 @@ const CriteriaGrid = () => {
             </div>
             <div className="ml-8">
               <div className="mb-2">
-                <span className="inline-block px-3 py-1 bg-secondary font-semibold text-sm rounded-full text-secondary-foreground">
+                <span className="inline-block px-3 py-1 bg-secondary font-semibold rounded-full text-secondary-foreground text-xs">
                   {criterion.requirement}
                 </span>
               </div>
@@ -90,8 +90,8 @@ const CriteriaGrid = () => {
       <Card className="border-destructive/20 bg-destructive/5 rounded-2xl">
         <CardHeader
           className="cursor-pointer select-none"
-          onClick={() => setShowExclusions(!showExclusions)}
-        >
+          onClick={() => setShowExclusions(!showExclusions)}>
+          
           <CardTitle className="flex items-center text-lg text-destructive">
             <ChevronDown className={`h-5 w-5 mr-2 transition-transform duration-200 ${showExclusions ? 'rotate-0' : '-rotate-90'}`} />
             Exclusions
@@ -100,18 +100,18 @@ const CriteriaGrid = () => {
             Les types d'entreprises et d'activités suivants ne sont pas éligibles à la Bourse French Tech.
           </CardDescription>
         </CardHeader>
-        {showExclusions && (
-          <CardContent>
+        {showExclusions &&
+        <CardContent>
             <ul className="space-y-3">
               {exclusions.map((exclusion, index) =>
-              <li key={index} className="flex items-start">
+            <li key={index} className="flex items-start">
                   <X className="h-4 w-4 text-destructive mr-3 mt-1 flex-shrink-0" />
                   <span className="text-destructive text-sm leading-relaxed">{exclusion}</span>
                 </li>
-              )}
+            )}
             </ul>
           </CardContent>
-        )}
+        }
       </Card>
     </div>);
 };
