@@ -41,12 +41,13 @@ const navEntries: NavEntry[] = [
     items: [
       { id: 'definition', label: 'Définition' },
       { id: 'criteres', label: "Critères d'éligibilité" },
-      { id: 'depenses', label: 'Dépenses éligibles' },
+      { id: 'exemples', label: 'Exemples' },
     ],
   },
   {
     label: 'Financer',
     items: [
+      { id: 'depenses', label: 'Dépenses éligibles' },
       { id: 'financement', label: 'Financement & calcul' },
       { id: 'avantages', label: 'Avantages' },
     ],
@@ -59,7 +60,6 @@ const navEntries: NavEntry[] = [
       { id: 'conseils', label: 'Conseils pratiques' },
     ],
   },
-  { id: 'exemples', label: 'Exemples' },
   { id: 'faq', label: 'FAQ' },
 ];
 
