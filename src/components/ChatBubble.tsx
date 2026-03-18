@@ -304,7 +304,7 @@ const ChatBubble: React.FC = () => {
                 <button
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
-                  className="text-xs border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                  className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
                 >
                   {prompt}
                 </button>
