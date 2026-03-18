@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
-const DAILY_LIMIT = 10;
+const DAILY_LIMIT = 7;
 const STORAGE_KEY = 'bft_chat_quota';
 
 function getQuota(): { date: string; count: number } {
