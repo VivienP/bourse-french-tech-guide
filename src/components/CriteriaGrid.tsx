@@ -42,7 +42,7 @@ const CriteriaGrid = () => {
   const CriteriaCard = ({ title, criteria, icon: Icon }: {title: string;criteria: typeof companyCriteria;icon: typeof Building;}) =>
   <Card className="h-full border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center text-xl mb-2">
+        <CardTitle className="flex items-center text-lg mb-2">
           <Icon className="h-6 w-6 text-primary mr-3" />
           {title}
         </CardTitle>
