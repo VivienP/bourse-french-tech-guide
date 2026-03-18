@@ -89,9 +89,10 @@ const ChatBubble: React.FC = () => {
     setIsLoading(false);
   }, []);
 
-  const sendMessage = useCallback(async () => {
-    const trimmed = input.trim();
+  const sendMessage = useCallback(async (directText?: string) => {
+    const trimmed = (directText ?? input).trim();
     if (!trimmed || isLoading) return;
+    if (!directText) setInput('');
 
     if (remaining <= 0) {
       setError("Vous avez atteint la limite de messages pour aujourd'hui. Revenez demain !");
