@@ -31,7 +31,7 @@ const ProcessTimeline = () => {
                   <step.icon className="h-5 w-5 text-primary" />
                 </div>
               </div>
-              <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+              <Card className="border-t-4 border-t-primary rounded-2xl shadow-sm hover:bg-muted/50 transition-all duration-300">
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-lg mb-2 text-foreground">{step.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{step.description}</p>
