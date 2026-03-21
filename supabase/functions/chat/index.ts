@@ -6,11 +6,17 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Read knowledge files once at cold start — never rewrite this content inline
-const KNOWLEDGE_BFT = Deno.readTextFileSync(new URL("./llms-full.txt", import.meta.url));
-const KNOWLEDGE_ND = Deno.readTextFileSync(
-  new URL("./financement-non-dilutif.md", import.meta.url)
+// Read knowledge files once at cold start
+const KNOWLEDGE_BFT = Deno.readTextFileSync(
+  new URL("./llms-full.txt", import.meta.url).pathname
 );
+
+const functionDir = new URL(".", import.meta.url).pathname;
+const KNOWLEDGE_ND = Array.from(Deno.readDirSync(functionDir))
+  .filter((entry) => entry.isFile && entry.name.endsWith(".md"))
+  .sort((a, b) => a.name.localeCompare(b.name))
+  .map((entry) => Deno.readTextFileSync(`${functionDir}/${entry.name}`))
+  .join("\n\n---\n\n");
 
 const SYSTEM_PROMPT_TEMPLATE = `Tu es BFT Assistant, un expert en financement public de l'innovation pour startups françaises, spécialisé sur la Bourse French Tech (BFT), la BFTE et le Fonds Parisien pour l'Innovation (FPI).
 
