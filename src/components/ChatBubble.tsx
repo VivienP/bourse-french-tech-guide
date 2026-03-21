@@ -261,7 +261,7 @@ const ChatBubble: React.FC = () => {
           <div className="flex items-center justify-between px-4 py-3 bg-secondary text-secondary-foreground">
             <div className="flex items-center gap-2">
               <MessageCircle className="h-4 w-4" />
-              <span className="font-semibold text-xs">Assistant IA BFT</span>
+              <span className="font-semibold text-xs">Assistant IA BFT & Financements publics</span>
             </div>
             <div className="flex items-center gap-3">
               <button
