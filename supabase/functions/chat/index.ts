@@ -103,39 +103,9 @@ Tu bases TOUTES tes réponses exclusivement sur ce document :
 
 {{KNOWLEDGE}}`;
 
-type Intent = "bft" | "non_dilutif";
-
-function detectIntent(messages: { role: string; content: string }[]): Intent {
-  const recentUserText = messages
-    .filter((m) => m.role === "user")
-    .slice(-3)
-    .map((m) => m.content.toLowerCase())
-    .join(" ");
-
-  const ndKeywords = [
-    "financement non dilutif", "non-dilutif", "subvention", "aide publique",
-    "crédit impôt", "cir ", "cii ", "jei ",
-    "jeune entreprise innovante", "prêt d'honneur", "financement public",
-    "autres aides", "en dehors de la bft", "alternatives", "autres dispositifs",
-    "quel financement", "comment financer",
-  ];
-
-  const bftKeywords = [
-    "bft", "bourse french tech", "bfte", "fpi", "fonds parisien",
-    "éligible", "éligibilité", "dossier", "candidature",
-  ];
-
-  const ndScore = ndKeywords.filter((kw) => recentUserText.includes(kw)).length;
-  const bftScore = bftKeywords.filter((kw) => recentUserText.includes(kw)).length;
-
-  return ndScore > bftScore ? "non_dilutif" : "bft";
-}
-
-function buildSystemPrompt(intent: Intent): string {
+function buildSystemPrompt(): string {
   const knowledgeSection =
-    intent === "non_dilutif"
-      ? `${KNOWLEDGE_BFT}\n\n---\n\nCONTEXTE COMPLÉMENTAIRE — FINANCEMENT NON DILUTIF EN FRANCE :\n${KNOWLEDGE_ND}`
-      : KNOWLEDGE_BFT;
+    `${KNOWLEDGE_BFT}\n\n---\n\nCONTEXTE COMPLÉMENTAIRE — FINANCEMENT NON DILUTIF EN FRANCE :\n${KNOWLEDGE_ND}`;
 
   // Use a function replacer to prevent JS from interpreting $ sequences in knowledgeSection
   return SYSTEM_PROMPT_TEMPLATE.replace("{{KNOWLEDGE}}", () => knowledgeSection);
@@ -202,8 +172,7 @@ serve(async (req) => {
     // Truncate history to last 8 messages to stay within context window
     const truncatedMessages = messages.slice(-8);
 
-    const intent = detectIntent(truncatedMessages);
-    const systemPrompt = buildSystemPrompt(intent);
+    const systemPrompt = buildSystemPrompt();
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
