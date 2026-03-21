@@ -30,7 +30,7 @@ function detectIntent(messages: Message[]): Intent {
   return ndScore > bftScore ? 'non_dilutif' : 'bft';
 }
 
-const DAILY_LIMIT = 7;
+const DAILY_LIMIT = 8;
 const STORAGE_KEY = 'bft_chat_quota';
 
 function getQuota(): { date: string; count: number } {
@@ -59,6 +59,24 @@ const WELCOME_MESSAGE: Message = {
     "Bonjour, posez vos questions sur la Bourse French Tech / subvention innovation de Bpifrance.",
 };
 
+const BFT_SUGGESTIONS = [
+  'Quels documents préparer pour le dossier ?',
+  'Quel montant de fonds propres faut-il ?',
+  'Comment trouver un incubateur référencé ?',
+];
+
+const ND_SUGGESTIONS = [
+  'Comment déclarer le CII ?',
+  'Quelles sont les aides Bpifrance disponibles ?',
+  'Comment obtenir le statut JEI ?',
+];
+
+const INITIAL_SUGGESTIONS = [
+  'Évaluer mon éligibilité ?',
+  'Dois-je avoir déjà immatriculé mon entreprise ?',
+  'Comment augmenter mes fonds propres ?',
+];
+
 const ChatBubble: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -66,16 +84,17 @@ const ChatBubble: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasBeenSeen, setHasBeenSeen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const remaining = DAILY_LIMIT - getQuota().count;
 
+  // Smooth auto-scroll
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   useEffect(() => {
@@ -83,6 +102,13 @@ const ChatBubble: React.FC = () => {
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Mark bubble as seen after first open
+  useEffect(() => {
+    if (isOpen && !hasBeenSeen) {
+      setHasBeenSeen(true);
+    }
+  }, [isOpen, hasBeenSeen]);
 
   const stopGeneration = useCallback(() => {
     abortRef.current?.abort();
@@ -217,6 +243,15 @@ const ChatBubble: React.FC = () => {
 
   const currentRemaining = DAILY_LIMIT - getQuota().count;
 
+  // Determine contextual suggestions based on last assistant message intent
+  const lastAssistantMsg = [...messages].reverse().find((m) => m.role === 'assistant' && m !== WELCOME_MESSAGE);
+  const hasUserMessages = messages.some((m) => m.role === 'user');
+  const contextualSuggestions = !hasUserMessages
+    ? INITIAL_SUGGESTIONS
+    : lastAssistantMsg?.intent === 'non_dilutif'
+      ? ND_SUGGESTIONS
+      : BFT_SUGGESTIONS;
+
   return (
     <>
       {/* Chat panel */}
@@ -294,13 +329,13 @@ const ChatBubble: React.FC = () => {
                 </div>
               </div>
             )}
+            <div ref={bottomRef} />
           </div>
 
-
-          {/* Predefined prompts */}
-          {currentRemaining > 0 && !messages.some((m) => m.role === 'user') && !isLoading && (
+          {/* Contextual suggestions */}
+          {currentRemaining > 0 && !isLoading && (
             <div className="px-3 pb-1 flex flex-wrap gap-1.5">
-              {['Évaluer mon éligibilité ?', 'Dois-je avoir déjà immatriculé mon entreprise ?', 'Comment augmenter mes fonds propres ?'].map((prompt) => (
+              {contextualSuggestions.map((prompt) => (
                 <button
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
@@ -358,10 +393,10 @@ const ChatBubble: React.FC = () => {
         </div>
       )}
 
-      {/* Floating bubble */}
+      {/* Floating bubble with entrance animation */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center"
+        className={`fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center animate-scale-in ${!hasBeenSeen && !isOpen ? 'animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_3]' : ''}`}
         aria-label="Ouvrir le chat"
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
