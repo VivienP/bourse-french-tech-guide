@@ -231,10 +231,10 @@ const Chat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <NavigationBar activeSection="" scrollToSection={navigateToSection} />
+      <NavigationBar activeSection="" scrollToSection={navigateToSection} minimal />
 
-      {/* Messages — pt-[73px] compense la navbar fixe */}
-      <div className="flex-1 overflow-y-auto px-4 pt-[73px] pb-6 space-y-4">
+      {/* Messages — pt-[96px] compense la navbar fixe + espace supplémentaire */}
+      <div className="flex-1 overflow-y-auto px-4 pt-[96px] pb-6 space-y-4">
         <div className="max-w-2xl mx-auto space-y-4">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
