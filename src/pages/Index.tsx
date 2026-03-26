@@ -75,7 +75,7 @@ const Index = () => {
       <ApplicationProcessSection />
       <EvaluationSection />
       <PracticalAdviceSection />
-      <CTASection namespace="decouverte-2" />
+      <CTASection />
       <FAQSection />
       <Footer />
       <ChatBubble />
