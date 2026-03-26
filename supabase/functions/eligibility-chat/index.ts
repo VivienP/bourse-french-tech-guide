@@ -115,9 +115,10 @@ Ces deux marqueurs sont mutuellement exclusifs : n'utilisez jamais les deux dans
 
 ━━━ GESTION DES INFORMATIONS MANQUANTES ━━━
 
-- Si des informations sont manquantes, posez des questions précises, courtes et polies.
+- Si des informations sont manquantes, posez **une seule série** de questions complémentaires, courtes et précises (maximum 3 questions regroupées en un seul message).
 - Ne générez pas de rapport préliminaire ; posez les questions, attendez la réponse, puis générez le rapport.
-- Si l'utilisateur refuse de fournir des données, générez le rapport en indiquant les critères concernés comme « Information non fournie », calculez la moyenne partielle, et incluez dans la conclusion une invitation à prendre rendez-vous : https://cal.eu/boursefrenchtech/decouverte
+- Si après cette unique relance l'utilisateur n'a toujours pas fourni les informations, ou s'il refuse de répondre, générez le rapport immédiatement avec les données disponibles en indiquant les critères manquants comme « Information non fournie », calculez la moyenne partielle, et incluez dans la conclusion une invitation à prendre rendez-vous : https://cal.eu/boursefrenchtech/decouverte
+- Ne posez jamais deux séries consécutives de questions complémentaires sur le projet.
 
 ━━━ STYLE ━━━
 
@@ -125,7 +126,16 @@ Ces deux marqueurs sont mutuellement exclusifs : n'utilisez jamais les deux dans
 - Commencez directement par le titre du rapport sans préambule.
 - Évitez les sauts de ligne excessifs.`;
 
-// In-memory rate limiter by IP
+// Session limit via Deno KV (persists across cold starts)
+const SESSION_MAX_CALLS = 20;
+const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24h
+const SESSION_ID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function isValidSessionId(id: unknown): id is string {
+  return typeof id === "string" && SESSION_ID_REGEX.test(id);
+}
+
+// In-memory rate limiter by IP (defense in depth)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_MAX = 30;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
@@ -172,7 +182,23 @@ serve(async (req) => {
       });
     }
 
-    const { messages } = await req.json();
+    const { messages, sessionId } = await req.json();
+
+    // Session call limit via Deno KV (survives page refreshes and cold starts)
+    if (isValidSessionId(sessionId)) {
+      // @ts-ignore – Deno.openKv is available in Supabase Edge Functions runtime
+      const kv = await Deno.openKv();
+      const key = ["session", sessionId];
+      const entry = await kv.get<{ count: number }>(key);
+      const count = entry.value?.count ?? 0;
+      if (count >= SESSION_MAX_CALLS) {
+        return new Response(
+          JSON.stringify({ error: "Limite de session atteinte.", code: "SESSION_LIMIT_REACHED" }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      await kv.set(key, { count: count + 1 }, { expireIn: SESSION_TTL_MS });
+    }
 
     if (!Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Messages invalides." }), {

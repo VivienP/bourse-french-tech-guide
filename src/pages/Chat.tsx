@@ -9,8 +9,18 @@ type Message = { role: 'user' | 'assistant'; content: string };
 const ELIGIBILITY_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/eligibility-chat`;
 const SEND_EMAIL_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`;
 const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
-
 const CAL_NAMESPACE = 'eligibilite';
+const MAX_INPUT_LENGTH = 1000;
+const SESSION_STORAGE_KEY = 'bft_session_id';
+
+function getOrCreateSessionId(): string {
+  let id = localStorage.getItem(SESSION_STORAGE_KEY);
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem(SESSION_STORAGE_KEY, id);
+  }
+  return id;
+}
 
 function stripMarkers(text: string): string {
   return text
@@ -67,26 +77,12 @@ const Chat: React.FC = () => {
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const conversationRef = useRef<Message[]>([]);
+  const sessionIdRef = useRef<string>(getOrCreateSessionId());
 
   // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, leadCaptured]);
-
-  // Init Cal.com
-  useEffect(() => {
-    if (score === null || score < 2.5 || conversationClosed) return;
-    if (!leadCaptured) return;
-    (async () => {
-      const cal = await getCalApi({ namespace: CAL_NAMESPACE, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
-      cal('ui', {
-        theme: 'light',
-        cssVarsPerTheme: { light: { 'cal-brand': '#1B2A4A' }, dark: { 'cal-brand': '#1B2A4A' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-    })();
-  }, [score, conversationClosed, leadCaptured]);
 
   const sendToEmail = useCallback(async (conversation: Message[], finalScore: number, email?: string, phone?: string) => {
     try {
@@ -123,12 +119,20 @@ const Chat: React.FC = () => {
       const resp = await fetch(ELIGIBILITY_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: AUTH_HEADER },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, sessionId: sessionIdRef.current }),
         signal: controller.signal,
       });
 
       if (!resp.ok) {
         const data = await resp.json().catch(() => ({}));
+        if (resp.status === 429 && data.code === 'SESSION_LIMIT_REACHED') {
+          setConversationClosed(true);
+          setMessages((prev) => [
+            ...prev,
+            { role: 'assistant', content: 'Vous avez atteint la limite de messages de cette session. Actualisez la page pour démarrer une nouvelle évaluation.' },
+          ]);
+          return;
+        }
         throw new Error(data.error || `Erreur ${resp.status}`);
       }
 
@@ -278,7 +282,7 @@ const Chat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <NavigationBar activeSection="" scrollToSection={navigateToSection} minimal />
+      <NavigationBar activeSection="" scrollToSection={navigateToSection} />
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 pt-[96px] pb-6 space-y-4">
@@ -387,19 +391,11 @@ const Chat: React.FC = () => {
             </div>
           )}
 
-          {/* Cal.eu widget — shown when eligible AND lead captured */}
+          {/* Eligible notice — shown after lead capture */}
           {isEligible && leadCaptured && (
-            <div className="mt-6">
-              <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-4 text-sm text-green-800">
-                <strong>Score : {score}/5 — Projet éligible.</strong> Prenez rendez-vous avec un expert pour préparer votre dossier.
-              </div>
-              <Cal
-                namespace={CAL_NAMESPACE}
-                calLink="boursefrenchtech/decouverte"
-                calOrigin="https://app.cal.eu"
-                style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }}
-                config={{ layout: 'month_view', theme: 'light' }}
-              />
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-sm text-green-800">
+              <strong className="block mb-1">Score : {score}/5 — Projet éligible.</strong>
+              Votre dossier a bien été transmis. Un expert vous contactera prochainement pour préparer votre candidature.
             </div>
           )}
 
@@ -443,37 +439,44 @@ const Chat: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex gap-2 items-end">
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
-                  rows={1}
-                  className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
-                  style={{ height: 'auto' }}
-                  onInput={(e) => {
-                    const el = e.currentTarget;
-                    el.style.height = 'auto';
-                    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
-                  }}
-                />
-                {isLoading ? (
-                  <button
-                    onClick={stopGeneration}
-                    className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity shrink-0"
-                  >
-                    <Square className="h-4 w-4" />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => sendMessage()}
-                    disabled={!input.trim()}
-                    className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 shrink-0"
-                  >
-                    <Send className="h-4 w-4" />
-                  </button>
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-2 items-end">
+                  <textarea
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
+                    onKeyDown={handleKeyDown}
+                    placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
+                    rows={1}
+                    className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
+                    style={{ height: 'auto' }}
+                    onInput={(e) => {
+                      const el = e.currentTarget;
+                      el.style.height = 'auto';
+                      el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+                    }}
+                  />
+                  {isLoading ? (
+                    <button
+                      onClick={stopGeneration}
+                      className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity shrink-0"
+                    >
+                      <Square className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => sendMessage()}
+                      disabled={!input.trim() || input.length > MAX_INPUT_LENGTH}
+                      className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 shrink-0"
+                    >
+                      <Send className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                {input.length >= MAX_INPUT_LENGTH && (
+                  <p className="text-xs text-destructive text-right">
+                    Limite de {MAX_INPUT_LENGTH} caractères atteinte.
+                  </p>
                 )}
               </div>
             )}

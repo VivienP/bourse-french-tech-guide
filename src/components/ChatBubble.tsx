@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageCircle, X, Send, Square, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 
 type Intent = 'bft' | 'non_dilutif';
 type Message = { role: 'user' | 'assistant'; content: string; intent?: Intent };
@@ -335,15 +336,25 @@ const ChatBubble: React.FC = () => {
           {/* Contextual suggestions */}
           {currentRemaining > 0 && !isLoading && (
             <div className="px-3 pb-1 flex flex-wrap gap-1.5">
-              {contextualSuggestions.map((prompt) => (
-                <button
-                  key={prompt}
-                  onClick={() => sendMessage(prompt)}
-                  className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
-                >
-                  {prompt}
-                </button>
-              ))}
+              {contextualSuggestions.map((prompt) =>
+                prompt === 'Évaluer mon éligibilité ?' ? (
+                  <Link
+                    key={prompt}
+                    to="/chat"
+                    className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                  >
+                    {prompt}
+                  </Link>
+                ) : (
+                  <button
+                    key={prompt}
+                    onClick={() => sendMessage(prompt)}
+                    className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                  >
+                    {prompt}
+                  </button>
+                )
+              )}
             </div>
           )}
 
@@ -379,14 +390,12 @@ const ChatBubble: React.FC = () => {
             ) : (
               <div className="flex flex-col items-center gap-3 py-2">
                 <p className="text-xs text-muted-foreground text-center">Vous avez atteint la limite de messages.</p>
-                <a
-                  href="https://www.cal.eu/boursefrenchtech/decouverte"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/chat"
                   className="w-full text-center rounded-xl bg-primary text-primary-foreground font-semibold py-3 px-4 text-xs hover:opacity-90 transition-opacity"
                 >
-                  Prendre rendez-vous avec un expert
-                </a>
+                  Évaluer mon éligibilité gratuitement →
+                </Link>
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -30,15 +31,13 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
-            <a 
-              href="https://cal.eu/boursefrenchtech/decouverte" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <h4 className="text-lg font-semibold mb-4">Éligibilité</h4>
+            <Link
+              to="/chat"
               className="inline-flex items-center text-secondary-foreground/80 hover:text-primary transition-colors duration-200"
             >
-              Prendre rendez-vous
-            </a>
+              Évaluer mon projet gratuitement →
+            </Link>
           </div>
         </div>
         

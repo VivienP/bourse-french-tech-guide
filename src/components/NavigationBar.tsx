@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Award, ChevronDown, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -211,10 +212,10 @@ const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: Navi
             </Sheet>
 
             <Button
-              onClick={() => scrollToSection('cta')}
+              asChild
               className="bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-all duration-200 shadow-sm"
             >
-              Réserver un créneau
+              <Link to="/chat">Évaluer mon éligibilité</Link>
             </Button>
           </div>
           )}

@@ -1,29 +1,11 @@
 
 import React from 'react';
-import Cal, { getCalApi } from '@calcom/embed-react';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
-const CTASection = ({ namespace = 'decouverte' }: {namespace?: string;}) => {
+const CTASection = () => {
   const { ref, isVisible } = useScrollAnimation();
-
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
-      cal('ui', {
-        theme: 'light',
-        cssVarsPerTheme: {
-          light: { 'cal-brand': '#1B2A4A' },
-          dark: { 'cal-brand': '#F6F3EC' }
-        },
-        hideEventTypeDetails: false,
-        // @ts-ignore – hideBranding is supported by the Cal.com API
-        hideBranding: true,
-        layout: 'month_view'
-      });
-    })();
-  }, [namespace]);
 
   return (
     <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-primary/15">
@@ -31,34 +13,34 @@ const CTASection = ({ namespace = 'decouverte' }: {namespace?: string;}) => {
         <div
           ref={ref}
           className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          
+
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-md">
+              <Sparkles className="h-6 w-6 text-primary-foreground" />
+            </div>
+          </div>
+
           <h2 className="text-3xl font-bold text-foreground mb-4 text-center md:text-3xl">
-            Échangez avec un expert
+            Votre projet est-il éligible ?
           </h2>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto text-base text-center">
-            Déléguez la constitution de votre dossier et maximisez vos chances de financement.
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-base text-center">
+            Répondez à quelques questions et obtenez une évaluation instantanée de votre éligibilité à la Bourse French Tech.
           </p>
 
-          <div className="flex justify-center mb-10">
+          <div className="flex justify-center">
             <Link
               to="/chat"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors text-sm"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors text-base shadow-md"
             >
-              Évaluer mon éligibilité gratuitement →
+              Évaluer mon éligibilité gratuitement
+              <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
 
-          <Cal
-            namespace={namespace}
-            calLink="boursefrenchtech/decouverte"
-            calOrigin="https://app.cal.eu"
-            style={{ width: '100%', height: '100%', overflow: 'auto', minHeight: 600 }}
-            config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'light' }} />
-          
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default CTASection;
