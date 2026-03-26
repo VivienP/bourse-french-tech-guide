@@ -35,7 +35,7 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
               Découvrir le dispositif
             </Button>
             <Button size="lg" onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg text-base">
-              Échangez avec un expert
+              Évaluer mon éligibilité
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
