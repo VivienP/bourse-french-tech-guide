@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ArrowLeft, Send, Square } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Send, Square } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
+import NavigationBar from '@/components/NavigationBar';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -12,9 +12,14 @@ const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
 
 const CAL_NAMESPACE = 'eligibilite';
 
-// Strip the SCORE_FINAL marker from displayed content
-function stripScoreMarker(text: string): string {
-  return text.replace(/\nSCORE_FINAL:\s*[\d.]+\s*$/i, '').trimEnd();
+// Strip LLM control markers from displayed content.
+// No $ anchor — markers are stripped as soon as they appear during streaming,
+// even if the LLM emits trailing content after them.
+function stripMarkers(text: string): string {
+  return text
+    .replace(/\nSCORE_FINAL:\s*[\d.]+/gi, '')
+    .replace(/\nCONVERSATION_CLOSED/gi, '')
+    .trimEnd();
 }
 
 // Extract score from assistant content — validates range [0, 5]
@@ -26,12 +31,17 @@ function extractScore(text: string): number | null {
   return val;
 }
 
+function extractClosed(text: string): boolean {
+  return /CONVERSATION_CLOSED/i.test(text);
+}
+
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+  const [conversationClosed, setConversationClosed] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -42,9 +52,9 @@ const Chat: React.FC = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Init Cal.com widget when score is eligible
+  // Init Cal.com widget when score is eligible and conversation is not closed
   useEffect(() => {
-    if (score === null || score < 2.5) return;
+    if (score === null || score < 2.5 || conversationClosed) return;
     (async () => {
       const cal = await getCalApi({ namespace: CAL_NAMESPACE, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
       cal('ui', {
@@ -54,7 +64,7 @@ const Chat: React.FC = () => {
         layout: 'month_view',
       });
     })();
-  }, [score]);
+  }, [score, conversationClosed]);
 
   const sendToEmail = useCallback(async (conversation: Message[], finalScore: number) => {
     try {
@@ -74,6 +84,7 @@ const Chat: React.FC = () => {
     // Allow empty call only for the initial trigger (directText === '')
     if (directText !== '' && !trimmed) return;
     if (isLoading) return;
+    if (conversationClosed) return;
 
     setInput('');
 
@@ -110,7 +121,7 @@ const Chat: React.FC = () => {
         assistantContent += chunk;
         setMessages((prev) => {
           const last = prev[prev.length - 1];
-          const displayed = stripScoreMarker(assistantContent);
+          const displayed = stripMarkers(assistantContent);
           if (last?.role === 'assistant') {
             return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: displayed } : m));
           }
@@ -158,6 +169,11 @@ const Chat: React.FC = () => {
         }
       }
 
+      // Check for conversation closed marker
+      if (extractClosed(assistantContent)) {
+        setConversationClosed(true);
+      }
+
       // Check for score marker in full response
       const detectedScore = extractScore(assistantContent);
       if (detectedScore !== null) {
@@ -165,7 +181,7 @@ const Chat: React.FC = () => {
         // Build full conversation for email (replace last assistant msg with clean version)
         const finalConversation: Message[] = [
           ...newMessages,
-          { role: 'assistant', content: stripScoreMarker(assistantContent) },
+          { role: 'assistant', content: stripMarkers(assistantContent) },
         ];
         if (!emailSent) {
           setEmailSent(true);
@@ -184,7 +200,7 @@ const Chat: React.FC = () => {
       setIsLoading(false);
       abortRef.current = null;
     }
-  }, [input, isLoading, messages, emailSent, sendToEmail]);
+  }, [input, isLoading, messages, emailSent, conversationClosed, sendToEmail]);
 
   // Abort stream on unmount
   useEffect(() => {
@@ -212,24 +228,19 @@ const Chat: React.FC = () => {
     setIsLoading(false);
   };
 
-  const isEligible = score !== null && score >= 2.5;
+  const isEligible = score !== null && score >= 2.5 && !conversationClosed;
   const reportDone = score !== null;
+
+  const navigateToSection = (sectionId: string) => {
+    window.location.href = `/#${sectionId}`;
+  };
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-card shrink-0">
-        <Link to="/" className="flex items-center text-muted-foreground hover:text-foreground transition-colors">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <div>
-          <h1 className="font-semibold text-sm text-foreground">Évaluation d'éligibilité BFT</h1>
-          <p className="text-xs text-muted-foreground">Décrivez votre projet — l'IA évalue votre dossier</p>
-        </div>
-      </div>
+      <NavigationBar activeSection="" scrollToSection={navigateToSection} />
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+      {/* Messages — pt-[73px] compense la navbar fixe */}
+      <div className="flex-1 overflow-y-auto px-4 pt-[73px] pb-6 space-y-4">
         <div className="max-w-2xl mx-auto space-y-4">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -281,9 +292,16 @@ const Chat: React.FC = () => {
           )}
 
           {/* Non-eligible notice */}
-          {reportDone && !isEligible && (
+          {reportDone && !isEligible && !conversationClosed && (
             <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-sm text-orange-800">
               <strong>Score : {score}/5.</strong> Votre projet nécessite des ajustements avant de candidater. Consultez les recommandations dans le rapport ci-dessus.
+            </div>
+          )}
+
+          {/* Conversation closed notice */}
+          {conversationClosed && (
+            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center">
+              Conversation terminée. Actualisez la page pour démarrer une nouvelle évaluation.
             </div>
           )}
 
@@ -292,41 +310,43 @@ const Chat: React.FC = () => {
       </div>
 
       {/* Input footer */}
-      <div className="border-t border-border px-4 py-3 bg-card shrink-0">
-        <div className="max-w-2xl mx-auto flex gap-2 items-end">
-          <textarea
-            ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
-            rows={1}
-            className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
-            style={{ height: 'auto' }}
-            onInput={(e) => {
-              const el = e.currentTarget;
-              el.style.height = 'auto';
-              el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
-            }}
-          />
-          {isLoading ? (
-            <button
-              onClick={stopGeneration}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity shrink-0"
-            >
-              <Square className="h-4 w-4" />
-            </button>
-          ) : (
-            <button
-              onClick={() => sendMessage()}
-              disabled={!input.trim()}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 shrink-0"
-            >
-              <Send className="h-4 w-4" />
-            </button>
-          )}
+      {!conversationClosed && (
+        <div className="border-t border-border px-4 py-3 bg-card shrink-0">
+          <div className="max-w-2xl mx-auto flex gap-2 items-end">
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
+              rows={1}
+              className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
+              style={{ height: 'auto' }}
+              onInput={(e) => {
+                const el = e.currentTarget;
+                el.style.height = 'auto';
+                el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+              }}
+            />
+            {isLoading ? (
+              <button
+                onClick={stopGeneration}
+                className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity shrink-0"
+              >
+                <Square className="h-4 w-4" />
+              </button>
+            ) : (
+              <button
+                onClick={() => sendMessage()}
+                disabled={!input.trim()}
+                className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 shrink-0"
+              >
+                <Send className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

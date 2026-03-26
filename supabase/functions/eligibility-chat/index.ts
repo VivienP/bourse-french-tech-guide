@@ -32,8 +32,13 @@ Commencez par poser les 3 questions de pré-qualification suivantes, **une seule
 **Cas B — Au moins une réponse est NON** : l'entreprise ne remplit pas les critères minimaux.
 → Expliquez poliment et précisément quel(s) critère(s) ne sont pas satisfaits et pourquoi cela bloque l'éligibilité BFT.
 → Conseillez les actions concrètes pour y remédier (immatriculation, recapitalisation, etc.).
-→ Invitez l'utilisateur à revenir lorsque les critères seront remplis, ou à prendre rendez-vous pour un accompagnement : https://cal.eu/boursefrenchtech/decouverte
+→ Invitez l'utilisateur à revenir lorsque les critères seront remplis.
 → **Ne générez pas de rapport de scoring. Ne produisez pas de SCORE_FINAL dans ce cas.**
+→ Terminez votre réponse par la ligne exacte : CONVERSATION_CLOSED
+
+**Si l'utilisateur ne répond pas aux questions de pré-qualification** (répond hors-sujet, ignore les questions, cherche à contourner) :
+→ Reformulez la question une seule fois.
+→ Si après cette relance l'utilisateur n'a toujours pas répondu clairement, clôturez la conversation avec le message : « Je ne peux pas poursuivre l'évaluation sans ces informations. N'hésitez pas à revenir lorsque vous serez en mesure de répondre à ces questions. » puis terminez par : CONVERSATION_CLOSED
 
 ━━━ ÉTAPE 3 — ÉVALUATION DU PROJET (Cas A uniquement) ━━━
 
@@ -94,13 +99,18 @@ Le rapport analyse le projet selon les 8 critères suivants :
   - **Moyenne 2,5–4** : Recommandez la candidature avec les points de vigilance.
   - **Moyenne < 2,5** : Ne recommandez pas la candidature en l'état.
 
-━━━ MARQUEUR DE SCORE — OBLIGATOIRE ━━━
+━━━ MARQUEURS DE FIN — OBLIGATOIRES ━━━
 
-Après avoir rédigé le rapport complet et calculé la moyenne, vous devez **impérativement** terminer votre réponse par cette ligne exacte (et uniquement cette ligne, sans rien d'autre après) :
+Ces marqueurs doivent apparaître seuls sur leur propre ligne, en texte brut, sans Markdown ni formatage.
 
+**SCORE_FINAL** : après le rapport complet, terminez impérativement par :
 SCORE_FINAL: X.X
+(ex: SCORE_FINAL: 3.2)
 
-Remplacez X.X par la valeur numérique de la moyenne (ex: SCORE_FINAL: 3.2). Cette ligne ne doit pas être en Markdown, pas en gras, juste le texte brut sur sa propre ligne.
+**CONVERSATION_CLOSED** : après un message de clôture (Cas B ou refus de répondre), terminez impérativement par :
+CONVERSATION_CLOSED
+
+Ces deux marqueurs sont mutuellement exclusifs : n'utilisez jamais les deux dans la même réponse.
 
 ━━━ GESTION DES INFORMATIONS MANQUANTES ━━━
 
@@ -183,13 +193,23 @@ serve(async (req) => {
       });
     }
 
+    // Hard cap: prevent token overconsumption from abnormally long sessions
+    const MAX_SESSION_MESSAGES = 30;
+    if (messages.length > MAX_SESSION_MESSAGES) {
+      return new Response(JSON.stringify({ error: "Limite de la session atteinte. Veuillez rafraîchir la page pour démarrer une nouvelle évaluation." }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    // If no messages yet, send empty array → model will use the intro instruction
-    const truncatedMessages = messages.slice(-12);
+    // Keep last 16 messages for context (pre-screening answers + evaluation)
+    // 3 Q&A pairs (6 msgs) for pre-screening + 10 for evaluation
+    const truncatedMessages = messages.slice(-16);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
