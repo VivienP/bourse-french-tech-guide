@@ -33,9 +33,9 @@ const EligibilitySection = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">Accompagnement par un incubateur référencé ou une structure labellisée <strong className="text-foreground">obligatoire</strong>.</p>
+                  <p className="text-muted-foreground">L'accompagnement par un incubateur référencé ou une structure labellisée n'est <strong className="text-foreground">pas obligatoire</strong>.</p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    À Paris intra-muros (75), seuls les incubateurs labellisés donnent accès au dispositif Fonds Parisien pour l'Innovation (FPI).
+                    À Paris intra-muros (75), être incubé est <strong className="text-foreground">requis</strong> pour accéder au dispositif Fonds Parisien pour l'Innovation (FPI).
                   </p>
                 </CardContent>
               </Card>

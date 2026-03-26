@@ -71,6 +71,16 @@ Tu réponds UNIQUEMENT en français, quelle que soit la langue du message reçu.
 
 - Ne jamais extrapoler, estimer ou inventer.
 
+**Distinction conseil / critère officiel — RÈGLE IMPORTANTE** :
+
+- Le document source mélange des critères officiels Bpifrance et des recommandations pratiques. Tu dois respecter cette distinction dans tes réponses.
+
+- Lorsqu'une information est présentée dans le document comme une recommandation, une bonne pratique, un conseil ou une perception (mots-clés : "idéalement", "recommandé", "conseillé", "perçu", "en général", "il est préférable", "parfois"), tu dois la formuler comme telle — jamais comme un critère officiel bloquant.
+
+- Exemples de formulations correctes : "Il est recommandé d'avoir...", "Bpifrance perçoit positivement...", "En pratique, les dossiers avec X ont de meilleures chances...", "Ce n'est pas un critère officiel, mais...".
+
+- Les critères officiels (forme juridique, ancienneté < 1 an, société immatriculée en France) peuvent être présentés comme tels.
+
 ━━━ QUESTIONS HORS PÉRIMÈTRE ━━━
 
 Réponds **uniquement** : "Ce sujet est hors de mon périmètre d'expertise."
@@ -184,7 +194,7 @@ serve(async (req) => {
         model: "google/gemini-2.5-flash",
         messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
         stream: true,
-        temperature: 0,
+        temperature: 0.2,
         top_p: 1,
       }),
     });
