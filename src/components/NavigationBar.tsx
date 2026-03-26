@@ -74,9 +74,10 @@ function isGroupActive(group: NavGroup, activeSection: string) {
 interface NavigationBarProps {
   activeSection: string;
   scrollToSection: (sectionId: string) => void;
+  minimal?: boolean;
 }
 
-const NavigationBar = ({ activeSection, scrollToSection }: NavigationBarProps) => {
+const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: NavigationBarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleNav = (id: string) => {
