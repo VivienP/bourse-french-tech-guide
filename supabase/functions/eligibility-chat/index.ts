@@ -97,18 +97,27 @@ Remplacez X.X par la valeur numérique de la moyenne (ex: SCORE_FINAL: 3.2). Cet
 - Commencez directement par le titre du rapport sans préambule.
 - Évitez les sauts de ligne excessifs.`;
 
-// In-memory rate limiter by IP — with periodic cleanup to prevent memory leak
+// In-memory rate limiter by IP
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_MAX = 30;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
-function checkRateLimit(ip: string): boolean {
+// Periodic cleanup every 10 minutes to prevent unbounded memory growth
+setInterval(() => {
   const now = Date.now();
   for (const [key, entry] of rateLimitMap) {
     if (now > entry.resetTime) rateLimitMap.delete(key);
   }
+}, 10 * 60 * 1000);
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
   const entry = rateLimitMap.get(ip);
   if (!entry) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (now > entry.resetTime) {
     rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return true;
   }
@@ -139,6 +148,19 @@ serve(async (req) => {
 
     if (!Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Messages invalides." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Validate message structure
+    const isValidMsg = (m: unknown): boolean =>
+      typeof m === "object" && m !== null &&
+      "role" in m && "content" in m &&
+      typeof (m as Record<string, unknown>).content === "string";
+
+    if (!messages.every(isValidMsg)) {
+      return new Response(JSON.stringify({ error: "Structure des messages invalide." }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });

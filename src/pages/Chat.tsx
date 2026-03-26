@@ -17,10 +17,13 @@ function stripScoreMarker(text: string): string {
   return text.replace(/\nSCORE_FINAL:\s*[\d.]+\s*$/i, '').trimEnd();
 }
 
-// Extract score from assistant content
+// Extract score from assistant content — validates range [0, 5]
 function extractScore(text: string): number | null {
   const match = text.match(/SCORE_FINAL:\s*([\d.]+)/i);
-  return match ? parseFloat(match[1]) : null;
+  if (!match) return null;
+  const val = parseFloat(match[1]);
+  if (isNaN(val) || val < 0 || val > 5) return null;
+  return val;
 }
 
 const Chat: React.FC = () => {
@@ -81,6 +84,7 @@ const Chat: React.FC = () => {
 
     const controller = new AbortController();
     abortRef.current = controller;
+    const timeoutId = setTimeout(() => controller.abort(), 90_000); // 90s max
     let assistantContent = '';
 
     try {
@@ -176,10 +180,16 @@ const Chat: React.FC = () => {
         { role: 'assistant', content: '⚠️ Une erreur est survenue. Veuillez réessayer.' },
       ]);
     } finally {
+      clearTimeout(timeoutId);
       setIsLoading(false);
       abortRef.current = null;
     }
   }, [input, isLoading, messages, emailSent, sendToEmail]);
+
+  // Abort stream on unmount
+  useEffect(() => {
+    return () => { abortRef.current?.abort(); };
+  }, []);
 
   // Trigger intro message on mount
   useEffect(() => {
@@ -242,7 +252,7 @@ const Chat: React.FC = () => {
           ))}
 
           {/* Loading indicator */}
-          {isLoading && messages[messages.length - 1]?.role === 'user' && (
+          {isLoading && (messages.length === 0 || messages[messages.length - 1]?.role === 'user') && (
             <div className="flex justify-start">
               <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3">
                 <div className="flex gap-1">

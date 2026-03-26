@@ -34,6 +34,17 @@ serve(async (req) => {
       });
     }
 
+    // Validate score is a finite number in [0, 5]
+    if (typeof score !== "number" || !isFinite(score) || score < 0 || score > 5) {
+      return new Response(JSON.stringify({ error: "Score invalide." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const escapeHtml = (s: string) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
     // Build plain-text transcript
     const transcript = conversation
       .map((m) => `[${m.role === "user" ? "Utilisateur" : "Assistant"}]\n${m.content}`)
@@ -48,7 +59,7 @@ serve(async (req) => {
 <p><strong>Résultat :</strong> ${scoreLabel}</p>
 <hr/>
 <h3>Conversation complète</h3>
-<pre style="font-family: monospace; white-space: pre-wrap; background: #f5f5f5; padding: 16px; border-radius: 4px;">${transcript.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
+<pre style="font-family: monospace; white-space: pre-wrap; background: #f5f5f5; padding: 16px; border-radius: 4px;">${escapeHtml(transcript)}</pre>
 `;
 
     const res = await fetch("https://api.resend.com/emails", {
