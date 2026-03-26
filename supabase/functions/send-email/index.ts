@@ -11,6 +11,45 @@ interface Message {
   content: string;
 }
 
+const RESEND_API_URL = "https://api.resend.com/emails";
+const FROM_EMAIL = "BFT Éligibilité <onboarding@resend.dev>";
+const RECIPIENTS = ["vivienperrelle@gmail.com", "ademuynck@odaliaconseil.com"];
+const SANDBOX_ALLOWED_RECIPIENT = "vivienperrelle@gmail.com";
+
+async function sendResendEmail({
+  apiKey,
+  to,
+  subject,
+  html,
+}: {
+  apiKey: string;
+  to: string[];
+  subject: string;
+  html: string;
+}) {
+  const response = await fetch(RESEND_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: FROM_EMAIL,
+      to,
+      subject,
+      html,
+    }),
+  });
+
+  const text = await response.text();
+
+  return {
+    ok: response.ok,
+    status: response.status,
+    text,
+  };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -72,23 +111,50 @@ ${contactInfo}
 <pre style="font-family: monospace; white-space: pre-wrap; background: #f5f5f5; padding: 16px; border-radius: 4px;">${escapeHtml(transcript)}</pre>
 `;
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "BFT Éligibilité <onboarding@resend.dev>",
-        to: ["vivienperrelle@gmail.com", "ademuynck@odaliaconseil.com"],
-        subject: `[BFT] Évaluation éligibilité — ${scoreLabel}`,
-        html,
-      }),
+    const subject = `[BFT] Évaluation éligibilité — ${scoreLabel}`;
+    const initialSend = await sendResendEmail({
+      apiKey: RESEND_API_KEY,
+      to: RECIPIENTS,
+      subject,
+      html,
     });
 
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Resend error:", res.status, text);
+    if (!initialSend.ok) {
+      const isSandboxRestriction =
+        initialSend.status === 403 &&
+        initialSend.text.includes(
+          "You can only send testing emails to your own email address",
+        );
+
+      if (isSandboxRestriction) {
+        const sandboxHtml = `${html}
+<p><em>Note automatique : en mode sandbox email, seul ${escapeHtml(SANDBOX_ALLOWED_RECIPIENT)} peut recevoir ce message tant qu'un domaine d'envoi n'est pas vérifié.</em></p>`;
+
+        const fallbackSend = await sendResendEmail({
+          apiKey: RESEND_API_KEY,
+          to: [SANDBOX_ALLOWED_RECIPIENT],
+          subject,
+          html: sandboxHtml,
+        });
+
+        if (!fallbackSend.ok) {
+          console.error("Resend fallback error:", fallbackSend.status, fallbackSend.text);
+          return new Response(JSON.stringify({ error: "Échec d'envoi du mail." }), {
+            status: 500,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        console.warn(
+          "Resend sandbox fallback applied: secondary recipients skipped until a sending domain is verified.",
+        );
+
+        return new Response(JSON.stringify({ success: true, sandboxFallback: true }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      console.error("Resend error:", initialSend.status, initialSend.text);
       return new Response(JSON.stringify({ error: "Échec d'envoi du mail." }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
