@@ -36,7 +36,10 @@ function extractClosed(text: string): boolean {
 }
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const INITIAL_MESSAGE = "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?";
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: INITIAL_MESSAGE }
+  ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
