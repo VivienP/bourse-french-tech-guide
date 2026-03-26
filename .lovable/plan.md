@@ -1,36 +1,39 @@
 
 
-## Problem
+## Plan: Boutons Oui/Non pour les 3 questions de préqualification
 
-The LLM is not reliably starting with the first pre-qualification question. Instead it sometimes jumps to "Pouvez-vous présenter votre projet ?" (the Cas A follow-up). This happens because the initial call sends empty messages and the LLM decides what to say first — which is non-deterministic.
+### Approche
 
-## Fix
+Ajouter un état `preQualStep` (0, 1, 2, 3) qui suit la progression dans les 3 questions de tri. Tant que `preQualStep < 3`, le textarea est masqué et remplacé par deux boutons **Oui** / **Non**. Quand l'utilisateur clique, le message "Oui" ou "Non" est envoyé automatiquement via `sendMessage()`.
 
-**Hardcode the first assistant message client-side** instead of relying on the LLM to generate it. Remove the empty initial API call entirely.
+Les 3 questions sont hardcodées côté client (pas besoin d'attendre le LLM) :
+1. Q1 (déjà affichée) : "Votre entreprise est-elle une société française déjà **immatriculée** ?"
+2. Q2 : "Votre société a-t-elle moins d'un an ?"
+3. Q3 : "Avez-vous au moins 20 000 € de fonds propres et quasi-fonds propres ?"
 
-### Changes
+### Changements dans `src/pages/Chat.tsx`
 
-**1. `src/pages/Chat.tsx`** — Replace the LLM-generated intro with a hardcoded first message:
+1. **Nouvel état** : `const [preQualStep, setPreQualStep] = useState(0);`
 
-- Remove the `sendMessage('')` initial call on mount
-- Instead, initialize `messages` state with the first assistant message already set:
-  ```ts
-  const INITIAL_MESSAGE = "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?";
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: INITIAL_MESSAGE }
-  ]);
-  ```
-- Remove the `initialCallDone` ref and the `useEffect` that triggers `sendMessage('')`
+2. **Fonction `handlePreQualAnswer(answer: 'Oui' | 'Non')`** :
+   - Appelle `sendMessage(answer)` pour envoyer la réponse au LLM
+   - Incrémente `preQualStep`
+   - Si `preQualStep < 2` (questions 2 et 3 restantes), ajouter la question suivante côté client comme message assistant après un court délai — ou laisser le LLM la poser (le prompt est déjà configuré pour enchaîner les questions)
 
-**2. `supabase/functions/eligibility-chat/index.ts`** — Update the system prompt to align with the new flow:
+3. **Zone de saisie conditionnelle** : dans le footer, remplacer le textarea par deux boutons quand `preQualStep < 3` et `!isLoading` :
+   ```
+   ┌─────────────────────────┐
+   │   [ Oui ]    [ Non ]    │
+   └─────────────────────────┘
+   ```
+   Boutons stylés avec les classes existantes (bg-primary pour Oui, outline pour Non).
 
-- Update the pre-qualification wording to match: "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?"
-- Update the 3 questions to match the user's exact formulations:
-  1. "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?"
-  2. "Votre société a-t-elle moins d'un an ?"
-  3. "Avez-vous au moins 20 000 € de fonds propres et quasi-fonds propres ?"
-- Clarify in the prompt that the first question has already been asked (it's the hardcoded intro), so the LLM should wait for the answer, then ask question 2, then question 3
-- Keep all other sections (scoring, report, markers) identical
+4. **Bloquer le textarea** : quand `preQualStep < 3`, ne pas rendre le textarea ni le bouton Send — uniquement les boutons Oui/Non.
 
-This eliminates the non-determinism of the initial message and guarantees the conversation always starts with the correct pre-qualification question.
+### Détails techniques
+
+- `preQualStep` commence à 0 (Q1 affichée, en attente de réponse)
+- Après clic → `sendMessage('Oui')` ou `sendMessage('Non')` → le LLM répond et pose la question suivante → `preQualStep` passe à 1, puis 2, puis 3
+- À `preQualStep === 3`, le textarea normal réapparaît pour la suite de la conversation
+- Les boutons sont désactivés pendant `isLoading` pour éviter les double-clics
 
