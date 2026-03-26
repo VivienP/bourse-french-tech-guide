@@ -2,6 +2,7 @@
 import React from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const CTASection = ({ namespace = 'decouverte' }: {namespace?: string;}) => {
@@ -34,9 +35,18 @@ const CTASection = ({ namespace = 'decouverte' }: {namespace?: string;}) => {
           <h2 className="text-3xl font-bold text-foreground mb-4 text-center md:text-3xl">
             Échangez avec un expert
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-2xl mx-auto text-base text-center">
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto text-base text-center">
             Déléguez la constitution de votre dossier et maximisez vos chances de financement.
           </p>
+
+          <div className="flex justify-center mb-10">
+            <Link
+              to="/chat"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors text-sm"
+            >
+              Évaluer mon éligibilité gratuitement →
+            </Link>
+          </div>
 
           <Cal
             namespace={namespace}
