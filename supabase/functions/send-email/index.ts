@@ -22,9 +22,11 @@ serve(async (req) => {
       throw new Error("RESEND_API_KEY is not configured");
     }
 
-    const { conversation, score } = await req.json() as {
+    const { conversation, score, contactEmail, contactPhone } = await req.json() as {
       conversation: Message[];
       score: number;
+      contactEmail?: string;
+      contactPhone?: string;
     };
 
     if (!Array.isArray(conversation)) {
