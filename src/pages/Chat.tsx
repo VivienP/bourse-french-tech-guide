@@ -235,6 +235,12 @@ const Chat: React.FC = () => {
     setIsLoading(false);
   };
 
+  const handlePreQualAnswer = useCallback((answer: 'Oui' | 'Non') => {
+    if (isLoading) return;
+    sendMessage(answer);
+    setPreQualStep((prev) => prev + 1);
+  }, [isLoading, sendMessage]);
+
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLeadError('');
