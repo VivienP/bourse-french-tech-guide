@@ -83,8 +83,7 @@ const Chat: React.FC = () => {
   const sendMessage = useCallback(async (directText?: string) => {
     const trimmed = (directText ?? input).trim();
 
-    // Allow empty call only for the initial trigger (directText === '')
-    if (directText !== '' && !trimmed) return;
+    if (!trimmed) return;
     if (isLoading) return;
     if (conversationClosed) return;
 
