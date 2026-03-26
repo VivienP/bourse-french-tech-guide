@@ -148,6 +148,7 @@ const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: Navi
           </div>
           )}
 
+          {!minimal && (
           <div className="flex items-center gap-2">
             {/* Mobile menu */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -216,6 +217,7 @@ const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: Navi
               Réserver un créneau
             </Button>
           </div>
+          )}
         </div>
       </div>
     </nav>
