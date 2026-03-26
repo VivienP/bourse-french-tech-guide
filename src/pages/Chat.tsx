@@ -36,7 +36,10 @@ function extractClosed(text: string): boolean {
 }
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const INITIAL_MESSAGE = "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?";
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: INITIAL_MESSAGE }
+  ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [score, setScore] = useState<number | null>(null);
@@ -45,7 +48,6 @@ const Chat: React.FC = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const initialCallDone = useRef(false);
 
   // Auto-scroll on new messages
   useEffect(() => {
@@ -81,8 +83,7 @@ const Chat: React.FC = () => {
   const sendMessage = useCallback(async (directText?: string) => {
     const trimmed = (directText ?? input).trim();
 
-    // Allow empty call only for the initial trigger (directText === '')
-    if (directText !== '' && !trimmed) return;
+    if (!trimmed) return;
     if (isLoading) return;
     if (conversationClosed) return;
 
@@ -207,13 +208,6 @@ const Chat: React.FC = () => {
     return () => { abortRef.current?.abort(); };
   }, []);
 
-  // Trigger intro message on mount
-  useEffect(() => {
-    if (initialCallDone.current) return;
-    initialCallDone.current = true;
-    sendMessage('');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
