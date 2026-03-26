@@ -1,49 +1,30 @@
 
 
-## Analysis
+## Diagnostic
 
-**Two separate issues identified:**
+**Two issues identified:**
 
-### 1. Build Error (Vite / @swc/core)
-The `@swc/core` native binding error is an **infrastructure-level issue** in the Lovable build sandbox — not caused by any code change. The `@vitejs/plugin-react-swc` plugin requires native binaries that occasionally fail to load in the sandbox environment. This is transient and will resolve on retry. No code fix needed.
+### 1. Edge function `eligibility-chat` not deployed (CRITICAL — causes the runtime error)
 
-### 2. Edge Function — File Reading
+The function exists in `supabase/functions/eligibility-chat/index.ts` but returns 404 when called — it was never deployed (or a previous deployment failed silently). The `/chat` page calls this function on mount with `{"messages":[]}`, gets a network failure, and displays the error message.
 
-**Current state:** All files are correctly placed in `supabase/functions/chat/` alongside `index.ts`:
-- `llms-full.txt` ✓
-- 11 `.md` files ✓ (including `financement-non-dilutif.md`)
-- 2 `.csv` files
+**Fix:** Deploy the `eligibility-chat` edge function. No code change needed — just a deployment.
 
-**Current code** (line 10-13) reads only 2 files using `new URL()` without `.pathname`:
+### 2. Build error in `src/pages/Chat.tsx` (line 52)
+
+The `cssVarsPerTheme` property expects both `light` and `dark` keys (`Record<Theme, Record<string, string>>`), but only `light` is provided.
+
+**Fix:** Add the missing `dark` key:
 ```ts
-const KNOWLEDGE_BFT = Deno.readTextFileSync(new URL("./llms-full.txt", import.meta.url));
-const KNOWLEDGE_ND = Deno.readTextFileSync(new URL("./financement-non-dilutif.md", import.meta.url));
+cssVarsPerTheme: {
+  light: { 'cal-brand': '#1B2A4A' },
+  dark: { 'cal-brand': '#1B2A4A' },
+},
 ```
 
-### Plan
+## Plan
 
-**Single change in `supabase/functions/chat/index.ts` (lines 9-13):**
-
-Replace the two static file reads with the user's exact approach:
-
-```ts
-// Read knowledge files once at cold start
-const KNOWLEDGE_BFT = Deno.readTextFileSync(
-  new URL("./llms-full.txt", import.meta.url).pathname
-);
-
-const functionDir = new URL(".", import.meta.url).pathname;
-const KNOWLEDGE_ND = Array.from(Deno.readDirSync(functionDir))
-  .filter((entry) => entry.isFile && entry.name.endsWith(".md"))
-  .sort((a, b) => a.name.localeCompare(b.name))
-  .map((entry) => Deno.readTextFileSync(`${functionDir}/${entry.name}`))
-  .join("\n\n---\n\n");
-```
-
-This:
-- Uses `.pathname` to get a string path (required by `readTextFileSync` in some Deno runtimes)
-- Dynamically reads **all** `.md` files in the function directory, sorted alphabetically, concatenated with separators
-- Keeps everything else untouched (detectIntent, buildSystemPrompt, rate limiting, streaming, error handling)
-
-After deploying, I'll check the edge function logs to confirm cold start succeeds or capture the exact error.
+1. **Fix the TypeScript build error** in `src/pages/Chat.tsx` — add `dark` theme to `cssVarsPerTheme`
+2. **Deploy the `eligibility-chat` edge function** — the code is correct, it just needs to be deployed
+3. **Verify** — curl the function to confirm it responds, then confirm the `/chat` page loads without error
 
