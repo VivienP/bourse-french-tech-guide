@@ -409,7 +409,7 @@ const Chat: React.FC = () => {
           {/* Conversation closed notice */}
           {conversationClosed && (
             <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center">
-              Conversation terminée. Actualisez la page pour démarrer une nouvelle évaluation.
+              Conversation terminée.
             </div>
           )}
 
