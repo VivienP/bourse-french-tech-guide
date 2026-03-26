@@ -10,7 +10,7 @@ const ELIGIBILITY_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/eligi
 const SEND_EMAIL_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`;
 const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
 const CAL_NAMESPACE = 'eligibilite';
-const MAX_INPUT_LENGTH = 1000;
+const MAX_INPUT_LENGTH = 2000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
 
 function getOrCreateSessionId(): string {
