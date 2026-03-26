@@ -80,7 +80,7 @@ ${contactInfo}
       },
       body: JSON.stringify({
         from: "BFT Éligibilité <onboarding@resend.dev>",
-        to: ["vivien.perrelle@gmail.com"],
+        to: ["vivienperrelle@gmail.com", "ademuynck@odaliaconseil.com"],
         subject: `[BFT] Évaluation éligibilité — ${scoreLabel}`,
         html,
       }),
