@@ -209,13 +209,6 @@ const Chat: React.FC = () => {
     return () => { abortRef.current?.abort(); };
   }, []);
 
-  // Trigger intro message on mount
-  useEffect(() => {
-    if (initialCallDone.current) return;
-    initialCallDone.current = true;
-    sendMessage('');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
