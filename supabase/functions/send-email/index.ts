@@ -22,9 +22,11 @@ serve(async (req) => {
       throw new Error("RESEND_API_KEY is not configured");
     }
 
-    const { conversation, score } = await req.json() as {
+    const { conversation, score, contactEmail, contactPhone } = await req.json() as {
       conversation: Message[];
       score: number;
+      contactEmail?: string;
+      contactPhone?: string;
     };
 
     if (!Array.isArray(conversation)) {
@@ -54,10 +56,18 @@ serve(async (req) => {
       ? `✅ ÉLIGIBLE (score : ${score}/5)`
       : `❌ NON ÉLIGIBLE (score : ${score}/5)`;
 
+    const contactInfo = (contactEmail || contactPhone)
+      ? `<h3>Coordonnées du prospect</h3>
+<p><strong>Email :</strong> ${escapeHtml(contactEmail || 'Non renseigné')}</p>
+<p><strong>Téléphone :</strong> ${escapeHtml(contactPhone || 'Non renseigné')}</p>
+<hr/>`
+      : '';
+
     const html = `
 <h2>Nouvelle évaluation d'éligibilité BFT</h2>
 <p><strong>Résultat :</strong> ${scoreLabel}</p>
 <hr/>
+${contactInfo}
 <h3>Conversation complète</h3>
 <pre style="font-family: monospace; white-space: pre-wrap; background: #f5f5f5; padding: 16px; border-radius: 4px;">${escapeHtml(transcript)}</pre>
 `;
@@ -70,7 +80,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: "BFT Éligibilité <onboarding@resend.dev>",
-        to: ["vivien.perrelle@gmail.com"],
+        to: ["vivienperrelle@gmail.com", "ademuynck@odaliaconseil.com"],
         subject: `[BFT] Évaluation éligibilité — ${scoreLabel}`,
         html,
       }),

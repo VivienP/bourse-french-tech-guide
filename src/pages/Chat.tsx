@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Send, Square } from 'lucide-react';
+import { Send, Square, Lock } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
@@ -12,9 +12,6 @@ const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
 
 const CAL_NAMESPACE = 'eligibilite';
 
-// Strip LLM control markers from displayed content.
-// No $ anchor — markers are stripped as soon as they appear during streaming,
-// even if the LLM emits trailing content after them.
 function stripMarkers(text: string): string {
   return text
     .replace(/\nSCORE_FINAL:\s*[\d.]+/gi, '')
@@ -22,7 +19,6 @@ function stripMarkers(text: string): string {
     .trimEnd();
 }
 
-// Extract score from assistant content — validates range [0, 5]
 function extractScore(text: string): number | null {
   const match = text.match(/SCORE_FINAL:\s*([\d.]+)/i);
   if (!match) return null;
@@ -35,6 +31,17 @@ function extractClosed(text: string): boolean {
   return /CONVERSATION_CLOSED/i.test(text);
 }
 
+// Simple email validation
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Simple phone validation (French format)
+function isValidPhone(phone: string): boolean {
+  const cleaned = phone.replace(/[\s.\-()]/g, '');
+  return /^(\+33|0)[1-9]\d{8}$/.test(cleaned);
+}
+
 const Chat: React.FC = () => {
   const INITIAL_MESSAGE = "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?";
   const [messages, setMessages] = useState<Message[]>([
@@ -45,18 +52,28 @@ const Chat: React.FC = () => {
   const [score, setScore] = useState<number | null>(null);
   const [emailSent, setEmailSent] = useState(false);
   const [conversationClosed, setConversationClosed] = useState(false);
+  const [reportContent, setReportContent] = useState<string | null>(null);
+
+  // Lead capture state
+  const [leadCaptured, setLeadCaptured] = useState(false);
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [leadError, setLeadError] = useState('');
+
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const conversationRef = useRef<Message[]>([]);
 
-  // Auto-scroll on new messages
+  // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, leadCaptured]);
 
-  // Init Cal.com widget when score is eligible and conversation is not closed
+  // Init Cal.com
   useEffect(() => {
     if (score === null || score < 2.5 || conversationClosed) return;
+    if (!leadCaptured) return;
     (async () => {
       const cal = await getCalApi({ namespace: CAL_NAMESPACE, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
       cal('ui', {
@@ -66,14 +83,14 @@ const Chat: React.FC = () => {
         layout: 'month_view',
       });
     })();
-  }, [score, conversationClosed]);
+  }, [score, conversationClosed, leadCaptured]);
 
-  const sendToEmail = useCallback(async (conversation: Message[], finalScore: number) => {
+  const sendToEmail = useCallback(async (conversation: Message[], finalScore: number, email?: string, phone?: string) => {
     try {
       await fetch(SEND_EMAIL_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: AUTH_HEADER },
-        body: JSON.stringify({ conversation, score: finalScore }),
+        body: JSON.stringify({ conversation, score: finalScore, contactEmail: email, contactPhone: phone }),
       });
     } catch (e) {
       console.error('send-email error:', e);
@@ -96,7 +113,7 @@ const Chat: React.FC = () => {
 
     const controller = new AbortController();
     abortRef.current = controller;
-    const timeoutId = setTimeout(() => controller.abort(), 90_000); // 90s max
+    const timeoutId = setTimeout(() => controller.abort(), 90_000);
     let assistantContent = '';
 
     try {
@@ -170,24 +187,19 @@ const Chat: React.FC = () => {
         }
       }
 
-      // Check for conversation closed marker
       if (extractClosed(assistantContent)) {
         setConversationClosed(true);
       }
 
-      // Check for score marker in full response
       const detectedScore = extractScore(assistantContent);
       if (detectedScore !== null) {
         setScore(detectedScore);
-        // Build full conversation for email (replace last assistant msg with clean version)
-        const finalConversation: Message[] = [
+        setReportContent(stripMarkers(assistantContent));
+        // Store conversation for later email send (after lead capture)
+        conversationRef.current = [
           ...newMessages,
           { role: 'assistant', content: stripMarkers(assistantContent) },
         ];
-        if (!emailSent) {
-          setEmailSent(true);
-          sendToEmail(finalConversation, detectedScore);
-        }
       }
     } catch (e: any) {
       if (e.name === 'AbortError') return;
@@ -201,13 +213,11 @@ const Chat: React.FC = () => {
       setIsLoading(false);
       abortRef.current = null;
     }
-  }, [input, isLoading, messages, emailSent, conversationClosed, sendToEmail]);
+  }, [input, isLoading, messages, conversationClosed]);
 
-  // Abort stream on unmount
   useEffect(() => {
     return () => { abortRef.current?.abort(); };
   }, []);
-
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -222,8 +232,36 @@ const Chat: React.FC = () => {
     setIsLoading(false);
   };
 
+  const handleLeadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLeadError('');
+
+    if (!contactEmail.trim() || !contactPhone.trim()) {
+      setLeadError('Veuillez remplir les deux champs.');
+      return;
+    }
+    if (!isValidEmail(contactEmail.trim())) {
+      setLeadError('Adresse email invalide.');
+      return;
+    }
+    if (!isValidPhone(contactPhone.trim())) {
+      setLeadError('Numéro de téléphone invalide (format français attendu).');
+      return;
+    }
+
+    setLeadCaptured(true);
+
+    // Now send the email with contact info
+    if (!emailSent && score !== null && conversationRef.current.length > 0) {
+      setEmailSent(true);
+      sendToEmail(conversationRef.current, score, contactEmail.trim(), contactPhone.trim());
+    }
+  };
+
   const isEligible = score !== null && score >= 2.5 && !conversationClosed;
   const reportDone = score !== null;
+  const showLeadGate = reportDone && !leadCaptured && !conversationClosed;
+  const showReport = reportDone && leadCaptured && !conversationClosed;
 
   const navigateToSection = (sectionId: string) => {
     window.location.href = `/#${sectionId}`;
@@ -233,28 +271,48 @@ const Chat: React.FC = () => {
     <div className="flex flex-col h-screen bg-background">
       <NavigationBar activeSection="" scrollToSection={navigateToSection} minimal />
 
-      {/* Messages — pt-[96px] compense la navbar fixe + espace supplémentaire */}
+      {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 pt-[96px] pb-6 space-y-4">
-        <div className="max-w-2xl mx-auto space-y-4">
-          {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
-                  msg.role === 'user'
-                    ? 'bg-primary text-primary-foreground rounded-br-sm'
-                    : 'bg-muted text-foreground rounded-bl-sm'
-                }`}
-              >
-                {msg.role === 'assistant' ? (
-                  <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&_*]:text-sm">
-                    <ReactMarkdown>{msg.content}</ReactMarkdown>
-                  </div>
-                ) : (
-                  msg.content
-                )}
+        <div className="max-w-3xl mx-auto space-y-4">
+          {messages.map((msg, i) => {
+            // Hide the report message (last assistant) if lead not captured yet
+            const isReportMsg = reportDone && !leadCaptured && msg.role === 'assistant' && i === messages.length - 1;
+
+            return (
+              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
+                    msg.role === 'user'
+                      ? 'bg-primary text-primary-foreground rounded-br-sm'
+                      : 'bg-muted text-foreground rounded-bl-sm'
+                  } ${isReportMsg ? 'relative' : ''}`}
+                >
+                  {isReportMsg ? (
+                    // Blurred report preview
+                    <div className="relative">
+                      <div className="blur-[6px] select-none pointer-events-none max-h-[200px] overflow-hidden">
+                        <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&_*]:text-sm">
+                          <ReactMarkdown>{msg.content}</ReactMarkdown>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/80 to-muted flex items-end justify-center pb-4">
+                        <div className="flex items-center gap-2 text-muted-foreground text-xs font-medium">
+                          <Lock className="h-3.5 w-3.5" />
+                          Renseignez vos coordonnées pour accéder au rapport
+                        </div>
+                      </div>
+                    </div>
+                  ) : msg.role === 'assistant' ? (
+                    <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&_*]:text-sm">
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    msg.content
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* Loading indicator */}
           {isLoading && (messages.length === 0 || messages[messages.length - 1]?.role === 'user') && (
@@ -269,8 +327,59 @@ const Chat: React.FC = () => {
             </div>
           )}
 
-          {/* Cal.eu widget — shown when eligible */}
-          {isEligible && (
+          {/* Lead capture gate */}
+          {showLeadGate && (
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <Lock className="h-4 w-4 text-primary" />
+                <h3 className="text-sm font-semibold text-foreground">Accédez à votre rapport d'évaluation</h3>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">
+                Renseignez vos coordonnées pour débloquer votre rapport complet et recevoir des recommandations personnalisées.
+              </p>
+              <form onSubmit={handleLeadSubmit} className="space-y-3">
+                <div>
+                  <input
+                    type="email"
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
+                    placeholder="Adresse email"
+                    className="w-full bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    value={contactPhone}
+                    onChange={(e) => setContactPhone(e.target.value)}
+                    placeholder="Numéro de téléphone"
+                    className="w-full bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+                {leadError && (
+                  <p className="text-xs text-destructive">{leadError}</p>
+                )}
+                <button
+                  type="submit"
+                  className="w-full bg-primary text-primary-foreground rounded-xl py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
+                >
+                  Voir mon rapport
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* Full report display after lead capture */}
+          {showReport && reportContent && (
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+              <div className="prose prose-sm max-w-none dark:prose-invert [&>h2]:text-base [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-sm [&>h3]:font-semibold [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2">
+                <ReactMarkdown>{reportContent}</ReactMarkdown>
+              </div>
+            </div>
+          )}
+
+          {/* Cal.eu widget — shown when eligible AND lead captured */}
+          {isEligible && leadCaptured && (
             <div className="mt-6">
               <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-4 text-sm text-green-800">
                 <strong>Score : {score}/5 — Projet éligible.</strong> Prenez rendez-vous avec un expert pour préparer votre dossier.
@@ -285,8 +394,8 @@ const Chat: React.FC = () => {
             </div>
           )}
 
-          {/* Non-eligible notice */}
-          {reportDone && !isEligible && !conversationClosed && (
+          {/* Non-eligible notice — shown after lead capture */}
+          {reportDone && !isEligible && !conversationClosed && leadCaptured && (
             <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-sm text-orange-800">
               <strong>Score : {score}/5.</strong> Votre projet nécessite des ajustements avant de candidater. Consultez les recommandations dans le rapport ci-dessus.
             </div>
@@ -303,10 +412,10 @@ const Chat: React.FC = () => {
         </div>
       </div>
 
-      {/* Input footer */}
-      {!conversationClosed && (
+      {/* Input footer — hidden when lead gate is showing or conversation closed */}
+      {!conversationClosed && !showLeadGate && (
         <div className="border-t border-border px-4 py-3 bg-card shrink-0">
-          <div className="max-w-2xl mx-auto flex gap-2 items-end">
+          <div className="max-w-3xl mx-auto flex gap-2 items-end">
             <textarea
               ref={inputRef}
               value={input}
