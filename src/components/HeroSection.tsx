@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import StatsSection from '@/components/StatsSection';
 
@@ -34,10 +35,12 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
             <Button size="lg" variant="outline" onClick={() => scrollToSection('definition')} className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground px-8 py-3 transition-all duration-200 rounded-xl text-base">
               Découvrir le dispositif
             </Button>
-            <Button size="lg" onClick={() => scrollToSection('cta')} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg text-base">
-              Évaluer mon éligibilité
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link to="/chat">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 transition-all duration-200 rounded-xl shadow-md hover:shadow-lg text-base">
+                Évaluer mon éligibilité
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
 
           <div className="animate-fade-in [animation-delay:600ms] opacity-0 [animation-fill-mode:forwards]">
