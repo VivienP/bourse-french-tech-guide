@@ -48,7 +48,6 @@ const Chat: React.FC = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const initialCallDone = useRef(false);
 
   // Auto-scroll on new messages
   useEffect(() => {
