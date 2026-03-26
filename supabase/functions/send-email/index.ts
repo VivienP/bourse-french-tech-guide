@@ -56,10 +56,18 @@ serve(async (req) => {
       ? `✅ ÉLIGIBLE (score : ${score}/5)`
       : `❌ NON ÉLIGIBLE (score : ${score}/5)`;
 
+    const contactInfo = (contactEmail || contactPhone)
+      ? `<h3>Coordonnées du prospect</h3>
+<p><strong>Email :</strong> ${escapeHtml(contactEmail || 'Non renseigné')}</p>
+<p><strong>Téléphone :</strong> ${escapeHtml(contactPhone || 'Non renseigné')}</p>
+<hr/>`
+      : '';
+
     const html = `
 <h2>Nouvelle évaluation d'éligibilité BFT</h2>
 <p><strong>Résultat :</strong> ${scoreLabel}</p>
 <hr/>
+${contactInfo}
 <h3>Conversation complète</h3>
 <pre style="font-family: monospace; white-space: pre-wrap; background: #f5f5f5; padding: 16px; border-radius: 4px;">${escapeHtml(transcript)}</pre>
 `;
