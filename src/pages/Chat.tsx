@@ -85,6 +85,21 @@ const Chat: React.FC = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, leadCaptured]);
 
+  // Cal.com init
+  useEffect(() => {
+    (async () => {
+      const cal = await getCalApi({ namespace: CAL_NAMESPACE });
+      cal('ui', {
+        cssVarsPerTheme: {
+          light: { 'cal-brand': '#1B2A4A' },
+          dark: { 'cal-brand': '#1B2A4A' },
+        },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    })();
+  }, []);
+
   const sendToEmail = useCallback(async (conversation: Message[], finalScore: number, email?: string, phone?: string) => {
     try {
       await fetch(SEND_EMAIL_URL, {
