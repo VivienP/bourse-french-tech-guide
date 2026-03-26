@@ -412,8 +412,8 @@ const Chat: React.FC = () => {
         </div>
       </div>
 
-      {/* Input footer — hidden when lead gate is showing or conversation closed */}
-      {!conversationClosed && !showLeadGate && (
+      {/* Input footer — hidden when lead gate, cal widget, or conversation closed */}
+      {!conversationClosed && !showLeadGate && !showReport && (
         <div className="border-t border-border px-4 py-3 bg-card shrink-0">
           <div className="max-w-3xl mx-auto flex gap-2 items-end">
             <textarea
