@@ -54,6 +54,9 @@ const Chat: React.FC = () => {
   const [conversationClosed, setConversationClosed] = useState(false);
   const [reportContent, setReportContent] = useState<string | null>(null);
 
+  // Pre-qualification state
+  const [preQualStep, setPreQualStep] = useState(0);
+
   // Lead capture state
   const [leadCaptured, setLeadCaptured] = useState(false);
   const [contactEmail, setContactEmail] = useState('');
@@ -231,6 +234,12 @@ const Chat: React.FC = () => {
     abortRef.current = null;
     setIsLoading(false);
   };
+
+  const handlePreQualAnswer = useCallback((answer: 'Oui' | 'Non') => {
+    if (isLoading) return;
+    sendMessage(answer);
+    setPreQualStep((prev) => prev + 1);
+  }, [isLoading, sendMessage]);
 
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -415,37 +424,58 @@ const Chat: React.FC = () => {
       {/* Input footer — hidden when lead gate, cal widget, or conversation closed */}
       {!conversationClosed && !showLeadGate && !showReport && (
         <div className="border-t border-border px-4 py-3 bg-card shrink-0">
-          <div className="max-w-3xl mx-auto flex gap-2 items-end">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
-              rows={1}
-              className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
-              style={{ height: 'auto' }}
-              onInput={(e) => {
-                const el = e.currentTarget;
-                el.style.height = 'auto';
-                el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
-              }}
-            />
-            {isLoading ? (
-              <button
-                onClick={stopGeneration}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity shrink-0"
-              >
-                <Square className="h-4 w-4" />
-              </button>
+          <div className="max-w-3xl mx-auto">
+            {preQualStep < 3 ? (
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => handlePreQualAnswer('Oui')}
+                  disabled={isLoading}
+                  className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-40"
+                >
+                  Oui
+                </button>
+                <button
+                  onClick={() => handlePreQualAnswer('Non')}
+                  disabled={isLoading}
+                  className="px-6 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm font-medium hover:bg-muted transition-colors disabled:opacity-40"
+                >
+                  Non
+                </button>
+              </div>
             ) : (
-              <button
-                onClick={() => sendMessage()}
-                disabled={!input.trim()}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 shrink-0"
-              >
-                <Send className="h-4 w-4" />
-              </button>
+              <div className="flex gap-2 items-end">
+                <textarea
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
+                  rows={1}
+                  className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
+                  style={{ height: 'auto' }}
+                  onInput={(e) => {
+                    const el = e.currentTarget;
+                    el.style.height = 'auto';
+                    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+                  }}
+                />
+                {isLoading ? (
+                  <button
+                    onClick={stopGeneration}
+                    className="flex items-center justify-center w-10 h-10 rounded-xl bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity shrink-0"
+                  >
+                    <Square className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => sendMessage()}
+                    disabled={!input.trim()}
+                    className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 shrink-0"
+                  >
+                    <Send className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </div>
