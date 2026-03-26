@@ -58,7 +58,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "BFT Éligibilité <noreply@resend.dev>",
+        from: "BFT Éligibilité <onboarding@resend.dev>",
         to: ["vivien.perrelle@gmail.com"],
         subject: `[BFT] Évaluation éligibilité — ${scoreLabel}`,
         html,
