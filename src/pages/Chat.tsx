@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Send, Square, Lock } from 'lucide-react';
+import { Send, Square, Lock, Calendar } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
@@ -72,6 +72,7 @@ const Chat: React.FC = () => {
   const [contactEmail, setContactEmail] = useState('');
   const [contactPhone, setContactPhone] = useState('');
   const [leadError, setLeadError] = useState('');
+  const [rgpdConsent, setRgpdConsent] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -253,6 +254,10 @@ const Chat: React.FC = () => {
       setLeadError('Veuillez remplir les deux champs.');
       return;
     }
+    if (!rgpdConsent) {
+      setLeadError('Veuillez accepter la politique de confidentialité pour continuer.');
+      return;
+    }
     if (!isValidEmail(contactEmail.trim())) {
       setLeadError('Adresse email invalide.');
       return;
@@ -372,6 +377,20 @@ const Chat: React.FC = () => {
                 {leadError && (
                   <p className="text-xs text-destructive">{leadError}</p>
                 )}
+                <label className="flex items-start gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={rgpdConsent}
+                    onChange={(e) => setRgpdConsent(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-border accent-primary shrink-0"
+                  />
+                  <span className="text-[11px] text-muted-foreground leading-tight">
+                    J'accepte que mes données personnelles (email, téléphone) soient collectées et traitées par BFT dans le cadre de cette évaluation d'éligibilité, conformément au{' '}
+                    <a href="/mentions-legales" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
+                      RGPD et à notre politique de confidentialité
+                    </a>. Ces données sont utilisées uniquement pour vous recontacter et ne sont jamais cédées à des tiers.
+                  </span>
+                </label>
                 <button
                   type="submit"
                   className="w-full bg-primary text-primary-foreground rounded-xl py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
@@ -403,6 +422,25 @@ const Chat: React.FC = () => {
           {reportDone && !isEligible && !conversationClosed && leadCaptured && (
             <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-sm text-orange-800">
               <strong>Score : {score}/5.</strong> Votre projet nécessite des ajustements avant de candidater. Consultez les recommandations dans le rapport ci-dessus.
+            </div>
+          )}
+
+          {/* Cal.com booking widget — shown after lead capture */}
+          {showReport && (
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <Calendar className="h-4 w-4 text-primary" />
+                <h3 className="text-sm font-semibold text-foreground">Prenez rendez-vous avec un expert</h3>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">
+                Réservez un créneau pour discuter de votre projet avec un conseiller spécialisé en financements publics.
+              </p>
+              <Cal
+                namespace={CAL_NAMESPACE}
+                calLink="odalia-conseil/decouverte"
+                style={{ width: '100%', height: '100%', overflow: 'auto' }}
+                config={{ layout: 'month_view', theme: 'light' }}
+              />
             </div>
           )}
 
