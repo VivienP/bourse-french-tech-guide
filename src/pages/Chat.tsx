@@ -54,6 +54,9 @@ const Chat: React.FC = () => {
   const [conversationClosed, setConversationClosed] = useState(false);
   const [reportContent, setReportContent] = useState<string | null>(null);
 
+  // Pre-qualification state
+  const [preQualStep, setPreQualStep] = useState(0);
+
   // Lead capture state
   const [leadCaptured, setLeadCaptured] = useState(false);
   const [contactEmail, setContactEmail] = useState('');
