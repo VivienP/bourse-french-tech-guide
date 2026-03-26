@@ -100,6 +100,7 @@ const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: Navi
           </div>
 
           {/* Desktop nav */}
+          {!minimal && (
           <div className="hidden md:flex items-center space-x-1">
             {navEntries.map((entry) =>
               isGroup(entry) ? (
@@ -145,6 +146,7 @@ const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: Navi
               )
             )}
           </div>
+          )}
 
           <div className="flex items-center gap-2">
             {/* Mobile menu */}
