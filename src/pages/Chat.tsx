@@ -49,7 +49,7 @@ const Chat: React.FC = () => {
       const cal = await getCalApi({ namespace: CAL_NAMESPACE, embedJsUrl: 'https://app.cal.eu/embed/embed.js' });
       cal('ui', {
         theme: 'light',
-        cssVarsPerTheme: { light: { 'cal-brand': '#1B2A4A' } },
+        cssVarsPerTheme: { light: { 'cal-brand': '#1B2A4A' }, dark: { 'cal-brand': '#1B2A4A' } },
         hideEventTypeDetails: false,
         layout: 'month_view',
       });
