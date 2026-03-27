@@ -113,10 +113,31 @@ Tu bases TOUTES tes réponses exclusivement sur ce document :
 
 {{KNOWLEDGE}}`;
 
-function buildSystemPrompt(): string {
-  const knowledgeSection =
-    `${KNOWLEDGE_BFT}\n\n---\n\nCONTEXTE COMPLÉMENTAIRE — FINANCEMENT NON DILUTIF EN FRANCE :\n${KNOWLEDGE_ND}`;
+// Keywords that indicate the user is asking about non-dilutive financing beyond BFT
+const ND_KEYWORDS = [
+  "cii", "cir", "jei", "crédit d'impôt", "credit d'impot",
+  "prêt d'honneur", "pret d'honneur", "financement non dilutif",
+  "business plan", "oseille", "i-nov", "deeptech",
+  "french tech émergence", "aide à l'innovation",
+];
 
+function needsNdKnowledge(messages: unknown[]): boolean {
+  const lastUserMsg = [...messages].reverse().find(
+    (m): m is { role: string; content: string } =>
+      typeof m === "object" && m !== null &&
+      (m as Record<string, unknown>).role === "user" &&
+      typeof (m as Record<string, unknown>).content === "string"
+  );
+  if (!lastUserMsg) return false;
+  const text = lastUserMsg.content.toLowerCase();
+  return ND_KEYWORDS.some((kw) => text.includes(kw));
+}
+
+function buildSystemPrompt(messages: unknown[]): string {
+  let knowledgeSection = KNOWLEDGE_BFT;
+  if (needsNdKnowledge(messages)) {
+    knowledgeSection += `\n\n---\n\nCONTEXTE COMPLÉMENTAIRE — FINANCEMENT NON DILUTIF EN FRANCE :\n${KNOWLEDGE_ND}`;
+  }
   // Use a function replacer to prevent JS from interpreting $ sequences in knowledgeSection
   return SYSTEM_PROMPT_TEMPLATE.replace("{{KNOWLEDGE}}", () => knowledgeSection);
 }
@@ -182,7 +203,7 @@ serve(async (req) => {
     // Truncate history to last 8 messages to stay within context window
     const truncatedMessages = messages.slice(-8);
 
-    const systemPrompt = buildSystemPrompt();
+    const systemPrompt = buildSystemPrompt(messages);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -196,6 +217,7 @@ serve(async (req) => {
         stream: true,
         temperature: 0.2,
         top_p: 1,
+        max_tokens: 500,
       }),
     });
 
