@@ -78,7 +78,14 @@ const INITIAL_SUGGESTIONS = [
   'Comment augmenter mes fonds propres ?',
 ];
 
-const ChatBubble: React.FC<{ hideEligibility?: boolean }> = ({ hideEligibility = false }) => {
+const ELIGIBILITY_CONTEXTUAL_SUGGESTIONS: Record<number, string> = {
+  0: 'Quelles formes juridiques sont éligibles à la BFT ?',
+  1: "Comment est calculée la date limite d'un an ?",
+  2: "Qu'est-il considéré comme fonds propres ou quasi-fonds propres par Bpifrance ?",
+  3: 'Quels types de projets innovants sont éligibles ?',
+};
+
+const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number }> = ({ hideEligibility = false, eligibilityStep }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
