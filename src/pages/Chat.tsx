@@ -543,6 +543,7 @@ const Chat: React.FC = () => {
           </div>
         </div>
       )}
+      <ChatBubble hideEligibility />
     </div>
   );
 };
