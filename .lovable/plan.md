@@ -1,39 +1,66 @@
 
+Objectif : rendre le comportement fiable même quand l’utilisateur répond de façon incomplète comme “Application mobile”, en évitant que le modèle clôture la conversation à tort.
 
-## Plan: Boutons Oui/Non pour les 3 questions de préqualification
+1. Reprendre l’orchestration côté backend au lieu de laisser le LLM “deviner”
+- Ajouter une vraie machine d’état dans `supabase/functions/eligibility-chat/index.ts` :
+  - `prequal_q1`, `prequal_q2`, `prequal_q3`
+  - `project_initial`
+  - `project_followup`
+  - `report_ready`
+  - `closed`
+- Déterminer l’étape à partir de l’historique des messages avant d’appeler le modèle.
+- N’autoriser `CONVERSATION_CLOSED` que dans les cas de préqualification négative ou refus répété de répondre aux questions Oui/Non.
 
-### Approche
+2. Séparer strictement les deux logiques aujourd’hui mélangées
+- Préqualification : règles déterministes, avec réponses limitées à Oui/Non.
+- Qualification projet : si la description est vague/incomplète, ne jamais fermer ; poser automatiquement un lot court de questions complémentaires.
+- Ne plus confier cette décision critique uniquement au prompt.
 
-Ajouter un état `preQualStep` (0, 1, 2, 3) qui suit la progression dans les 3 questions de tri. Tant que `preQualStep < 3`, le textarea est masqué et remplacé par deux boutons **Oui** / **Non**. Quand l'utilisateur clique, le message "Oui" ou "Non" est envoyé automatiquement via `sendMessage()`.
+3. Mettre en place une détection robuste des informations manquantes
+- Créer une fonction serveur qui vérifie explicitement si les 3 blocs minimaux sont présents :
+  - innovation / problème résolu
+  - équipe
+  - marché / concurrents
+- Si un bloc manque ou si la réponse est trop courte/générique (“Application mobile”, “Projet IA”, etc.), répondre avec une relance structurée au lieu de lancer le scoring.
+- Garder une seule relance maximale avant de produire un rapport partiel, sans fermeture.
 
-Les 3 questions sont hardcodées côté client (pas besoin d'attendre le LLM) :
-1. Q1 (déjà affichée) : "Votre entreprise est-elle une société française déjà **immatriculée** ?"
-2. Q2 : "Votre société a-t-elle moins d'un an ?"
-3. Q3 : "Avez-vous au moins 20 000 € de fonds propres et quasi-fonds propres ?"
+4. Simplifier et durcir le prompt
+- Réécrire le prompt pour qu’il reçoive l’étape courante en entrée.
+- Lui interdire explicitement :
+  - de clôturer en étape projet pour manque d’informations
+  - de scorer sans prérequis suffisants
+  - d’interpréter une réponse projet vague comme un refus de répondre
+- Réduire les instructions ambiguës qui se chevauchent aujourd’hui entre préqualification, relance et clôture.
 
-### Changements dans `src/pages/Chat.tsx`
+5. Aligner le frontend `/chat` avec cette orchestration
+- Dans `src/pages/Chat.tsx`, conserver les boutons Oui/Non pour les 3 premières questions.
+- Ajouter une notion d’étape dérivée de la conversation côté client pour mieux contrôler :
+  - quand la saisie libre réapparaît
+  - quand une conversation est réellement terminée
+  - quand afficher la relance projet au lieu du message de fin
+- Éviter de se baser uniquement sur les marqueurs LLM pour piloter l’UX.
 
-1. **Nouvel état** : `const [preQualStep, setPreQualStep] = useState(0);`
+6. Corriger la logique de fermeture de conversation
+- Aujourd’hui, si le backend renvoie `CONVERSATION_CLOSED`, l’UI bloque tout de suite l’échange.
+- La correction devra faire en sorte que ce marqueur ne puisse plus sortir en étape projet.
+- Ainsi, un message vague déclenchera forcément une question de clarification et non un arrêt définitif.
 
-2. **Fonction `handlePreQualAnswer(answer: 'Oui' | 'Non')`** :
-   - Appelle `sendMessage(answer)` pour envoyer la réponse au LLM
-   - Incrémente `preQualStep`
-   - Si `preQualStep < 2` (questions 2 et 3 restantes), ajouter la question suivante côté client comme message assistant après un court délai — ou laisser le LLM la poser (le prompt est déjà configuré pour enchaîner les questions)
+7. Prévoir des garde-fous de robustesse
+- Ajouter des helpers explicites côté serveur :
+  - extraction des réponses de préqualification
+  - détection de réponse Oui/Non valide
+  - détection de projet trop vague
+  - calcul de l’étape courante
+- Cela rendra le comportement stable même si le modèle varie légèrement.
 
-3. **Zone de saisie conditionnelle** : dans le footer, remplacer le textarea par deux boutons quand `preQualStep < 3` et `!isLoading` :
-   ```
-   ┌─────────────────────────┐
-   │   [ Oui ]    [ Non ]    │
-   └─────────────────────────┘
-   ```
-   Boutons stylés avec les classes existantes (bg-primary pour Oui, outline pour Non).
+8. Vérifications à faire après implémentation
+- Cas nominal : 3 Oui → “Application mobile” → l’agent pose les 3 questions complémentaires.
+- Cas plus précis : 3 Oui → description complète → génération directe du rapport.
+- Cas refus partiel en préqualification : l’agent reformule, puis ferme seulement à cette étape si nécessaire.
+- Cas Non à un critère : fermeture justifiée sans rapport.
+- Vérifier aussi que l’UI ne réactive pas la zone de saisie si une vraie clôture a eu lieu.
 
-4. **Bloquer le textarea** : quand `preQualStep < 3`, ne pas rendre le textarea ni le bouton Send — uniquement les boutons Oui/Non.
-
-### Détails techniques
-
-- `preQualStep` commence à 0 (Q1 affichée, en attente de réponse)
-- Après clic → `sendMessage('Oui')` ou `sendMessage('Non')` → le LLM répond et pose la question suivante → `preQualStep` passe à 1, puis 2, puis 3
-- À `preQualStep === 3`, le textarea normal réapparaît pour la suite de la conversation
-- Les boutons sont désactivés pendant `isLoading` pour éviter les double-clics
-
+Détails techniques
+- Cause racine principale : l’architecture actuelle repose trop sur le prompt pour inférer l’état conversationnel.
+- Problème aggravant : le prompt contient des règles concurrentes sur “relancer” vs “clôturer”, et le client traite `CONVERSATION_CLOSED` comme vérité absolue.
+- Solution robuste : déplacer les décisions de workflow critiques dans du code déterministe, et utiliser le modèle seulement pour formuler les questions, analyses et rapports dans le cadre de l’étape décidée par le backend.
