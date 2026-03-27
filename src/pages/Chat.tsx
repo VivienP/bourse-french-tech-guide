@@ -518,8 +518,14 @@ const Chat: React.FC = () => {
 
           {/* Conversation closed notice */}
           {conversationClosed && (
-            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center">
-              Conversation terminée.
+            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center space-y-3">
+              <p>Conversation terminée.</p>
+              <button
+                onClick={resetConversation}
+                className="text-xs font-medium text-primary hover:underline transition-colors"
+              >
+                Démarrer une nouvelle évaluation
+              </button>
             </div>
           )}
 
