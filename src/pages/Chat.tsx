@@ -459,7 +459,7 @@ const Chat: React.FC = () => {
               </p>
               <Cal
                 namespace={CAL_NAMESPACE}
-                calLink="odalia-conseil/decouverte"
+                calLink="boursefrenchtech/decouverte"
                 style={{ width: '100%', height: '100%', overflow: 'auto' }}
                 config={{ layout: 'month_view', theme: 'light' }}
               />
