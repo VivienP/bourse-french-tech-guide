@@ -82,23 +82,25 @@ function isValidPhone(phone: string): boolean {
 
 const Chat: React.FC = () => {
   const INITIAL_MESSAGE = "Votre entreprise est-elle une société française **déjà immatriculée** (SAS/SARL/...) ?";
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: INITIAL_MESSAGE }
-  ]);
+  const saved = React.useMemo(() => loadChatState(), []);
+
+  const [messages, setMessages] = useState<Message[]>(
+    saved?.messages ?? [{ role: 'assistant', content: INITIAL_MESSAGE }]
+  );
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [score, setScore] = useState<number | null>(null);
+  const [score, setScore] = useState<number | null>(saved?.score ?? null);
   const [emailSent, setEmailSent] = useState(false);
-  const [conversationClosed, setConversationClosed] = useState(false);
-  const [reportContent, setReportContent] = useState<string | null>(null);
+  const [conversationClosed, setConversationClosed] = useState(saved?.conversationClosed ?? false);
+  const [reportContent, setReportContent] = useState<string | null>(saved?.reportContent ?? null);
 
   // Pre-qualification state
-  const [preQualStep, setPreQualStep] = useState(0);
+  const [preQualStep, setPreQualStep] = useState(saved?.preQualStep ?? 0);
 
   // Lead capture state
-  const [leadCaptured, setLeadCaptured] = useState(false);
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
+  const [leadCaptured, setLeadCaptured] = useState(saved?.leadCaptured ?? false);
+  const [contactEmail, setContactEmail] = useState(saved?.contactEmail ?? '');
+  const [contactPhone, setContactPhone] = useState(saved?.contactPhone ?? '');
   const [leadError, setLeadError] = useState('');
   const [rgpdConsent, setRgpdConsent] = useState(false);
 
