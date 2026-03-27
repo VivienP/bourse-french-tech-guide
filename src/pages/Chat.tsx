@@ -13,6 +13,33 @@ const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
 const CAL_NAMESPACE = 'eligibilite';
 const MAX_INPUT_LENGTH = 10000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
+const CHAT_STATE_KEY = 'bft_chat_state';
+
+interface SavedChatState {
+  messages: Message[];
+  preQualStep: number;
+  conversationClosed: boolean;
+  score: number | null;
+  reportContent: string | null;
+  leadCaptured: boolean;
+  contactEmail: string;
+  contactPhone: string;
+  sessionId: string;
+}
+
+function loadChatState(): SavedChatState | null {
+  try {
+    const raw = localStorage.getItem(CHAT_STATE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return null;
+}
+
+function saveChatState(state: SavedChatState) {
+  try {
+    localStorage.setItem(CHAT_STATE_KEY, JSON.stringify(state));
+  } catch {}
+}
 
 function getOrCreateSessionId(): string {
   let id = localStorage.getItem(SESSION_STORAGE_KEY);
@@ -55,23 +82,25 @@ function isValidPhone(phone: string): boolean {
 
 const Chat: React.FC = () => {
   const INITIAL_MESSAGE = "Votre entreprise est-elle une société française **déjà immatriculée** (SAS/SARL/...) ?";
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: INITIAL_MESSAGE }
-  ]);
+  const saved = React.useMemo(() => loadChatState(), []);
+
+  const [messages, setMessages] = useState<Message[]>(
+    saved?.messages ?? [{ role: 'assistant', content: INITIAL_MESSAGE }]
+  );
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [score, setScore] = useState<number | null>(null);
+  const [score, setScore] = useState<number | null>(saved?.score ?? null);
   const [emailSent, setEmailSent] = useState(false);
-  const [conversationClosed, setConversationClosed] = useState(false);
-  const [reportContent, setReportContent] = useState<string | null>(null);
+  const [conversationClosed, setConversationClosed] = useState(saved?.conversationClosed ?? false);
+  const [reportContent, setReportContent] = useState<string | null>(saved?.reportContent ?? null);
 
   // Pre-qualification state
-  const [preQualStep, setPreQualStep] = useState(0);
+  const [preQualStep, setPreQualStep] = useState(saved?.preQualStep ?? 0);
 
   // Lead capture state
-  const [leadCaptured, setLeadCaptured] = useState(false);
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
+  const [leadCaptured, setLeadCaptured] = useState(saved?.leadCaptured ?? false);
+  const [contactEmail, setContactEmail] = useState(saved?.contactEmail ?? '');
+  const [contactPhone, setContactPhone] = useState(saved?.contactPhone ?? '');
   const [leadError, setLeadError] = useState('');
   const [rgpdConsent, setRgpdConsent] = useState(false);
 
@@ -80,6 +109,27 @@ const Chat: React.FC = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const conversationRef = useRef<Message[]>([]);
   const sessionIdRef = useRef<string>(getOrCreateSessionId());
+
+  // Save chat state to localStorage
+  useEffect(() => {
+    saveChatState({
+      messages,
+      preQualStep,
+      conversationClosed,
+      score,
+      reportContent,
+      leadCaptured,
+      contactEmail,
+      contactPhone,
+      sessionId: sessionIdRef.current,
+    });
+  }, [messages, preQualStep, conversationClosed, score, reportContent, leadCaptured, contactEmail, contactPhone]);
+
+  const resetConversation = useCallback(() => {
+    localStorage.removeItem(CHAT_STATE_KEY);
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+    window.location.reload();
+  }, []);
 
   // Auto-scroll
   useEffect(() => {
@@ -468,8 +518,14 @@ const Chat: React.FC = () => {
 
           {/* Conversation closed notice */}
           {conversationClosed && (
-            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center">
-              Conversation terminée.
+            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center space-y-3">
+              <p>Conversation terminée.</p>
+              <button
+                onClick={resetConversation}
+                className="text-xs font-medium text-primary hover:underline transition-colors"
+              >
+                Démarrer une nouvelle évaluation
+              </button>
             </div>
           )}
 
