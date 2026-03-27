@@ -13,7 +13,7 @@ type Phase =
   | "prequal_q3"
   | "prequal_rejected"
   | "project_initial"
-  | "project_missing_info"
+  | "project_ready_for_eval"
   | "report_ready";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -28,18 +28,84 @@ const PREQUAL_LABELS = [
   "Au moins 20 000 € de fonds propres et quasi-fonds propres",
 ];
 
-// ── Pillar detection ───────────────────────────────────────────────────────────
+// ── Pillar detection (semantic via LLM) ─────────────────────────────────────────
 
 type Pillar = "innovation" | "team" | "market";
 
+async function classifyPillarsSemanticly(allUserTexts: string[], apiKey: string): Promise<Pillar[]> {
+  const combined = allUserTexts.join("\n\n");
+
+  // Quick fallback to regex if text is very short
+  if (combined.length < 100) {
+    return detectMissingPillarsFallback(combined);
+  }
+
+  try {
+    const classificationPrompt = `Analyse le texte suivant et indique quels piliers sont couverts : innovation, team (équipe), market (marché).
+
+Texte:
+${combined}
+
+Réponds EXACTEMENT au format JSON suivant, sans aucun texte avant ou après :
+{"innovation": true, "team": true, "market": true}
+
+- innovation: true si le texte mentionne des aspects techniquement innovants, complexité technique, R&D, prototypage, ou avancement technologique
+- team: true si le texte mentionne l'équipe fondatrice, expérience, compétences, ou background pertinent
+- market: true si le texte mentionne le marché cible, clients potentiels, compétition, stratégie commerciale, ou taille de marché`;
+
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [{ role: "user", content: classificationPrompt }],
+        stream: false,
+        temperature: 0.1,
+        top_p: 1,
+        max_tokens: 100,
+      }),
+    });
+
+    if (!response.ok) {
+      // Fallback to regex if LLM fails
+      console.warn("LLM classification failed, falling back to regex");
+      return detectMissingPillarsFallback(combined);
+    }
+
+    const data = (await response.json()) as Record<string, unknown>;
+    const content = (data.choices?.[0] as Record<string, unknown>)?.message?.content as string | undefined;
+    if (!content) return detectMissingPillarsFallback(combined);
+
+    let parsed: Record<string, boolean>;
+    try {
+      parsed = JSON.parse(content);
+    } catch {
+      console.warn("Failed to parse LLM classification response:", content);
+      return detectMissingPillarsFallback(combined);
+    }
+
+    const missing: Pillar[] = [];
+    if (!parsed.innovation) missing.push("innovation");
+    if (!parsed.team) missing.push("team");
+    if (!parsed.market) missing.push("market");
+    return missing;
+  } catch (error) {
+    console.warn("Semantic pillar classification error:", error);
+    return detectMissingPillarsFallback(combined);
+  }
+}
+
+// Fallback regex-based detection if LLM is unavailable
 const PILLAR_PATTERNS: Record<Pillar, RegExp> = {
-  innovation: /innov|techno|brevet|algorith|prototype|r&d|différen|ia\b|machine.?learn|deep.?learn|block.?chain|framework|moteur|embarqu|hors.?ligne|cyber|biotech|hardware|microalgu/i,
+  innovation: /innov|techno|brevet|algorith|prototype|r&d|différen|ia\b|machine.?learn|deep.?learn|block.?chain|framework|moteur|embarqu|hors.?ligne|cyber|biotech|hardware|microalgu|dispositif|financement|subvention|ressource/i,
   team: /fondat|co-fondat|cofoundr|cto|ceo|coo|équipe|associé|profil|expérience|parcours|ingénieur|développeur|compétence/i,
   market: /marché|client|concurrent|cible|segment|utilisateur|go.?to.?market|b2b|b2c|saas|revenue|chiffre|vente|part de marché|acquisition/i,
 };
 
-function detectMissingPillars(allUserTexts: string[]): Pillar[] {
-  const combined = allUserTexts.join(" ");
+function detectMissingPillarsFallback(combined: string): Pillar[] {
   const missing: Pillar[] = [];
   for (const [pillar, re] of Object.entries(PILLAR_PATTERNS) as [Pillar, RegExp][]) {
     if (!re.test(combined)) missing.push(pillar);
@@ -73,16 +139,8 @@ function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[];
   if (n === 2) return { phase: "prequal_q3", rejectedLabels, missingPillars: [] };
   if (n === 3) return { phase: "project_initial", rejectedLabels, missingPillars: [] };
 
-  // n >= 4: project description phase — check pillars
-  const projectTexts = userMsgs.slice(3).map((m) => m.content);
-  const missing = detectMissingPillars(projectTexts);
-
-  if (n === 4 && missing.length > 0) {
-    return { phase: "project_missing_info", rejectedLabels, missingPillars: missing };
-  }
-
-  // n >= 5: generate report regardless (don't loop forever)
-  return { phase: "report_ready", rejectedLabels, missingPillars: [] };
+  // n >= 4: project description phase — pillars will be evaluated asynchronously
+  return { phase: "project_ready_for_eval", rejectedLabels, missingPillars: [] };
 }
 
 // ── Hardcoded SSE helper ───────────────────────────────────────────────────────
@@ -261,7 +319,7 @@ serve(async (req) => {
     }
 
     // ── State machine ──
-    const { phase, rejectedLabels, missingPillars } = detectPhase(messages);
+    const { phase, rejectedLabels } = detectPhase(messages);
 
     // Deterministic responses
     if (phase === "prequal_q2") {
@@ -275,25 +333,37 @@ serve(async (req) => {
         "Vous remplissez les critères de pré-qualification ✅\n\nPouvez-vous présenter votre projet ? Fournissez le plus d'informations possibles (vous pouvez copier-coller vos documents de présentation).",
       );
     }
-    if (phase === "project_missing_info") {
-      const missingDescriptions = missingPillars.map((p) => `- ${PILLAR_LABELS[p]}`).join("\n");
-      return sseText(
-        "Merci pour ces informations. Pour produire une évaluation complète, j'aurais besoin de précisions sur :\n\n" +
-        missingDescriptions +
-        "\n\nPouvez-vous compléter ces éléments ?",
-      );
-    }
 
     // LLM-based responses
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
+    // For project_ready_for_eval: check pillars semantically
     let systemPrompt: string;
     let maxTokens: number;
 
     if (phase === "prequal_rejected") {
       systemPrompt = buildRejectedPrompt(rejectedLabels);
       maxTokens = 600;
+    } else if (phase === "project_ready_for_eval") {
+      // Check pillars using semantic classification
+      const userMsgs = messages.filter((m) => m.role === "user");
+      const projectTexts = userMsgs.slice(3).map((m) => m.content);
+      const missingPillars = await classifyPillarsSemanticly(projectTexts, LOVABLE_API_KEY);
+
+      // If key pillars are missing, ask for more info (only on first project message)
+      if (missingPillars.length > 0 && userMsgs.length === 4) {
+        const missingDescriptions = missingPillars.map((p) => `- ${PILLAR_LABELS[p]}`).join("\n");
+        return sseText(
+          "Merci pour ces informations. Pour produire une évaluation complète, j'aurais besoin de précisions sur :\n\n" +
+          missingDescriptions +
+          "\n\nPouvez-vous compléter ces éléments ?",
+        );
+      }
+
+      // Otherwise proceed to report
+      systemPrompt = REPORT_PROMPT;
+      maxTokens = 3000;
     } else {
       systemPrompt = REPORT_PROMPT;
       maxTokens = 3000;
