@@ -12,6 +12,8 @@ const ELIGIBILITY_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/eligi
 const SEND_EMAIL_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`;
 const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
 const CAL_NAMESPACE = 'eligibilite';
+const CAL_ORIGIN = 'https://app.cal.eu';
+const CAL_EMBED_JS_URL = `${CAL_ORIGIN}/embed/embed.js`;
 const MAX_INPUT_LENGTH = 10000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
 const CHAT_STATE_KEY = 'bft_chat_state';
@@ -140,7 +142,10 @@ const Chat: React.FC = () => {
   // Cal.com init
   useEffect(() => {
     (async () => {
-      const cal = await getCalApi({ namespace: CAL_NAMESPACE });
+      const cal = await getCalApi({
+        namespace: CAL_NAMESPACE,
+        embedJsUrl: CAL_EMBED_JS_URL,
+      });
       cal('ui', {
         cssVarsPerTheme: {
           light: { 'cal-brand': '#1B2A4A' },
@@ -537,6 +542,8 @@ const Chat: React.FC = () => {
               <Cal
                 namespace={CAL_NAMESPACE}
                 calLink="boursefrenchtech/decouverte"
+                calOrigin={CAL_ORIGIN}
+                embedJsUrl={CAL_EMBED_JS_URL}
                 style={{ width: '100%', height: '100%', overflow: 'auto' }}
                 config={{ layout: 'month_view', theme: 'light' }}
               />
