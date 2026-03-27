@@ -110,6 +110,27 @@ const Chat: React.FC = () => {
   const conversationRef = useRef<Message[]>([]);
   const sessionIdRef = useRef<string>(getOrCreateSessionId());
 
+  // Save chat state to localStorage
+  useEffect(() => {
+    saveChatState({
+      messages,
+      preQualStep,
+      conversationClosed,
+      score,
+      reportContent,
+      leadCaptured,
+      contactEmail,
+      contactPhone,
+      sessionId: sessionIdRef.current,
+    });
+  }, [messages, preQualStep, conversationClosed, score, reportContent, leadCaptured, contactEmail, contactPhone]);
+
+  const resetConversation = useCallback(() => {
+    localStorage.removeItem(CHAT_STATE_KEY);
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+    window.location.reload();
+  }, []);
+
   // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
