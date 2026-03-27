@@ -91,14 +91,14 @@ const NavigationBar = ({ activeSection, scrollToSection, minimal = false }: Navi
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 cursor-pointer">
             <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-sm">
               <Award className="h-5 w-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold text-foreground whitespace-nowrap hidden sm:inline">
               Bourse French Tech
             </span>
-          </div>
+          </Link>
 
           {/* Desktop nav */}
           {!minimal && (
