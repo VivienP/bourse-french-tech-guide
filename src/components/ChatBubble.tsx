@@ -247,11 +247,14 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean }> = ({ hideEligibility =
   // Determine contextual suggestions based on last assistant message intent
   const lastAssistantMsg = [...messages].reverse().find((m) => m.role === 'assistant' && m !== WELCOME_MESSAGE);
   const hasUserMessages = messages.some((m) => m.role === 'user');
-  const contextualSuggestions = !hasUserMessages
+  const rawSuggestions = !hasUserMessages
     ? INITIAL_SUGGESTIONS
     : lastAssistantMsg?.intent === 'non_dilutif'
       ? ND_SUGGESTIONS
       : BFT_SUGGESTIONS;
+  const contextualSuggestions = hideEligibility
+    ? rawSuggestions.filter((s) => s !== 'Évaluer mon éligibilité ?')
+    : rawSuggestions;
 
   return (
     <>
