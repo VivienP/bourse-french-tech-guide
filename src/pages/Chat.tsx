@@ -3,6 +3,7 @@ import { Send, Square, Lock, Calendar } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
+import ChatBubble from '@/components/ChatBubble';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
