@@ -138,10 +138,11 @@ Si après cette unique relance l'utilisateur n'a pas fourni les informations, ou
 - Commencez directement par le titre du rapport sans préambule.
 - Évitez les sauts de ligne excessifs.`;
 
-// Session limit via Deno KV (persists across cold starts)
+// Session limit via in-memory store
 const SESSION_MAX_CALLS = 20;
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24h
 const SESSION_ID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const sessionStore = new Map<string, { count: number; start: number }>();
 
 function isValidSessionId(id: unknown): id is string {
   return typeof id === "string" && SESSION_ID_REGEX.test(id);
