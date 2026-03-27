@@ -302,7 +302,7 @@ const Chat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <NavigationBar activeSection="" scrollToSection={navigateToSection} />
+      <NavigationBar activeSection="" scrollToSection={navigateToSection} minimal />
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 pt-[96px] pb-6 space-y-4">
