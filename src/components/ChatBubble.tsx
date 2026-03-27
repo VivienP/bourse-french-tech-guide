@@ -78,7 +78,7 @@ const INITIAL_SUGGESTIONS = [
   'Comment augmenter mes fonds propres ?',
 ];
 
-const ChatBubble: React.FC = () => {
+const ChatBubble: React.FC<{ hideEligibility?: boolean }> = ({ hideEligibility = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
