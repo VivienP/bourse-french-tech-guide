@@ -259,9 +259,13 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
     : lastAssistantMsg?.intent === 'non_dilutif'
       ? ND_SUGGESTIONS
       : BFT_SUGGESTIONS;
-  const contextualSuggestions = hideEligibility
+  const filteredSuggestions = hideEligibility
     ? rawSuggestions.filter((s) => s !== 'Évaluer mon éligibilité ?')
     : rawSuggestions;
+
+  const contextualSuggestions = eligibilityStep !== undefined && ELIGIBILITY_CONTEXTUAL_SUGGESTIONS[eligibilityStep]
+    ? [ELIGIBILITY_CONTEXTUAL_SUGGESTIONS[eligibilityStep], ...filteredSuggestions.filter((s) => s !== ELIGIBILITY_CONTEXTUAL_SUGGESTIONS[eligibilityStep])]
+    : filteredSuggestions;
 
   return (
     <>
