@@ -536,9 +536,6 @@ const Chat: React.FC = () => {
                 <Calendar className="h-4 w-4 text-primary" />
                 <h3 className="text-sm font-semibold text-foreground">Prenez rendez-vous avec un expert</h3>
               </div>
-              <p className="text-xs text-muted-foreground mb-4">
-                Réservez un créneau pour discuter de votre projet avec un conseiller spécialisé en financements publics.
-              </p>
               <Cal
                 namespace={CAL_NAMESPACE}
                 calLink="boursefrenchtech/decouverte"
