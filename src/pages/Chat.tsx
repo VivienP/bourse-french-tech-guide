@@ -13,6 +13,33 @@ const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
 const CAL_NAMESPACE = 'eligibilite';
 const MAX_INPUT_LENGTH = 10000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
+const CHAT_STATE_KEY = 'bft_chat_state';
+
+interface SavedChatState {
+  messages: Message[];
+  preQualStep: number;
+  conversationClosed: boolean;
+  score: number | null;
+  reportContent: string | null;
+  leadCaptured: boolean;
+  contactEmail: string;
+  contactPhone: string;
+  sessionId: string;
+}
+
+function loadChatState(): SavedChatState | null {
+  try {
+    const raw = localStorage.getItem(CHAT_STATE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return null;
+}
+
+function saveChatState(state: SavedChatState) {
+  try {
+    localStorage.setItem(CHAT_STATE_KEY, JSON.stringify(state));
+  } catch {}
+}
 
 function getOrCreateSessionId(): string {
   let id = localStorage.getItem(SESSION_STORAGE_KEY);
