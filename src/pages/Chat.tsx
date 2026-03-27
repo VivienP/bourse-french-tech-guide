@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
 import ChatBubble from '@/components/ChatBubble';
+import { supabase } from '@/integrations/supabase/client';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -341,10 +342,36 @@ const Chat: React.FC = () => {
 
     setLeadCaptured(true);
 
-    // Now send the email with contact info
+    // Now send the email with contact info (existing Resend notification)
     if (!emailSent && score !== null && conversationRef.current.length > 0) {
       setEmailSent(true);
       sendToEmail(conversationRef.current, score, contactEmail.trim(), contactPhone.trim());
+
+      // Send transactional email to user
+      supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'conversation-report',
+          recipientEmail: contactEmail.trim(),
+          idempotencyKey: `conversation-report-${sessionIdRef.current}`,
+          templateData: {
+            score,
+            conversation: conversationRef.current,
+          },
+        },
+      }).catch((e) => console.error('transactional email error:', e));
+
+      // Send CC to ademuynck@odaliaconseil.com
+      supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'conversation-report',
+          recipientEmail: 'ademuynck@odaliaconseil.com',
+          idempotencyKey: `conversation-report-cc-${sessionIdRef.current}`,
+          templateData: {
+            score,
+            conversation: conversationRef.current,
+          },
+        },
+      }).catch((e) => console.error('transactional cc email error:', e));
     }
   };
 
