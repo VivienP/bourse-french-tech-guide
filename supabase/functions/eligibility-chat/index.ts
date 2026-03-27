@@ -196,20 +196,21 @@ serve(async (req) => {
 
     const { messages, sessionId } = await req.json();
 
-    // Session call limit via Deno KV (survives page refreshes and cold starts)
+    // Session call limit via in-memory map
     if (isValidSessionId(sessionId)) {
-      // @ts-ignore – Deno.openKv is available in Supabase Edge Functions runtime
-      const kv = await Deno.openKv();
-      const key = ["session", sessionId];
-      const entry = await kv.get<{ count: number }>(key);
-      const count = entry.value?.count ?? 0;
-      if (count >= SESSION_MAX_CALLS) {
-        return new Response(
-          JSON.stringify({ error: "Limite de session atteinte.", code: "SESSION_LIMIT_REACHED" }),
-          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+      const now = Date.now();
+      const entry = sessionStore.get(sessionId);
+      if (entry && (now - entry.start) < SESSION_TTL_MS) {
+        if (entry.count >= SESSION_MAX_CALLS) {
+          return new Response(
+            JSON.stringify({ error: "Limite de session atteinte.", code: "SESSION_LIMIT_REACHED" }),
+            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        entry.count++;
+      } else {
+        sessionStore.set(sessionId, { count: 1, start: now });
       }
-      await kv.set(key, { count: count + 1 }, { expireIn: SESSION_TTL_MS });
     }
 
     if (!Array.isArray(messages)) {
