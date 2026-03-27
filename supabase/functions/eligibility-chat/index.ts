@@ -13,7 +13,7 @@ type Phase =
   | "prequal_q3"
   | "prequal_rejected"
   | "project_initial"
-  | "project_followup"
+  | "project_missing_info"
   | "report_ready";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -22,28 +22,40 @@ function isNo(text: string): boolean {
   return /^(non|no|n)\b/i.test(text.trim());
 }
 
-function isVague(text: string): boolean {
-  const t = text.trim();
-  if (t.length < 80) return true;
-  const keywords = [
-    "problème", "solution", "marché", "client", "équipe", "technolog",
-    "innov", "concurren", "développ", "plateforme", "logiciel",
-    "service", "produit", "utilisateur", "revenu", "modèle",
-    "business", "saas", "ia", "intelligence", "algorithme", "données",
-    "santé", "énergie", "fintech", "edtech", "prototype", "brevet",
-  ];
-  const lower = t.toLowerCase();
-  const hits = keywords.filter((w) => lower.includes(w)).length;
-  return hits < 2 && t.length < 200;
-}
-
 const PREQUAL_LABELS = [
   "Société française immatriculée (SAS/SARL/…)",
   "Société de moins d'un an",
   "Au moins 20 000 € de fonds propres et quasi-fonds propres",
 ];
 
-function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[] } {
+// ── Pillar detection ───────────────────────────────────────────────────────────
+
+type Pillar = "innovation" | "team" | "market";
+
+const PILLAR_PATTERNS: Record<Pillar, RegExp> = {
+  innovation: /innov|techno|brevet|algorith|prototype|r&d|différen|ia\b|machine.?learn|deep.?learn|block.?chain|framework|moteur|embarqu|hors.?ligne|cyber|biotech|hardware|microalgu/i,
+  team: /fondat|co-fondat|cofoundr|cto|ceo|coo|équipe|associé|profil|expérience|parcours|ingénieur|développeur|compétence/i,
+  market: /marché|client|concurrent|cible|segment|utilisateur|go.?to.?market|b2b|b2c|saas|revenue|chiffre|vente|part de marché|acquisition/i,
+};
+
+function detectMissingPillars(allUserTexts: string[]): Pillar[] {
+  const combined = allUserTexts.join(" ");
+  const missing: Pillar[] = [];
+  for (const [pillar, re] of Object.entries(PILLAR_PATTERNS) as [Pillar, RegExp][]) {
+    if (!re.test(combined)) missing.push(pillar);
+  }
+  return missing;
+}
+
+const PILLAR_LABELS: Record<Pillar, string> = {
+  innovation: "l'aspect innovant et la complexité technique de votre projet",
+  team: "l'équipe fondatrice (profils, compétences, expériences)",
+  market: "le marché cible et le paysage concurrentiel",
+};
+
+// ── Phase detection ────────────────────────────────────────────────────────────
+
+function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[]; missingPillars: Pillar[] } {
   const userMsgs = messages.filter((m) => m.role === "user");
   const n = userMsgs.length;
   const rejectedLabels: string[] = [];
@@ -54,21 +66,23 @@ function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[] 
     }
   }
 
-  if (rejectedLabels.length > 0) return { phase: "prequal_rejected", rejectedLabels };
+  if (rejectedLabels.length > 0) return { phase: "prequal_rejected", rejectedLabels, missingPillars: [] };
 
-  if (n <= 0) return { phase: "prequal_q2", rejectedLabels }; // edge-case safety
-  if (n === 1) return { phase: "prequal_q2", rejectedLabels };
-  if (n === 2) return { phase: "prequal_q3", rejectedLabels };
-  if (n === 3) return { phase: "project_initial", rejectedLabels };
+  if (n <= 0) return { phase: "prequal_q2", rejectedLabels, missingPillars: [] };
+  if (n === 1) return { phase: "prequal_q2", rejectedLabels, missingPillars: [] };
+  if (n === 2) return { phase: "prequal_q3", rejectedLabels, missingPillars: [] };
+  if (n === 3) return { phase: "project_initial", rejectedLabels, missingPillars: [] };
 
-  if (n === 4) {
-    return {
-      phase: isVague(userMsgs[3].content) ? "project_followup" : "report_ready",
-      rejectedLabels,
-    };
+  // n >= 4: project description phase — check pillars
+  const projectTexts = userMsgs.slice(3).map((m) => m.content);
+  const missing = detectMissingPillars(projectTexts);
+
+  if (n === 4 && missing.length > 0) {
+    return { phase: "project_missing_info", rejectedLabels, missingPillars: missing };
   }
 
-  return { phase: "report_ready", rejectedLabels };
+  // n >= 5: generate report regardless (don't loop forever)
+  return { phase: "report_ready", rejectedLabels, missingPillars: [] };
 }
 
 // ── Hardcoded SSE helper ───────────────────────────────────────────────────────
@@ -81,7 +95,7 @@ function sseText(text: string): Response {
   });
 }
 
-// ── Prompts per phase ──────────────────────────────────────────────────────────
+// ── Prompts ────────────────────────────────────────────────────────────────────
 
 function buildRejectedPrompt(rejectedLabels: string[]): string {
   return `Vous êtes un expert français en financement public de l'innovation (Bpifrance, Bourse French Tech).
@@ -114,11 +128,37 @@ L'utilisateur a passé la pré-qualification (société française immatriculée
 7. **Potentiel de croissance et viabilité du modèle économique** — Marché cible, scalabilité, rentabilité.
 8. **Stratégie Go-to-market et exécution** — Réalisme, préventes, LOI, partenaires.
 
+━━━ CALIBRATION — EXEMPLES RÉELS ━━━
+
+Projets NON innovants (score innovation < 2, score final < 2) — pas de complexité technique réelle :
+— Application/site web standard sans techno propriétaire (ex: app de réservation, presse en ligne, marketplace classique, réseau social sans IA, livraison de produits, logiciel de gestion basique)
+— Commercialisation de produits existants (compléments alimentaires, cosmétiques, dentifrice, produits physiques sans R&D)
+— Plateforme communautaire ou d'entraide sans moteur technologique différenciant (ex: réseau social avec avatar, plateforme mutualiste)
+— Sous-traitance ou revente de services existants (ex: sous-traitant médical sans projet propre)
+— Services de livraison ou logistique sans innovation technique
+
+Projets INNOVANTS (score innovation ≥ 3) — complexité technique avérée :
+— IA embarquée hors-ligne sur smartphone (traitement d'image en local, modèle frugal)
+— Cybersécurité / rétro-ingénierie avec IA (dual-use défense)
+— Hardware deeptech (purificateur d'air par microalgues, biotech)
+— Framework agentique, moteur de génération procédurale
+— Fintech avec algorithme propriétaire (épargne collaborative, scoring innovant)
+— IA pour automatisation de processus complexes avec développement technique significatif
+
+RÈGLE CLÉ : La BFT finance l'INNOVATION TECHNOLOGIQUE, pas les bonnes idées business. Un projet sans complexité de développement technique significative doit recevoir un score d'innovation ≤ 2/5, ce qui entraîne mécaniquement un score final bas.
+
+━━━ RÈGLES DE NOTATION ━━━
+
+- Si l'information n'est pas fournie pour un critère, attribuer la note de **1/5** avec la mention « Information non fournie — note pénalisée ».
+- Être exigeant : un 4/5 ou 5/5 nécessite des preuves concrètes (brevets déposés, LoI signées, équipe technique expérimentée, etc.).
+- Un 3/5 est la note pour un projet prometteur mais sans preuves solides.
+- Un 2/5 signifie des faiblesses significatives.
+- Un 1/5 signifie absence d'information ou critère clairement non rempli.
+
 ━━━ FORMAT DU RAPPORT ━━━
 
 - Markdown avec titres H2 numérotés (## 1. Analyse de l'innovation, etc.)
 - Notes en gras : **Note : X/5**
-- Si un critère manque d'information : « Information non fournie » sans note.
 - Paragraphe de synthèse : forces, faiblesses, recommandations.
 - Conclusion :
   - Moyenne ≥ 4 → recommander fortement
@@ -129,11 +169,10 @@ L'utilisateur a passé la pré-qualification (société française immatriculée
 ━━━ RÈGLES ABSOLUES ━━━
 
 - NE JAMAIS utiliser CONVERSATION_CLOSED. Vous DEVEZ produire un rapport.
-- Si des informations manquent, notez les critères manquants comme « Information non fournie » et calculez la moyenne sur les critères notés.
 - Ton formel, professionnel, phrases courtes. Pas de préambule. Commencez directement par le titre.
 - Répondre uniquement en français.`;
 
-// ── Rate limiting (same as before) ─────────────────────────────────────────────
+// ── Rate limiting ──────────────────────────────────────────────────────────────
 
 const SESSION_MAX_CALLS = 20;
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
@@ -192,7 +231,6 @@ serve(async (req) => {
 
     const { messages, sessionId } = await req.json();
 
-    // Session limit
     if (isValidSessionId(sessionId)) {
       const now = Date.now();
       const entry = sessionStore.get(sessionId);
@@ -223,9 +261,9 @@ serve(async (req) => {
     }
 
     // ── State machine ──
-    const { phase, rejectedLabels } = detectPhase(messages);
+    const { phase, rejectedLabels, missingPillars } = detectPhase(messages);
 
-    // Deterministic responses (no LLM needed)
+    // Deterministic responses
     if (phase === "prequal_q2") {
       return sseText("Votre société a-t-elle moins d'un an ?");
     }
@@ -237,12 +275,12 @@ serve(async (req) => {
         "Vous remplissez les critères de pré-qualification ✅\n\nPouvez-vous présenter votre projet ? Fournissez le plus d'informations possibles (vous pouvez copier-coller vos documents de présentation).",
       );
     }
-    if (phase === "project_followup") {
+    if (phase === "project_missing_info") {
+      const missingDescriptions = missingPillars.map((p) => `- ${PILLAR_LABELS[p]}`).join("\n");
       return sseText(
-        "Votre description est un peu courte pour une évaluation complète. Pourriez-vous préciser :\n\n" +
-        "1. **Quel problème précis** votre projet résout-il, et quelle est sa technologie ou approche innovante ?\n" +
-        "2. **Qui compose l'équipe** fondatrice, et quelles sont vos compétences clés ?\n" +
-        "3. **Quel est votre marché cible**, et qui sont vos principaux concurrents ?",
+        "Merci pour ces informations. Pour produire une évaluation complète, j'aurais besoin de précisions sur :\n\n" +
+        missingDescriptions +
+        "\n\nPouvez-vous compléter ces éléments ?",
       );
     }
 
@@ -257,12 +295,10 @@ serve(async (req) => {
       systemPrompt = buildRejectedPrompt(rejectedLabels);
       maxTokens = 600;
     } else {
-      // report_ready
       systemPrompt = REPORT_PROMPT;
       maxTokens = 3000;
     }
 
-    // Keep relevant context (skip hardcoded assistant messages for cleaner context)
     const truncatedMessages = messages.slice(-16);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
