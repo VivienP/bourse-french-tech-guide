@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
 import ChatBubble from '@/components/ChatBubble';
+import { supabase } from '@/integrations/supabase/client';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
