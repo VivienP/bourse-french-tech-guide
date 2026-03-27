@@ -1,34 +1,46 @@
 
 
-## Plan : Suggestions contextuelles dans la bulle Q/A selon l'étape d'éligibilité
+## Plan : Envoyer la conversation par email à l'utilisateur après le formulaire de leads
 
-### Approche
+### Contexte
 
-Passer le `preQualStep` et l'état `conversationClosed` de la page `/chat` au composant `ChatBubble` via une nouvelle prop `eligibilityStep`. Le ChatBubble utilisera cette info pour afficher des suggestions pertinentes liées à la question d'éligibilité en cours, sans toucher au backend.
+Le domaine `notify.boursefrenchtech.fr` est vérifié et prêt. L'infrastructure email (queues pgmq, cron) est en place. Il manque le scaffolding des emails transactionnels (`send-transactional-email`, `handle-email-unsubscribe`, etc.) et le template de la conversation.
 
-### Mapping des suggestions par étape
+### Étapes
 
-| `eligibilityStep` | Question affichée dans /chat | Suggestion contextuelle dans la bulle |
-|---|---|---|
-| 0 | "Société française déjà immatriculée ?" | "Quelles formes juridiques sont éligibles à la BFT ?" |
-| 1 | "Société immatriculée depuis moins d'un an ?" | "Comment est calculée la date limite d'un an ?" |
-| 2 | "Au moins 20 000 € de fonds propres ?" | "Qu'est-il considéré comme fonds propres ou quasi-fonds propres par Bpifrance ?" |
-| 3+ (projet) | Description du projet | "Quels types de projets innovants sont éligibles ?" |
+1. **Scaffolder l'infrastructure transactionnelle** via l'outil dédié — crée les Edge Functions `send-transactional-email`, `handle-email-unsubscribe`, `handle-email-suppression`, le registre de templates et la page de désinscription.
 
-### Modifications
+2. **Créer le template `conversation-report`** dans `_shared/transactional-email-templates/` — un composant React Email qui affiche :
+   - Le résultat d'éligibilité (score, éligible/non éligible)
+   - La conversation complète formatée proprement
+   - Le branding BFT (couleur navy #1B2A4A)
+   - Le template accepte des props : `score`, `conversation` (tableau de messages)
 
-**`src/components/ChatBubble.tsx`**
-- Ajouter une prop `eligibilityStep?: number` à côté de `hideEligibility`
-- Créer un tableau `ELIGIBILITY_CONTEXTUAL_SUGGESTIONS` indexé par étape
-- Dans le calcul de `contextualSuggestions` : si `eligibilityStep` est défini (on est sur /chat), utiliser la suggestion contextuelle correspondante en première position, suivie des suggestions existantes (sans "Évaluer mon éligibilité")
+3. **Enregistrer le template** dans `registry.ts`.
 
-**`src/pages/Chat.tsx`**
-- Passer `<ChatBubble hideEligibility eligibilityStep={preQualStep} />` au composant
+4. **Déployer les Edge Functions** transactionnelles.
+
+5. **Modifier `src/pages/Chat.tsx`** — dans `handleLeadSubmit`, après `setLeadCaptured(true)` :
+   - Appeler `supabase.functions.invoke('send-transactional-email', ...)` avec :
+     - `templateName: 'conversation-report'`
+     - `recipientEmail: contactEmail` (l'email de l'utilisateur)
+     - `templateData: { score, conversation: conversationRef.current }`
+     - `idempotencyKey: conversation-report-${sessionIdRef.current}`
+   - L'email sera envoyé depuis `notify.boursefrenchtech.fr` à l'utilisateur
+   - **CC ademuynck@odaliaconseil.com** : le template `send-transactional-email` ne supporte pas nativement le CC. Solution : déclencher un second appel `send-transactional-email` vers `ademuynck@odaliaconseil.com` avec le même contenu et un idempotency key distinct (`conversation-report-cc-${sessionIdRef.current}`)
+   - Conserver l'appel existant `sendToEmail` (notification interne via Resend) pour l'équipe
+
+### Résultat
+
+Quand l'utilisateur soumet email + téléphone + RGPD :
+- Il reçoit la conversation par email sur son adresse personnelle (via Lovable Email)
+- ademuynck@odaliaconseil.com reçoit la même conversation (second envoi transactionnel)
+- L'équipe interne reçoit toujours la notification existante (via Resend)
 
 ### Détails techniques
 
-- Aucune modification backend
-- Les suggestions contextuelles sont un simple tableau statique côté client
-- La suggestion contextuelle est ajoutée en premier dans la liste, les autres suggestions générales restent disponibles après
-- Si `eligibilityStep` dépasse la taille du tableau (conversation avancée/fermée), on retombe sur les suggestions par défaut
+- Template React Email avec styles inline, fond blanc, accents navy #1B2A4A
+- Deux invocations `send-transactional-email` (utilisateur + CC) avec idempotency keys distincts
+- Import `supabase` client dans Chat.tsx pour `functions.invoke()`
+- Page de désinscription créée automatiquement par le scaffolding
 
