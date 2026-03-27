@@ -1,46 +1,86 @@
 
 
-## Plan : Envoyer la conversation par email à l'utilisateur après le formulaire de leads
+## Plan : Corriger l'évaluation d'éligibilité — exigence équipe, pénalisation "info manquante", calibration des notes
 
-### Contexte
+### Problèmes identifiés
 
-Le domaine `notify.boursefrenchtech.fr` est vérifié et prêt. L'infrastructure email (queues pgmq, cron) est en place. Il manque le scaffolding des emails transactionnels (`send-transactional-email`, `handle-email-unsubscribe`, etc.) et le template de la conversation.
+1. **L'agent génère un rapport sans info sur l'équipe** — La machine d'état passe en `report_ready` dès que la description du projet est "suffisamment longue" (>80 chars + 2 keywords), sans vérifier si les 3 piliers critiques (innovation, équipe, marché) sont couverts.
 
-### Étapes
+2. **"Information non fournie" ne pénalise pas la note** — Le prompt dit de ne pas noter les critères manquants et de calculer la moyenne sur les critères notés, ce qui gonfle artificiellement le score.
 
-1. **Scaffolder l'infrastructure transactionnelle** via l'outil dédié — crée les Edge Functions `send-transactional-email`, `handle-email-unsubscribe`, `handle-email-suppression`, le registre de templates et la page de désinscription.
+3. **Notes sur-évaluées** — Le prompt ne donne pas assez de calibration au modèle. Des projets peu innovants (app de livraison, presse en ligne, réseau social basique) reçoivent des notes trop hautes.
 
-2. **Créer le template `conversation-report`** dans `_shared/transactional-email-templates/` — un composant React Email qui affiche :
-   - Le résultat d'éligibilité (score, éligible/non éligible)
-   - La conversation complète formatée proprement
-   - Le branding BFT (couleur navy #1B2A4A)
-   - Le template accepte des props : `score`, `conversation` (tableau de messages)
+### Données d'exemples réels extraites du fichier
 
-3. **Enregistrer le template** dans `registry.ts`.
+Projets **NON innovants** (score attendu < 2) :
+- Logiciel pour auberges sur le chemin de Compostelle
+- Sous-traitant médical (pas de projet propre)
+- Service de livraison CBD + sextoys
+- Presse en ligne sur le handicap
+- Réseau social avec avatar
+- Plateforme mutualiste TDAH
+- Dentifrice
 
-4. **Déployer les Edge Functions** transactionnelles.
+Projets **innovants** (éligibles BFT/CII) :
+- Shelfie : IA locale embarquée smartphone pour diagnostic pharmacie hors-ligne
+- IA + cybersécurité pour rétro-ingénierie de code source (dual-use)
+- Purificateur d'air à base de microalgues
+- IA pour gestion automatisée de centres de stretching
+- Ollyo : fintech d'épargne collaborative (tontine)
 
-5. **Modifier `src/pages/Chat.tsx`** — dans `handleLeadSubmit`, après `setLeadCaptured(true)` :
-   - Appeler `supabase.functions.invoke('send-transactional-email', ...)` avec :
-     - `templateName: 'conversation-report'`
-     - `recipientEmail: contactEmail` (l'email de l'utilisateur)
-     - `templateData: { score, conversation: conversationRef.current }`
-     - `idempotencyKey: conversation-report-${sessionIdRef.current}`
-   - L'email sera envoyé depuis `notify.boursefrenchtech.fr` à l'utilisateur
-   - **CC ademuynck@odaliaconseil.com** : le template `send-transactional-email` ne supporte pas nativement le CC. Solution : déclencher un second appel `send-transactional-email` vers `ademuynck@odaliaconseil.com` avec le même contenu et un idempotency key distinct (`conversation-report-cc-${sessionIdRef.current}`)
-   - Conserver l'appel existant `sendToEmail` (notification interne via Resend) pour l'équipe
+### Étapes d'implémentation
 
-### Résultat
+**1. Renforcer la machine d'état pour exiger les 3 piliers** (`eligibility-chat/index.ts`)
 
-Quand l'utilisateur soumet email + téléphone + RGPD :
-- Il reçoit la conversation par email sur son adresse personnelle (via Lovable Email)
-- ademuynck@odaliaconseil.com reçoit la même conversation (second envoi transactionnel)
-- L'équipe interne reçoit toujours la notification existante (via Resend)
+Modifier `detectPhase` et ajouter une phase `project_missing_info` :
+- Après la première description projet (`n === 4`), analyser le contenu pour détecter la présence des 3 piliers : innovation/techno, équipe, marché/concurrence
+- Si un ou plusieurs piliers manquent → nouvelle phase `project_missing_info` qui demande spécifiquement les infos manquantes
+- Si `n === 5` et toujours vague → `report_ready` quand même (on ne boucle pas indéfiniment)
+- Ajouter une fonction `detectMissingPillars(text)` qui cherche des keywords pour équipe (`fondateur, co-fondateur, CTO, équipe, associé, profil, expérience`), marché (`marché, client, concurrent, cible, segment, utilisateur`), innovation (`innov, techno, brevet, algorithme, IA, prototype, R&D, différen`)
 
-### Détails techniques
+**2. Modifier le REPORT_PROMPT pour pénaliser l'info manquante** (`eligibility-chat/index.ts`)
 
-- Template React Email avec styles inline, fond blanc, accents navy #1B2A4A
-- Deux invocations `send-transactional-email` (utilisateur + CC) avec idempotency keys distincts
-- Import `supabase` client dans Chat.tsx pour `functions.invoke()`
-- Page de désinscription créée automatiquement par le scaffolding
+- Remplacer la règle "pas de note si info manquante" par : **"Si l'information n'est pas fournie pour un critère, attribuer la note de 1/5 avec la mention 'Information non fournie — note pénalisée'."**
+- Cela force la moyenne à baisser quand l'utilisateur ne fournit pas d'information.
+
+**3. Ajouter des exemples de calibration au REPORT_PROMPT** (`eligibility-chat/index.ts`)
+
+Injecter dans le prompt une section `EXEMPLES DE CALIBRATION` basée sur les données réelles :
+
+```text
+━━━ CALIBRATION — EXEMPLES RÉELS ━━━
+
+Projets NON innovants (score < 2) — pas de complexité technique réelle :
+— Application/site web standard sans techno propriétaire (ex: app de réservation, presse en ligne, marketplace classique, réseau social sans IA, livraison de produits)
+— Commercialisation de produits existants (compléments alimentaires, cosmétiques, produits physiques sans R&D)
+— Plateforme communautaire ou d'entraide sans moteur technologique différenciant
+— Sous-traitance ou revente de services existants
+
+Projets INNOVANTS (score ≥ 2.5) — complexité technique avérée :
+— IA embarquée hors-ligne sur smartphone (traitement d'image en local, modèle frugal)
+— Cybersécurité / rétro-ingénierie avec IA (dual-use défense)
+— Hardware deeptech (purificateur d'air par microalgues, biotech)
+— Framework agentique, moteur de génération procédurale
+
+RÈGLE CLÉ : La BFT finance l'INNOVATION TECHNOLOGIQUE, pas les bonnes idées business. Un projet sans complexité de développement technique significative doit recevoir un score d'innovation ≤ 2/5.
+```
+
+**4. Ajuster la logique `isVague`** (`eligibility-chat/index.ts`)
+
+Actuellement, `isVague` ne regarde que la longueur et le nombre de keywords. Problème : "Application mobile pour gérer des locations" fait >80 chars mais ne couvre pas l'équipe → ne déclenche pas le followup.
+
+Remplacer par `needsMoreInfo(text, allUserMessages)` qui :
+- Vérifie la présence des 3 piliers dans l'ENSEMBLE des messages utilisateur (pas juste le dernier)
+- Retourne `true` si un pilier manque
+
+### Fichiers modifiés
+
+- `supabase/functions/eligibility-chat/index.ts` — machine d'état, prompts, logique de détection
+
+### Résultat attendu
+
+- L'agent demande systématiquement des précisions si l'équipe, le marché ou l'innovation ne sont pas décrits
+- Les critères sans information reçoivent 1/5 au lieu d'être exclus du calcul
+- Les projets non-innovants (app basique, service de livraison, marketplace) reçoivent un score < 2
+- Les projets véritablement innovants (deeptech, IA embarquée, biotech) conservent des scores ≥ 2.5
 
