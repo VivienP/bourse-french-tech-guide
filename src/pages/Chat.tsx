@@ -53,7 +53,7 @@ function isValidPhone(phone: string): boolean {
 }
 
 const Chat: React.FC = () => {
-  const INITIAL_MESSAGE = "Votre entreprise est-elle une société française déjà **immatriculée** (SAS/SARL/...) ?";
+  const INITIAL_MESSAGE = "Votre entreprise est-elle une société française **déjà immatriculée** (SAS/SARL/...) ?";
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: INITIAL_MESSAGE }
   ]);
