@@ -211,7 +211,13 @@ const Chat: React.FC = () => {
       }
 
       if (extractClosed(assistantContent)) {
-        setConversationClosed(true);
+        // Only honor CONVERSATION_CLOSED during prequal phase (not during project evaluation)
+        const userMsgs = newMessages.filter(m => m.role === 'user');
+        const allPrequalPassed = userMsgs.length >= 3 &&
+          userMsgs.slice(0, 3).every(m => /^oui$/i.test(m.content.trim()));
+        if (!allPrequalPassed) {
+          setConversationClosed(true);
+        }
       }
 
       const detectedScore = extractScore(assistantContent);
