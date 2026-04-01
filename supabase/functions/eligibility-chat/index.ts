@@ -35,7 +35,7 @@ async function classifyPillarsSemanticly(allUserTexts: string[], apiKey: string)
   const combined = allUserTexts.join("\n\n");
 
   // If text is too short to evaluate, proceed to report directly
-  if (combined.length < 100) return [];
+  if (combined.length < 100) return ["innovation", "team", "market", "supports", "gtm"];
 
   try {
     const classificationPrompt = `Analyse le texte suivant et indique quels piliers sont couverts parmi : innovation, team (équipe), market (marché), supports (soutiens/partenariats), gtm (stratégie go-to-market).
