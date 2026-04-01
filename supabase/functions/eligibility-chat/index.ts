@@ -73,8 +73,9 @@ Réponds EXACTEMENT au format JSON suivant, sans aucun texte avant ou après :
       return [];
     }
 
-    const data = (await response.json()) as Record<string, unknown>;
-    const content = (data.choices?.[0] as Record<string, unknown>)?.message?.content as string | undefined;
+    const data = await response.json();
+    // deno-lint-ignore no-explicit-any
+    const content = (data as any)?.choices?.[0]?.message?.content as string | undefined;
     if (!content) return [];
 
     let parsed: Record<string, boolean>;
