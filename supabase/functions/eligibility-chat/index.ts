@@ -205,7 +205,8 @@ RÈGLE CLÉ : La BFT finance l'INNOVATION TECHNOLOGIQUE, pas les bonnes idées b
 - Markdown avec titres H2 numérotés (## 1. Analyse de l'innovation, etc.)
 - Notes en gras : **Note : X/5**
 - Paragraphe de synthèse : forces et faiblesses factuelles uniquement.
-  INTERDIT : toute section ou mention "Recommandations", "Il est recommandé", "Il faudrait", "Nous conseillons".
+  INTERDIT ABSOLU : toute mention ou section "Recommandations", "Il est recommandé", "Il faudrait", "Nous conseillons", "je vous recommande", "pour améliorer", "prochaines étapes".
+  Si tu es tenté de mettre une recommandation, remplace-la par une simple constatation de faiblesse.
 - Conclusion :
   - Si Innovation (critère 1) ≤ 2/5 OU Expertise de l'équipe (critère 5) ≤ 2/5 → **ne pas recommander en l'état**, quelle que soit la moyenne
   - Moyenne ≥ 4 → recommander fortement
@@ -341,11 +342,13 @@ serve(async (req) => {
       const projectTexts = userMsgs.slice(3).map((m) => m.content);
       const missingPillars = await classifyPillarsSemanticly(projectTexts, LOVABLE_API_KEY);
 
-      // Allow up to 3 relance rounds (user messages 4, 5, 6) while pillars are missing
-      const MAX_RELANCE_ROUND = 6;
-      if (missingPillars.length >= 1 && userMsgs.length <= MAX_RELANCE_ROUND) {
+      // relanceCount = number of follow-up rounds already done (0 on first project description)
+      const relanceCount = userMsgs.length - 4;
+      const MAX_RELANCE = 3;
+
+      if (missingPillars.length >= 1 && relanceCount < MAX_RELANCE) {
         const missingDescriptions = missingPillars.map((p) => `- ${PILLAR_LABELS[p]}`).join("\n");
-        const isFirstRelance = userMsgs.length === 4;
+        const isFirstRelance = relanceCount === 0;
         const intro = isFirstRelance
           ? "Merci pour cette présentation. Pour que l'évaluation soit **complète et pertinente**, j'aurais besoin de précisions sur :"
           : "Merci pour ces précisions. Il manque encore des informations sur :";
@@ -354,11 +357,11 @@ serve(async (req) => {
           missingDescriptions +
           "\n\n**L'évaluation sera moins précise et les notes seront impactées** si ces éléments restent absents. Vous pouvez répondre à tout ou partie.",
         );
+      } else {
+        // Max relance rounds reached (or all pillars covered) → generate report
+        systemPrompt = REPORT_PROMPT;
+        maxTokens = 3000;
       }
-
-      // Otherwise proceed to report
-      systemPrompt = REPORT_PROMPT;
-      maxTokens = 3000;
     } else {
       systemPrompt = REPORT_PROMPT;
       maxTokens = 3000;
