@@ -126,6 +126,16 @@ const scoreSection = {
 }
 const scoreText = { fontSize: '16px', color: NAVY, margin: '0', fontWeight: '600' as const }
 
+const contactSection = {
+  backgroundColor: '#fef9e7',
+  borderRadius: '8px',
+  padding: '16px',
+  marginBottom: '8px',
+  border: '1px solid #f5e6a3',
+}
+const contactTitle = { fontSize: '14px', fontWeight: 'bold' as const, color: NAVY, margin: '0 0 8px' }
+const contactInfo = { fontSize: '13px', color: '#374151', margin: '0 0 4px', lineHeight: '1.5' }
+
 const roleLabel = {
   fontSize: '11px',
   fontWeight: 'bold' as const,
