@@ -419,7 +419,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
       {/* Floating bubble with entrance animation */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center animate-scale-in ${!hasBeenSeen && !isOpen ? 'animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_3]' : ''}`}
+        className={`fixed bottom-6 ${position === 'left' ? 'left-4 sm:left-6' : 'right-4 sm:right-6'} z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center animate-scale-in ${!hasBeenSeen && !isOpen ? 'animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_3]' : ''}`}
         aria-label="Ouvrir le chat"
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}

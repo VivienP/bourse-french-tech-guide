@@ -633,7 +633,7 @@ const Chat: React.FC = () => {
           </div>
         </div>
       )}
-      <ChatBubble hideEligibility eligibilityStep={preQualStep} />
+      <ChatBubble hideEligibility eligibilityStep={preQualStep} position="left" />
     </div>
   );
 };
