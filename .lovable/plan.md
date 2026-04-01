@@ -1,37 +1,28 @@
 
 
-## Plan : Ajouter les coordonnées du prospect dans l'email envoyé à Aline
+## Diagnostic
 
-### Approche
+**Cause racine identifiée** : dans `classifyPillarsSemanticly()` (ligne 37-38), si le texte combiné fait moins de 100 caractères, la fonction retourne `[]` (tableau vide). Or dans la logique d'évaluation (ligne ~280), `[]` est interprété comme "aucun pilier manquant = tous couverts" → le rapport est généré immédiatement sans poser de questions.
 
-Passer `contactEmail` et `contactPhone` dans le `templateData` de l'appel CC vers Aline, puis afficher ces infos dans le template email uniquement quand elles sont présentes (l'email utilisateur ne les affiche pas).
+Le texte "Saas de visualisation et analyse partagées de données biologiques" fait ~65 caractères, donc il tombe dans ce cas.
 
-### Étapes
+Ce n'est ni un problème d'email ni un contournement utilisateur — c'est un bug dans la logique de détection des piliers.
 
-**1. `src/pages/Chat.tsx`** — Ajouter `contactEmail` et `contactPhone` au `templateData` de l'appel CC (lignes 369-379) :
+## Correction
+
+**Fichier** : `supabase/functions/eligibility-chat/index.ts`
+
+**Changement** : Quand le texte est trop court pour évaluer sémantiquement, retourner TOUS les piliers comme manquants au lieu d'un tableau vide. Cela forcera l'agent à poser des questions complémentaires.
+
 ```typescript
-templateData: {
-  score,
-  conversation: conversationRef.current,
-  prospectEmail: contactEmail.trim(),
-  prospectPhone: contactPhone.trim(),
-},
+// Ligne 37-38 : remplacer
+if (combined.length < 100) return [];
+
+// Par
+if (combined.length < 100) return ["innovation", "team", "market", "supports", "gtm"];
 ```
 
-**2. `supabase/functions/_shared/transactional-email-templates/conversation-report.tsx`** — Ajouter les props `prospectEmail?` et `prospectPhone?` à l'interface, puis afficher un encart « Coordonnées du prospect » entre le score et la conversation quand ces props sont présentes :
-```tsx
-{(prospectEmail || prospectPhone) && (
-  <Section style={contactSection}>
-    <Text style={contactTitle}>📋 Coordonnées du prospect</Text>
-    {prospectEmail && <Text style={contactInfo}>Email : {prospectEmail}</Text>}
-    {prospectPhone && <Text style={contactInfo}>Tél : {prospectPhone}</Text>}
-  </Section>
-)}
-```
+Cela garantit que toute description courte déclenche systématiquement les questions de relance sur les 5 piliers, au lieu de sauter directement au rapport.
 
-**3. Redéployer** `send-transactional-email` après modification du template.
-
-### Fichiers modifiés
-- `src/pages/Chat.tsx` (1 ligne)
-- `supabase/functions/_shared/transactional-email-templates/conversation-report.tsx` (props + section conditionnelle)
+Redéployer la fonction `eligibility-chat` après la modification.
 
