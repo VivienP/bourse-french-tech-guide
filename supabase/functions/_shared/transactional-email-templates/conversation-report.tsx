@@ -47,6 +47,15 @@ const ConversationReportEmail = ({ score, conversation, prospectEmail, prospectP
 
           <Hr style={divider} />
 
+          {/* Prospect contact info (CC email only) */}
+          {(prospectEmail || prospectPhone) && (
+            <Section style={contactSection}>
+              <Text style={contactTitle}>📋 Coordonnées du prospect</Text>
+              {prospectEmail && <Text style={contactInfo}>Email : {prospectEmail}</Text>}
+              {prospectPhone && <Text style={contactInfo}>Tél : {prospectPhone}</Text>}
+            </Section>
+          )}
+
           {/* Conversation */}
           <Heading style={h2}>Détail de la conversation</Heading>
 
