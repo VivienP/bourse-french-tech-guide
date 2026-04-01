@@ -204,7 +204,8 @@ RÈGLE CLÉ : La BFT finance l'INNOVATION TECHNOLOGIQUE, pas les bonnes idées b
 
 - Markdown avec titres H2 numérotés (## 1. Analyse de l'innovation, etc.)
 - Notes en gras : **Note : X/5**
-- Paragraphe de synthèse : forces et faiblesses factuelles uniquement — aucun conseil, aucune recommandation d'action.
+- Paragraphe de synthèse : forces et faiblesses factuelles uniquement.
+  INTERDIT : toute section ou mention "Recommandations", "Il est recommandé", "Il faudrait", "Nous conseillons".
 - Conclusion :
   - Si Innovation (critère 1) ≤ 2/5 OU Expertise de l'équipe (critère 5) ≤ 2/5 → **ne pas recommander en l'état**, quelle que soit la moyenne
   - Moyenne ≥ 4 → recommander fortement
@@ -215,6 +216,7 @@ RÈGLE CLÉ : La BFT finance l'INNOVATION TECHNOLOGIQUE, pas les bonnes idées b
 ━━━ RÈGLES ABSOLUES ━━━
 
 - NE JAMAIS utiliser CONVERSATION_CLOSED. Vous DEVEZ produire un rapport.
+- NE JAMAIS générer de section ou de contenu "Recommandations" — ni dans la synthèse, ni ailleurs dans le rapport.
 - Ton formel, professionnel, phrases courtes. Pas de préambule. Commencez directement par le titre.
 - Répondre uniquement en français.`;
 
@@ -339,11 +341,16 @@ serve(async (req) => {
       const projectTexts = userMsgs.slice(3).map((m) => m.content);
       const missingPillars = await classifyPillarsSemanticly(projectTexts, LOVABLE_API_KEY);
 
-      // If any pillar is missing, ask for more info (only on first project message)
-      if (missingPillars.length >= 1 && userMsgs.length === 4) {
+      // Allow up to 3 relance rounds (user messages 4, 5, 6) while pillars are missing
+      const MAX_RELANCE_ROUND = 6;
+      if (missingPillars.length >= 1 && userMsgs.length <= MAX_RELANCE_ROUND) {
         const missingDescriptions = missingPillars.map((p) => `- ${PILLAR_LABELS[p]}`).join("\n");
+        const isFirstRelance = userMsgs.length === 4;
+        const intro = isFirstRelance
+          ? "Merci pour cette présentation. Pour que l'évaluation soit **complète et pertinente**, j'aurais besoin de précisions sur :"
+          : "Merci pour ces précisions. Il manque encore des informations sur :";
         return sseText(
-          "Merci pour cette présentation. Pour que l'évaluation soit **complète et pertinente**, j'aurais besoin de précisions sur :\n\n" +
+          intro + "\n\n" +
           missingDescriptions +
           "\n\n**L'évaluation sera moins précise et les notes seront impactées** si ces éléments restent absents. Vous pouvez répondre à tout ou partie.",
         );
