@@ -85,7 +85,7 @@ const ELIGIBILITY_CONTEXTUAL_SUGGESTIONS: Record<number, string> = {
   3: 'Quels types de projets innovants sont éligibles ?',
 };
 
-const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number }> = ({ hideEligibility = false, eligibilityStep }) => {
+const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number; position?: 'left' | 'right' }> = ({ hideEligibility = false, eligibilityStep, position = 'right' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
