@@ -13,8 +13,7 @@ type Phase =
   | "prequal_q3"
   | "prequal_rejected"
   | "project_initial"
-  | "project_ready_for_eval"
-  | "report_ready";
+  | "project_ready_for_eval";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -30,28 +29,28 @@ const PREQUAL_LABELS = [
 
 // ── Pillar detection (semantic via LLM) ─────────────────────────────────────────
 
-type Pillar = "innovation" | "team" | "market";
+type Pillar = "innovation" | "team" | "market" | "supports" | "gtm";
 
 async function classifyPillarsSemanticly(allUserTexts: string[], apiKey: string): Promise<Pillar[]> {
   const combined = allUserTexts.join("\n\n");
 
-  // Quick fallback to regex if text is very short
-  if (combined.length < 100) {
-    return detectMissingPillarsFallback(combined);
-  }
+  // If text is too short to evaluate, proceed to report directly
+  if (combined.length < 100) return [];
 
   try {
-    const classificationPrompt = `Analyse le texte suivant et indique quels piliers sont couverts : innovation, team (équipe), market (marché).
+    const classificationPrompt = `Analyse le texte suivant et indique quels piliers sont couverts parmi : innovation, team (équipe), market (marché), supports (soutiens/partenariats), gtm (stratégie go-to-market).
 
 Texte:
 ${combined}
 
 Réponds EXACTEMENT au format JSON suivant, sans aucun texte avant ou après :
-{"innovation": true, "team": true, "market": true}
+{"innovation": true, "team": true, "market": true, "supports": true, "gtm": true}
 
 - innovation: true si le texte mentionne des aspects techniquement innovants, complexité technique, R&D, prototypage, ou avancement technologique
 - team: true si le texte mentionne l'équipe fondatrice, expérience, compétences, ou background pertinent
-- market: true si le texte mentionne le marché cible, clients potentiels, compétition, stratégie commerciale, ou taille de marché`;
+- market: true si le texte mentionne le marché cible, clients potentiels, compétition, stratégie commerciale, ou taille de marché
+- supports: true si le texte mentionne des soutiens, partenaires stratégiques, incubateurs, accélérateurs, lettres d'intention, ou investisseurs
+- gtm: true si le texte mentionne la stratégie go-to-market, canaux d'acquisition, préventes, plan de lancement, déploiement commercial, premiers clients, LOI signées, pré-inscriptions, ou toute traction commerciale déjà obtenue`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -70,58 +69,46 @@ Réponds EXACTEMENT au format JSON suivant, sans aucun texte avant ou après :
     });
 
     if (!response.ok) {
-      // Fallback to regex if LLM fails
-      console.warn("LLM classification failed, falling back to regex");
-      return detectMissingPillarsFallback(combined);
+      console.warn("LLM classification failed, proceeding to report");
+      return [];
     }
 
     const data = (await response.json()) as Record<string, unknown>;
     const content = (data.choices?.[0] as Record<string, unknown>)?.message?.content as string | undefined;
-    if (!content) return detectMissingPillarsFallback(combined);
+    if (!content) return [];
 
     let parsed: Record<string, boolean>;
     try {
       parsed = JSON.parse(content);
     } catch {
       console.warn("Failed to parse LLM classification response:", content);
-      return detectMissingPillarsFallback(combined);
+      return [];
     }
 
     const missing: Pillar[] = [];
     if (!parsed.innovation) missing.push("innovation");
     if (!parsed.team) missing.push("team");
     if (!parsed.market) missing.push("market");
+    if (!parsed.supports) missing.push("supports");
+    if (!parsed.gtm) missing.push("gtm");
     return missing;
   } catch (error) {
     console.warn("Semantic pillar classification error:", error);
-    return detectMissingPillarsFallback(combined);
+    return [];
   }
-}
-
-// Fallback regex-based detection if LLM is unavailable
-const PILLAR_PATTERNS: Record<Pillar, RegExp> = {
-  innovation: /innov|techno|brevet|algorith|prototype|r&d|différen|ia\b|machine.?learn|deep.?learn|block.?chain|framework|moteur|embarqu|hors.?ligne|cyber|biotech|hardware|microalgu|dispositif|financement|subvention|ressource/i,
-  team: /fondat|co-fondat|cofoundr|cto|ceo|coo|équipe|associé|profil|expérience|parcours|ingénieur|développeur|compétence/i,
-  market: /marché|client|concurrent|cible|segment|utilisateur|go.?to.?market|b2b|b2c|saas|revenue|chiffre|vente|part de marché|acquisition/i,
-};
-
-function detectMissingPillarsFallback(combined: string): Pillar[] {
-  const missing: Pillar[] = [];
-  for (const [pillar, re] of Object.entries(PILLAR_PATTERNS) as [Pillar, RegExp][]) {
-    if (!re.test(combined)) missing.push(pillar);
-  }
-  return missing;
 }
 
 const PILLAR_LABELS: Record<Pillar, string> = {
   innovation: "l'aspect innovant et la complexité technique de votre projet",
   team: "l'équipe fondatrice (profils, compétences, expériences)",
   market: "le marché cible et le paysage concurrentiel",
+  supports: "les soutiens et partenariats existants (incubateur, accélérateur, partenaires stratégiques)",
+  gtm: "la stratégie Go-to-Market et le stade d'avancement (premiers clients, LOI signées, pré-inscriptions, traction commerciale)",
 };
 
 // ── Phase detection ────────────────────────────────────────────────────────────
 
-function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[]; missingPillars: Pillar[] } {
+function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[] } {
   const userMsgs = messages.filter((m) => m.role === "user");
   const n = userMsgs.length;
   const rejectedLabels: string[] = [];
@@ -132,15 +119,15 @@ function detectPhase(messages: Msg[]): { phase: Phase; rejectedLabels: string[];
     }
   }
 
-  if (rejectedLabels.length > 0) return { phase: "prequal_rejected", rejectedLabels, missingPillars: [] };
+  if (rejectedLabels.length > 0) return { phase: "prequal_rejected", rejectedLabels };
 
-  if (n <= 0) return { phase: "prequal_q2", rejectedLabels, missingPillars: [] };
-  if (n === 1) return { phase: "prequal_q2", rejectedLabels, missingPillars: [] };
-  if (n === 2) return { phase: "prequal_q3", rejectedLabels, missingPillars: [] };
-  if (n === 3) return { phase: "project_initial", rejectedLabels, missingPillars: [] };
+  if (n <= 0) return { phase: "prequal_q2", rejectedLabels };
+  if (n === 1) return { phase: "prequal_q2", rejectedLabels };
+  if (n === 2) return { phase: "prequal_q3", rejectedLabels };
+  if (n === 3) return { phase: "project_initial", rejectedLabels };
 
   // n >= 4: project description phase — pillars will be evaluated asynchronously
-  return { phase: "project_ready_for_eval", rejectedLabels, missingPillars: [] };
+  return { phase: "project_ready_for_eval", rejectedLabels };
 }
 
 // ── Hardcoded SSE helper ───────────────────────────────────────────────────────
@@ -184,7 +171,7 @@ L'utilisateur a passé la pré-qualification (société française immatriculée
 5. **Expertise de l'équipe** — Crédibilité, compétences techniques, expériences, réseau.
 6. **Impact social et environnemental** — Fort, modéré, faible ou inexistant.
 7. **Potentiel de croissance et viabilité du modèle économique** — Marché cible, scalabilité, rentabilité.
-8. **Stratégie Go-to-market et exécution** — Réalisme, préventes, LOI, partenaires.
+8. **Stratégie Go-to-market et exécution** — Réalisme, préventes, LOI signées, premiers clients, traction commerciale, partenaires.
 
 ━━━ CALIBRATION — EXEMPLES RÉELS ━━━
 
@@ -217,8 +204,9 @@ RÈGLE CLÉ : La BFT finance l'INNOVATION TECHNOLOGIQUE, pas les bonnes idées b
 
 - Markdown avec titres H2 numérotés (## 1. Analyse de l'innovation, etc.)
 - Notes en gras : **Note : X/5**
-- Paragraphe de synthèse : forces, faiblesses, recommandations.
+- Paragraphe de synthèse : forces et faiblesses factuelles uniquement — aucun conseil, aucune recommandation d'action.
 - Conclusion :
+  - Si Innovation (critère 1) ≤ 2/5 OU Expertise de l'équipe (critère 5) ≤ 2/5 → **ne pas recommander en l'état**, quelle que soit la moyenne
   - Moyenne ≥ 4 → recommander fortement
   - Moyenne 2,5–4 → recommander avec vigilance
   - Moyenne < 2,5 → ne pas recommander en l'état
@@ -351,13 +339,13 @@ serve(async (req) => {
       const projectTexts = userMsgs.slice(3).map((m) => m.content);
       const missingPillars = await classifyPillarsSemanticly(projectTexts, LOVABLE_API_KEY);
 
-      // If key pillars are missing, ask for more info (only on first project message)
-      if (missingPillars.length > 0 && userMsgs.length === 4) {
+      // If any pillar is missing, ask for more info (only on first project message)
+      if (missingPillars.length >= 1 && userMsgs.length === 4) {
         const missingDescriptions = missingPillars.map((p) => `- ${PILLAR_LABELS[p]}`).join("\n");
         return sseText(
-          "Merci pour ces informations. Pour produire une évaluation complète, j'aurais besoin de précisions sur :\n\n" +
+          "Merci pour cette présentation. Pour que l'évaluation soit **complète et pertinente**, j'aurais besoin de précisions sur :\n\n" +
           missingDescriptions +
-          "\n\nPouvez-vous compléter ces éléments ?",
+          "\n\n**L'évaluation sera moins précise et les notes seront impactées** si ces éléments restent absents. Vous pouvez répondre à tout ou partie.",
         );
       }
 
