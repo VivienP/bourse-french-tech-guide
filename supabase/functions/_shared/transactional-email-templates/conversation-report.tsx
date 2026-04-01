@@ -14,6 +14,8 @@ interface ConversationMessage {
 interface ConversationReportProps {
   score?: number
   conversation?: ConversationMessage[]
+  prospectEmail?: string
+  prospectPhone?: string
 }
 
 const ConversationReportEmail = ({ score, conversation }: ConversationReportProps) => {

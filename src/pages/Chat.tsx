@@ -374,6 +374,8 @@ const Chat: React.FC = () => {
           templateData: {
             score,
             conversation: conversationRef.current,
+            prospectEmail: contactEmail.trim(),
+            prospectPhone: contactPhone.trim(),
           },
         },
       }).catch((e) => console.error('transactional cc email error:', e));
