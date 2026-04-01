@@ -398,7 +398,10 @@ const Chat: React.FC = () => {
         <div className="max-w-3xl mx-auto space-y-4">
           {messages.map((msg, i) => {
             // Hide the report message (last assistant) if lead not captured yet
-            const isReportMsg = reportDone && !leadCaptured && msg.role === 'assistant' && i === messages.length - 1;
+            // Hide report message: blurred preview if not lead-captured, completely hidden if report card is shown
+            const isLastAssistant = reportDone && msg.role === 'assistant' && i === messages.length - 1;
+            if (isLastAssistant && showReport) return null;
+            const isReportMsg = isLastAssistant && !leadCaptured;
 
             return (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
