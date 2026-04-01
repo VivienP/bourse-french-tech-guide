@@ -18,7 +18,7 @@ interface ConversationReportProps {
   prospectPhone?: string
 }
 
-const ConversationReportEmail = ({ score, conversation }: ConversationReportProps) => {
+const ConversationReportEmail = ({ score, conversation, prospectEmail, prospectPhone }: ConversationReportProps) => {
   const isEligible = score !== undefined && score !== null && score >= 2.5
   const scoreLabel = isEligible ? 'Projet éligible' : 'Projet nécessitant des ajustements'
 
