@@ -1,35 +1,37 @@
 
 
-## Plan : Corriger les deux problèmes d'UI sur /chat
+## Plan : Ajouter les coordonnées du prospect dans l'email envoyé à Aline
 
-### Problème 1 — Bulle Q/A qui chevauche le bouton "Envoyer" en mobile
+### Approche
 
-La bulle flottante est positionnée `fixed bottom-6 right-4` et le panneau de chat s'ouvre aussi à droite, ce qui chevauche le footer d'input de la page /chat sur mobile.
+Passer `contactEmail` et `contactPhone` dans le `templateData` de l'appel CC vers Aline, puis afficher ces infos dans le template email uniquement quand elles sont présentes (l'email utilisateur ne les affiche pas).
 
-**Solution** : Ajouter une prop `position` au composant `ChatBubble` pour permettre de placer la bulle à gauche. Sur la page `/chat`, passer `position="left"`.
+### Étapes
 
-**Fichiers modifiés** :
-- `src/components/ChatBubble.tsx` — Ajouter prop `position?: 'left' | 'right'` (défaut `'right'`). Changer les classes du bouton flottant et du panneau selon la position :
-  - Bouton : `right-4 sm:right-6` → `left-4 sm:left-6` quand `position="left"`
-  - Panneau : `sm:left-auto sm:right-6` → `sm:right-auto sm:left-6` quand `position="left"`
-- `src/pages/Chat.tsx` — Passer `position="left"` au `<ChatBubble>`
+**1. `src/pages/Chat.tsx`** — Ajouter `contactEmail` et `contactPhone` au `templateData` de l'appel CC (lignes 369-379) :
+```typescript
+templateData: {
+  score,
+  conversation: conversationRef.current,
+  prospectEmail: contactEmail.trim(),
+  prospectPhone: contactPhone.trim(),
+},
+```
 
-### Problème 2 — Rapport affiché en double
+**2. `supabase/functions/_shared/transactional-email-templates/conversation-report.tsx`** — Ajouter les props `prospectEmail?` et `prospectPhone?` à l'interface, puis afficher un encart « Coordonnées du prospect » entre le score et la conversation quand ces props sont présentes :
+```tsx
+{(prospectEmail || prospectPhone) && (
+  <Section style={contactSection}>
+    <Text style={contactTitle}>📋 Coordonnées du prospect</Text>
+    {prospectEmail && <Text style={contactInfo}>Email : {prospectEmail}</Text>}
+    {prospectPhone && <Text style={contactInfo}>Tél : {prospectPhone}</Text>}
+  </Section>
+)}
+```
 
-Le rapport apparait dans le dernier message assistant ET dans l'encart `showReport`. Actuellement, le message n'est masqué que quand `!leadCaptured` (blurred preview). Une fois le lead capturé, le message complet réapparait.
+**3. Redéployer** `send-transactional-email` après modification du template.
 
-**Solution** : Aussi cacher le message du rapport quand `showReport` est vrai (lead capturé + score présent).
-
-**Fichier modifié** :
-- `src/pages/Chat.tsx` — Modifier la condition `isReportMsg` (ligne 401) :
-  ```
-  const isReportMsg = reportDone && msg.role === 'assistant' && i === messages.length - 1;
-  ```
-  Puis conditionner : si `isReportMsg && showReport` → ne pas rendre le message du tout (au lieu de le montrer normalement après lead capture).
-
-### Détails techniques
-
-- Aucune modification backend
-- 2 fichiers modifiés : `ChatBubble.tsx`, `Chat.tsx`
-- Changements purement CSS/conditionnels
+### Fichiers modifiés
+- `src/pages/Chat.tsx` (1 ligne)
+- `supabase/functions/_shared/transactional-email-templates/conversation-report.tsx` (props + section conditionnelle)
 
