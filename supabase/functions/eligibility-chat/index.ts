@@ -36,7 +36,6 @@ const STRUCTURED_QUESTIONS: string[] = [
   "Pourquoi demandez-vous cette bourse spécifiquement ?",
 ];
 
-
 // ── Phase detection ────────────────────────────────────────────────────────────
 
 /**
@@ -61,8 +60,13 @@ function detectPhase(messages: Msg[]): Phase {
   // Gate passed (Oui). Count structured answers (messages after the gate answer).
   const answered = n - 1;
   const phases: Phase[] = [
-    "structured_q1", "structured_q2", "structured_q3", "structured_q4",
-    "structured_q5", "structured_q6", "structured_q7",
+    "structured_q1",
+    "structured_q2",
+    "structured_q3",
+    "structured_q4",
+    "structured_q5",
+    "structured_q6",
+    "structured_q7",
   ];
   if (answered < 7) return phases[answered];
   return "ready_for_eval";
@@ -71,8 +75,7 @@ function detectPhase(messages: Msg[]): Phase {
 // ── Hardcoded SSE helper ───────────────────────────────────────────────────────
 
 function sseText(text: string): Response {
-  const payload =
-    `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\ndata: [DONE]\n\n`;
+  const payload = `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\ndata: [DONE]\n\n`;
   return new Response(new TextEncoder().encode(payload), {
     headers: { ...corsHeaders, "Content-Type": "text/event-stream", "Cache-Control": "no-cache" },
   });
@@ -175,15 +178,18 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_MAX = 30;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of rateLimitMap) {
-    if (now > entry.resetTime) rateLimitMap.delete(key);
-  }
-  for (const [key, entry] of sessionStore) {
-    if (now - entry.start > SESSION_TTL_MS) sessionStore.delete(key);
-  }
-}, 10 * 60 * 1000);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, entry] of rateLimitMap) {
+      if (now > entry.resetTime) rateLimitMap.delete(key);
+    }
+    for (const [key, entry] of sessionStore) {
+      if (now - entry.start > SESSION_TTL_MS) sessionStore.delete(key);
+    }
+  },
+  10 * 60 * 1000,
+);
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -206,9 +212,7 @@ serve(async (req) => {
 
   try {
     const clientIP =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      req.headers.get("cf-connecting-ip") ||
-      "unknown";
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("cf-connecting-ip") || "unknown";
 
     if (!checkRateLimit(clientIP)) {
       return new Response(JSON.stringify({ error: "Trop de requêtes. Veuillez réessayer plus tard." }), {
@@ -224,10 +228,10 @@ serve(async (req) => {
       const entry = sessionStore.get(sessionId);
       if (entry && now - entry.start < SESSION_TTL_MS) {
         if (entry.count >= SESSION_MAX_CALLS) {
-          return new Response(
-            JSON.stringify({ error: "Limite de session atteinte.", code: "SESSION_LIMIT_REACHED" }),
-            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: "Limite de session atteinte.", code: "SESSION_LIMIT_REACHED" }), {
+            status: 429,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
         entry.count++;
       } else {
@@ -237,14 +241,16 @@ serve(async (req) => {
 
     if (!Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Messages invalides." }), {
-        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     const MAX_SESSION_MESSAGES = 20;
     if (messages.length > MAX_SESSION_MESSAGES) {
       return new Response(JSON.stringify({ error: "Limite de la session atteinte." }), {
-        status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
@@ -257,8 +263,13 @@ serve(async (req) => {
     }
 
     const STRUCTURED_PHASES: Phase[] = [
-      "structured_q1", "structured_q2", "structured_q3", "structured_q4",
-      "structured_q5", "structured_q6", "structured_q7",
+      "structured_q1",
+      "structured_q2",
+      "structured_q3",
+      "structured_q4",
+      "structured_q5",
+      "structured_q6",
+      "structured_q7",
     ];
     const structuredIdx = STRUCTURED_PHASES.indexOf(phase);
     if (structuredIdx !== -1) {
@@ -299,7 +310,8 @@ serve(async (req) => {
       clearTimeout(aiTimeout);
       if (e instanceof Error && e.name === "AbortError") {
         return new Response(JSON.stringify({ error: "Service IA temporairement indisponible." }), {
-          status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 503,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       throw e;
@@ -309,18 +321,21 @@ serve(async (req) => {
     if (!response.ok) {
       if (response.status === 429) {
         return new Response(JSON.stringify({ error: "Limite de requêtes atteinte." }), {
-          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (response.status === 402) {
         return new Response(JSON.stringify({ error: "Service temporairement indisponible." }), {
-          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 402,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const text = await response.text();
       console.error("AI gateway error:", response.status, text);
       return new Response(JSON.stringify({ error: "Erreur du service IA." }), {
-        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
@@ -330,7 +345,8 @@ serve(async (req) => {
   } catch (e) {
     console.error("eligibility-chat error:", e);
     return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Erreur inconnue" }), {
-      status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 });
