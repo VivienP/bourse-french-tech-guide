@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageCircle, X, Send, Square, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
+import { parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
 type Intent = 'bft' | 'non_dilutif';
 type Message = { role: 'user' | 'assistant'; content: string; intent?: Intent };
@@ -78,11 +79,10 @@ const INITIAL_SUGGESTIONS = [
   'Comment augmenter mes fonds propres ?',
 ];
 
+// Step 0 = gate question visible, step 1 = gate answered (max in current flow)
 const ELIGIBILITY_CONTEXTUAL_SUGGESTIONS: Record<number, string> = {
   0: 'Quelles formes juridiques sont éligibles à la BFT ?',
   1: "Comment est calculée la date limite d'un an ?",
-  2: "Qu'est-il considéré comme fonds propres ou quasi-fonds propres par Bpifrance ?",
-  3: 'Quels types de projets innovants sont éligibles ?',
 };
 
 const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number; position?: 'left' | 'right' }> = ({ hideEligibility = false, eligibilityStep, position = 'right' }) => {
@@ -193,20 +193,12 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
 
         let newlineIdx: number;
         while ((newlineIdx = buffer.indexOf('\n')) !== -1) {
-          let line = buffer.slice(0, newlineIdx);
+          const line = buffer.slice(0, newlineIdx);
           buffer = buffer.slice(newlineIdx + 1);
-          if (line.endsWith('\r')) line = line.slice(0, -1);
-          if (line.startsWith(':') || line.trim() === '') continue;
-          if (!line.startsWith('data: ')) continue;
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === '[DONE]') {
-            done = true;
-            break;
-          }
           try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) upsert(content);
+            const result = parseSSELine(line);
+            if (result === SSE_DONE) { done = true; break; }
+            if (result) upsert(result);
           } catch {
             buffer = line + '\n' + buffer;
             break;
@@ -216,16 +208,10 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
 
       // Final flush
       if (buffer.trim()) {
-        for (let raw of buffer.split('\n')) {
-          if (!raw) continue;
-          if (raw.endsWith('\r')) raw = raw.slice(0, -1);
-          if (!raw.startsWith('data: ')) continue;
-          const jsonStr = raw.slice(6).trim();
-          if (jsonStr === '[DONE]') continue;
+        for (const raw of buffer.split('\n')) {
           try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) upsert(content);
+            const result = parseSSELine(raw);
+            if (result && result !== SSE_DONE) upsert(result);
           } catch {}
         }
       }

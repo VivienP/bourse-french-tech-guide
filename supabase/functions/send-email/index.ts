@@ -84,7 +84,8 @@ serve(async (req) => {
     }
 
     const escapeHtml = (s: string) =>
-      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 
     // Build plain-text transcript
     const transcript = conversation

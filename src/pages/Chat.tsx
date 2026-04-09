@@ -1,3 +1,14 @@
+/**
+ * Chat.tsx — Chatbot d'éligibilité BFT
+ *
+ * State machine (backend-driven, synchronisé via comptage de messages) :
+ *   gate_pending → [Oui] → structured_q1..q7 → ready_for_eval (rapport + lead gate)
+ *                → [Non] → gate_rejected (CONVERSATION_CLOSED)
+ *
+ * Persistence : localStorage clé "bft_chat_state" (JSON)
+ * Streaming   : SSE via /eligibility-chat edge function
+ * Scoring     : SCORE_FINAL marker dans le dernier message assistant
+ */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, Square, Lock, Calendar } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -5,12 +16,14 @@ import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
 import ChatBubble from '@/components/ChatBubble';
 import { supabase } from '@/integrations/supabase/client';
+import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
 const ELIGIBILITY_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/eligibility-chat`;
 const SEND_EMAIL_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`;
 const AUTH_HEADER = `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`;
+const CC_EMAIL = import.meta.env.VITE_CC_EMAIL ?? '';
 const CAL_NAMESPACE = 'eligibilite';
 const CAL_ORIGIN = 'https://app.cal.eu';
 const CAL_EMBED_JS_URL = `${CAL_ORIGIN}/embed/embed.js`;
@@ -53,25 +66,6 @@ function getOrCreateSessionId(): string {
   return id;
 }
 
-function stripMarkers(text: string): string {
-  return text
-    .replace(/\nSCORE_FINAL:\s*[\d.]+/gi, '')
-    .replace(/\nCONVERSATION_CLOSED/gi, '')
-    .trimEnd();
-}
-
-function extractScore(text: string): number | null {
-  const match = text.match(/SCORE_FINAL:\s*([\d.]+)/i);
-  if (!match) return null;
-  const val = parseFloat(match[1]);
-  if (isNaN(val) || val < 0 || val > 5) return null;
-  return val;
-}
-
-function extractClosed(text: string): boolean {
-  return /CONVERSATION_CLOSED/i.test(text);
-}
-
 // Simple email validation
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -83,8 +77,14 @@ function isValidPhone(phone: string): boolean {
   return /^(\+33|0)[1-9]\d{8}$/.test(cleaned);
 }
 
+const INITIAL_MESSAGE =
+  "Ce programme est réservé aux startups qui remplissent les **3 conditions suivantes** :\n\n" +
+  "- Société commerciale immatriculée (SAS, SARL, SASU, EURL…)\n" +
+  "- Créée il y a **moins d'un an**\n" +
+  "- Au moins **20 000 € de fonds propres** et quasi-fonds propres\n\n" +
+  "**Confirmez-vous que vous remplissez l'ensemble de ces conditions ?**";
+
 const Chat: React.FC = () => {
-  const INITIAL_MESSAGE = "Votre entreprise est-elle une société française **déjà immatriculée** (SAS/SARL/...) ?";
   const saved = React.useMemo(() => loadChatState(), []);
 
   const [messages, setMessages] = useState<Message[]>(
@@ -134,10 +134,10 @@ const Chat: React.FC = () => {
     window.location.reload();
   }, []);
 
-  // Auto-scroll
+  // Auto-scroll on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, leadCaptured]);
+  }, [messages]);
 
   // Cal.com init
   useEffect(() => {
@@ -235,17 +235,12 @@ const Chat: React.FC = () => {
 
         let newlineIdx: number;
         while ((newlineIdx = buffer.indexOf('\n')) !== -1) {
-          let line = buffer.slice(0, newlineIdx);
+          const line = buffer.slice(0, newlineIdx);
           buffer = buffer.slice(newlineIdx + 1);
-          if (line.endsWith('\r')) line = line.slice(0, -1);
-          if (line.startsWith(':') || line.trim() === '') continue;
-          if (!line.startsWith('data: ')) continue;
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === '[DONE]') { done = true; break; }
           try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) upsert(content);
+            const result = parseSSELine(line);
+            if (result === SSE_DONE) { done = true; break; }
+            if (result) upsert(result);
           } catch {
             buffer = line + '\n' + buffer;
             break;
@@ -255,24 +250,18 @@ const Chat: React.FC = () => {
 
       // Final flush
       if (buffer.trim()) {
-        for (let raw of buffer.split('\n')) {
-          if (!raw || !raw.startsWith('data: ')) continue;
-          const jsonStr = raw.slice(6).trim();
-          if (jsonStr === '[DONE]') continue;
+        for (const raw of buffer.split('\n')) {
           try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) upsert(content);
+            const result = parseSSELine(raw);
+            if (result && result !== SSE_DONE) upsert(result);
           } catch {}
         }
       }
 
       if (extractClosed(assistantContent)) {
-        // Only honor CONVERSATION_CLOSED during prequal phase (not during project evaluation)
+        // Only honor CONVERSATION_CLOSED when the gate was rejected (first user message = "Non")
         const userMsgs = newMessages.filter(m => m.role === 'user');
-        const allPrequalPassed = userMsgs.length >= 3 &&
-          userMsgs.slice(0, 3).every(m => /^oui$/i.test(m.content.trim()));
-        if (!allPrequalPassed) {
+        if (userMsgs.length >= 1 && isNo(userMsgs[0].content)) {
           setConversationClosed(true);
         }
       }
@@ -365,11 +354,11 @@ const Chat: React.FC = () => {
         },
       }).catch((e) => console.error('transactional email error:', e));
 
-      // Send CC to ademuynck@odaliaconseil.com
-      supabase.functions.invoke('send-transactional-email', {
+      // Send CC to the configured address (VITE_CC_EMAIL)
+      if (CC_EMAIL) supabase.functions.invoke('send-transactional-email', {
         body: {
           templateName: 'conversation-report',
-          recipientEmail: 'ademuynck@odaliaconseil.com',
+          recipientEmail: CC_EMAIL,
           idempotencyKey: `conversation-report-cc-${sessionIdRef.current}`,
           templateData: {
             score,
@@ -573,7 +562,7 @@ const Chat: React.FC = () => {
       {!conversationClosed && !showLeadGate && !showReport && (
         <div className="border-t border-border px-4 py-3 bg-card shrink-0">
           <div className="max-w-3xl mx-auto">
-            {preQualStep < 3 ? (
+            {preQualStep < 1 ? (
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={() => handlePreQualAnswer('Oui')}
@@ -598,7 +587,7 @@ const Chat: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
                     onKeyDown={handleKeyDown}
-                    placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Décrivez votre projet...'}
+                    placeholder={reportDone ? 'Rapport généré — posez une question complémentaire...' : 'Votre réponse...'}
                     rows={1}
                     className="flex-1 bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground resize-none min-h-[40px] max-h-[160px] overflow-y-auto"
                     style={{ height: 'auto' }}
