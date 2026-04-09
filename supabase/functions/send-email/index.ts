@@ -61,7 +61,7 @@ serve(async (req) => {
       throw new Error("RESEND_API_KEY is not configured");
     }
 
-    const { conversation, score, contactEmail, contactPhone } = await req.json() as {
+    const { conversation, score, contactEmail, contactPhone } = (await req.json()) as {
       conversation: Message[];
       score: number;
       contactEmail?: string;
@@ -84,24 +84,27 @@ serve(async (req) => {
     }
 
     const escapeHtml = (s: string) =>
-      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 
     // Build plain-text transcript
     const transcript = conversation
       .map((m) => `[${m.role === "user" ? "Utilisateur" : "Assistant"}]\n${m.content}`)
       .join("\n\n---\n\n");
 
-    const scoreLabel = score >= 2.5
-      ? `✅ ÉLIGIBLE (score : ${score}/5)`
-      : `❌ NON ÉLIGIBLE (score : ${score}/5)`;
+    const scoreLabel = score >= 2.5 ? `✅ ÉLIGIBLE (score : ${score}/5)` : `❌ NON ÉLIGIBLE (score : ${score}/5)`;
 
-    const contactInfo = (contactEmail || contactPhone)
-      ? `<h3>Coordonnées du prospect</h3>
-<p><strong>Email :</strong> ${escapeHtml(contactEmail || 'Non renseigné')}</p>
-<p><strong>Téléphone :</strong> ${escapeHtml(contactPhone || 'Non renseigné')}</p>
+    const contactInfo =
+      contactEmail || contactPhone
+        ? `<h3>Coordonnées du prospect</h3>
+<p><strong>Email :</strong> ${escapeHtml(contactEmail || "Non renseigné")}</p>
+<p><strong>Téléphone :</strong> ${escapeHtml(contactPhone || "Non renseigné")}</p>
 <hr/>`
-      : '';
+        : "";
 
     const html = `
 <h2>Nouvelle évaluation d'éligibilité BFT</h2>
@@ -123,9 +126,7 @@ ${contactInfo}
     if (!initialSend.ok) {
       const isSandboxRestriction =
         initialSend.status === 403 &&
-        initialSend.text.includes(
-          "You can only send testing emails to your own email address",
-        );
+        initialSend.text.includes("You can only send testing emails to your own email address");
 
       if (isSandboxRestriction) {
         const sandboxHtml = `${html}
