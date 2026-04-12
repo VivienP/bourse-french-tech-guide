@@ -257,7 +257,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
     <>
       {/* Chat panel */}
       {isOpen && (
-        <div className={`fixed bottom-24 left-4 right-4 ${position === 'left' ? 'sm:right-auto sm:left-6' : 'sm:left-auto sm:right-6'} z-50 w-auto max-w-[400px] h-[500px] ${isExpanded ? 'sm:w-[540px] sm:max-w-[540px] sm:h-[620px]' : 'sm:w-[400px] sm:max-w-[400px] sm:h-[500px]'} bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300 transition-all`}>
+        <div className={`fixed bottom-24 left-4 right-4 ${position === 'left' ? 'sm:right-auto sm:left-6' : 'sm:left-auto sm:right-6'} z-50 w-auto max-w-[400px] h-[500px] ${isExpanded ? 'sm:w-[540px] sm:max-w-[540px] sm:h-[620px]' : 'sm:w-[400px] sm:max-w-[400px] sm:h-[500px]'} bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300 transition-all`} style={{ touchAction: 'manipulation' }}>
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-secondary text-secondary-foreground">
             <div className="flex items-center gap-2">
@@ -279,7 +279,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3" style={{ WebkitOverflowScrolling: 'touch' }}>
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
@@ -406,6 +406,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`fixed bottom-6 ${position === 'left' ? 'left-4 sm:left-6' : 'right-4 sm:right-6'} z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center animate-scale-in ${!hasBeenSeen && !isOpen ? 'animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_3]' : ''}`}
+        style={{ touchAction: 'manipulation' }}
         aria-label="Ouvrir le chat"
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
