@@ -11,6 +11,7 @@
  */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, Square, Lock, Calendar, RotateCcw } from 'lucide-react';
+import ScoreGauge from '@/components/ScoreGauge';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
@@ -575,7 +576,13 @@ const Chat: React.FC = () => {
 
           {/* Full report display after lead capture */}
           {showReport && reportContent && (
-            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-6">
+              {/* Score gauge */}
+              {score !== null && (
+                <div className="flex justify-center py-2">
+                  <ScoreGauge score={score} />
+                </div>
+              )}
               <div className="prose prose-sm max-w-none dark:prose-invert [&>h2]:text-base [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-sm [&>h3]:font-semibold [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2">
                 <ReactMarkdown>{reportContent}</ReactMarkdown>
               </div>
@@ -585,7 +592,6 @@ const Chat: React.FC = () => {
           {/* Eligible notice — shown after lead capture */}
           {isEligible && leadCaptured && (
             <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-sm text-green-800">
-              <strong className="block mb-1">Score : {score}/5 — Projet éligible.</strong>
               Votre dossier a bien été transmis. Un expert vous contactera prochainement pour préparer votre candidature.
             </div>
           )}
@@ -593,7 +599,7 @@ const Chat: React.FC = () => {
           {/* Non-eligible notice — shown after lead capture */}
           {reportDone && !isEligible && !conversationClosed && leadCaptured && (
             <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-sm text-orange-800">
-              <strong>Score : {score}/5.</strong> Votre projet nécessite des ajustements avant de candidater. Consultez les recommandations dans le rapport ci-dessus.
+              Votre projet nécessite des ajustements avant de candidater. Consultez les constats dans le rapport ci-dessus.
             </div>
           )}
 
