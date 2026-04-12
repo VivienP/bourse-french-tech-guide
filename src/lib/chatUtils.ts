@@ -36,15 +36,23 @@ export function stripMarkers(text: string): string {
 /** Sentinel returned when the SSE stream is complete. */
 export const SSE_DONE = Symbol('SSE_DONE');
 
+/** Result type for parseSSELine — distinguishes content, reasoning, done, and skip. */
+export type SSEResult =
+  | { type: 'content'; text: string }
+  | { type: 'reasoning' }
+  | typeof SSE_DONE
+  | null;
+
 /**
  * Parses a single `data: ...` SSE line.
  * Returns:
- *   - a non-empty string with the delta content chunk
+ *   - { type: 'content', text } with the delta content chunk
+ *   - { type: 'reasoning' } when the model is in its reasoning phase
  *   - SSE_DONE when the stream has ended ([DONE] marker)
  *   - null when the line carries no content (skip and continue)
  * Throws when the JSON is incomplete (caller should re-buffer the line).
  */
-export function parseSSELine(line: string): string | typeof SSE_DONE | null {
+export function parseSSELine(line: string): SSEResult {
   if (line.endsWith('\r')) line = line.slice(0, -1);
   if (line.startsWith(':') || line.trim() === '') return null;
   if (!line.startsWith('data: ')) return null;
@@ -53,6 +61,16 @@ export function parseSSELine(line: string): string | typeof SSE_DONE | null {
   if (jsonStr === '[DONE]') return SSE_DONE;
 
   const parsed = JSON.parse(jsonStr); // throws on incomplete JSON — caller must re-buffer
-  const content: string | undefined = parsed.choices?.[0]?.delta?.content;
-  return content ?? null;
+  const delta = parsed.choices?.[0]?.delta;
+
+  // Content tokens take priority
+  const content: string | undefined = delta?.content;
+  if (content) return { type: 'content', text: content };
+
+  // Detect reasoning phase (reasoning_content or reasoning field)
+  if (delta?.reasoning_content !== undefined || delta?.reasoning !== undefined) {
+    return { type: 'reasoning' };
+  }
+
+  return null;
 }
