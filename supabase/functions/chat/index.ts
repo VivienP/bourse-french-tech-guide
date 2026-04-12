@@ -291,7 +291,7 @@ serve(async (req) => {
         model: "openai/gpt-5.2",
         messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
         stream: true,
-        max_tokens: 2000,
+        max_completion_tokens: 2000,
         reasoning_effort: "medium",
       }),
     });
