@@ -16,15 +16,8 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, max = 5 }) => {
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - percentage);
 
-  // Color based on score
-  const getColor = () => {
-    if (score >= 3.5) return { stroke: 'hsl(142, 71%, 45%)', bg: 'hsl(142, 76%, 96%)', text: 'hsl(142, 71%, 35%)' };
-    if (score >= 2.5) return { stroke: 'hsl(142, 50%, 50%)', bg: 'hsl(142, 50%, 96%)', text: 'hsl(142, 50%, 38%)' };
-    if (score >= 1.5) return { stroke: 'hsl(38, 92%, 50%)', bg: 'hsl(38, 92%, 96%)', text: 'hsl(38, 92%, 40%)' };
-    return { stroke: 'hsl(0, 72%, 51%)', bg: 'hsl(0, 72%, 96%)', text: 'hsl(0, 72%, 41%)' };
-  };
-
-  const color = getColor();
+  // Use semantic color classes based on score tier
+  const tier = score >= 3.5 ? 'high' : score >= 2.5 ? 'mid' : score >= 1.5 ? 'low' : 'fail';
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -46,7 +39,13 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, max = 5 }) => {
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke={color.stroke}
+            stroke={
+              tier === 'high' || tier === 'mid'
+                ? 'hsl(var(--primary))'
+                : tier === 'low'
+                  ? 'hsl(var(--muted-foreground))'
+                  : 'hsl(var(--destructive))'
+            }
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circumference}
@@ -56,7 +55,7 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, max = 5 }) => {
         </svg>
         {/* Score text centered */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-bold" style={{ color: color.text }}>
+          <span className="text-2xl font-bold text-foreground">
             {score.toFixed(1)}
           </span>
           <span className="text-[10px] text-muted-foreground font-medium">/ {max}</span>
@@ -65,12 +64,16 @@ const ScoreGauge: React.FC<ScoreGaugeProps> = ({ score, max = 5 }) => {
 
       {/* Badge */}
       <span
-        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
-        style={{ backgroundColor: color.bg, color: color.text }}
+        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+          isEligible
+            ? 'bg-accent text-accent-foreground'
+            : 'bg-destructive/10 text-destructive'
+        }`}
       >
         <span
-          className="w-2 h-2 rounded-full"
-          style={{ backgroundColor: color.stroke }}
+          className={`w-2 h-2 rounded-full ${
+            isEligible ? 'bg-primary' : 'bg-destructive'
+          }`}
         />
         {isEligible ? 'Éligible' : 'Non éligible en l\'état'}
       </span>
