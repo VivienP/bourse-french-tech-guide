@@ -17,7 +17,7 @@ import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
 
 import { supabase } from '@/integrations/supabase/client';
-import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE, type SSEResult } from '@/lib/chatUtils';
+import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
