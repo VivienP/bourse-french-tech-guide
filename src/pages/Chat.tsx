@@ -660,7 +660,7 @@ const Chat: React.FC = () => {
 
       {/* Input footer — hidden when lead gate, cal widget, or conversation closed */}
       {!conversationClosed && !showLeadGate && !showReport && (
-        <div className="border-t border-border px-3 sm:px-4 py-2.5 sm:py-3 bg-card shrink-0">
+        <div className="border-t border-border px-4 py-3 bg-card shrink-0">
           <div className="max-w-3xl mx-auto">
             {preQualStep < 1 ? (
               <div className="flex gap-3 justify-center">
