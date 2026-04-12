@@ -198,7 +198,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
           try {
             const result = parseSSELine(line);
             if (result === SSE_DONE) { done = true; break; }
-            if (result) upsert(result);
+            if (result && result.type === 'content') upsert(result.text);
           } catch {
             buffer = line + '\n' + buffer;
             break;
@@ -211,7 +211,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
         for (const raw of buffer.split('\n')) {
           try {
             const result = parseSSELine(raw);
-            if (result && result !== SSE_DONE) upsert(result);
+            if (result && result !== SSE_DONE && result.type === 'content') upsert(result.text);
           } catch {}
         }
       }

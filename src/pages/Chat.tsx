@@ -17,7 +17,7 @@ import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
 
 import { supabase } from '@/integrations/supabase/client';
-import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE, type SSEResult } from '@/lib/chatUtils';
+import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -111,6 +111,7 @@ const Chat: React.FC = () => {
   );
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isReasoning, setIsReasoning] = useState(false);
   const [score, setScore] = useState<number | null>(saved?.score ?? null);
   const [emailSent, setEmailSent] = useState(false);
   const [conversationClosed, setConversationClosed] = useState(saved?.conversationClosed ?? false);
@@ -202,6 +203,7 @@ const Chat: React.FC = () => {
     const newMessages: Message[] = userMsg ? [...messages, userMsg] : messages;
     if (userMsg) setMessages(newMessages);
     setIsLoading(true);
+    setIsReasoning(false);
 
     const controller = new AbortController();
     abortRef.current = controller;
@@ -273,7 +275,8 @@ const Chat: React.FC = () => {
           try {
             const result = parseSSELine(line);
             if (result === SSE_DONE) { done = true; break; }
-            if (result) upsert(result);
+            if (result && result.type === 'reasoning') { setIsReasoning(true); }
+            if (result && result.type === 'content') { setIsReasoning(false); upsert(result.text); }
           } catch {
             buffer = line + '\n' + buffer;
             break;
@@ -286,7 +289,7 @@ const Chat: React.FC = () => {
         for (const raw of buffer.split('\n')) {
           try {
             const result = parseSSELine(raw);
-            if (result && result !== SSE_DONE) upsert(result);
+            if (result && result !== SSE_DONE && result.type === 'content') upsert(result.text);
           } catch {}
         }
       }
@@ -505,8 +508,18 @@ const Chat: React.FC = () => {
             );
           })}
 
-          {/* Loading indicator */}
-          {isLoading && (messages.length === 0 || messages[messages.length - 1]?.role === 'user') && (
+          {/* Reasoning indicator */}
+          {isLoading && isReasoning && (
+            <div className="flex justify-start">
+              <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-2">
+                <span className="text-sm">🧠</span>
+                <span className="text-xs text-muted-foreground animate-pulse">Analyse en cours…</span>
+              </div>
+            </div>
+          )}
+
+          {/* Loading indicator (before reasoning or for non-reasoning responses) */}
+          {isLoading && !isReasoning && (messages.length === 0 || messages[messages.length - 1]?.role === 'user') && (
             <div className="flex justify-start">
               <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3">
                 <div className="flex gap-1">
