@@ -14,7 +14,7 @@ import { Send, Square, Lock, Calendar } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
-import ChatBubble from '@/components/ChatBubble';
+
 import { supabase } from '@/integrations/supabase/client';
 import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
@@ -624,7 +624,7 @@ const Chat: React.FC = () => {
           </div>
         </div>
       )}
-      <ChatBubble hideEligibility eligibilityStep={preQualStep} position="left" />
+      
     </div>
   );
 };
