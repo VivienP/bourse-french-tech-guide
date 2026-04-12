@@ -1,23 +1,36 @@
 
 
-## Plan: Hide individual criterion scores, show only the overall average
+## Plan: Add "thinking" indicator during GPT reasoning phase
 
-### Change
+### What it does
+Shows an animated "Analyse en cours…" indicator while GPT-5.2 is reasoning (before content starts streaming). Disappears once the actual response begins. Does NOT show raw reasoning text — just a visual cue.
 
-**`supabase/functions/eligibility-chat/index.ts`** — Update `REPORT_PROMPT` (lines 107-164)
+### Changes
 
-Modify the report format instructions so the LLM:
-- Still evaluates all 5 dimensions internally (for accurate scoring)
-- Does **not** display individual "Note : X/5" per criterion
-- Writes a qualitative paragraph per dimension (strengths/weaknesses) without showing the score
-- Shows **only the final average** in the conclusion section
+**`src/lib/chatUtils.ts`** — Extend `parseSSELine` to detect reasoning phase
 
-Key prompt edits:
-1. **Lines 147-150** — Replace format instructions: remove "Notes en gras : **Note : X/5**", replace with "Ne jamais afficher la note individuelle de chaque critère. Rédiger un paragraphe d'analyse factuelle par dimension sans mentionner de note chiffrée."
-2. **Lines 154-157** — Update conclusion format to prominently display the average: "Afficher uniquement la **Note globale : X.X/5** suivie du verdict d'éligibilité."
-3. **Lines 139-145** — Update scoring rules to clarify these are internal-only: "Ces notes sont internes au calcul et ne doivent pas apparaître dans le rapport."
+Add a new return type to distinguish reasoning chunks from content chunks:
+```typescript
+export type SSEResult = 
+  | { type: 'content'; text: string }
+  | { type: 'reasoning' }
+  | typeof SSE_DONE
+  | null;
+```
+
+Update `parseSSELine` to check for `delta.reasoning_content` or `delta.reasoning` in the parsed JSON. If present (and no `delta.content`), return `{ type: 'reasoning' }`. If `delta.content` exists, return `{ type: 'content', text: content }`.
+
+**`src/pages/Chat.tsx`** — Add reasoning state and UI indicator
+
+1. Add `isReasoning` boolean state
+2. Set it to `true` when first reasoning chunk arrives
+3. Set it to `false` when first content chunk arrives
+4. Show a pulsing indicator (brain icon + "Analyse en cours…") in the message area while `isReasoning` is true
 
 ### Files modified
-- `supabase/functions/eligibility-chat/index.ts` (~10 lines in REPORT_PROMPT)
-- Redeploy edge function `eligibility-chat`
+- `src/lib/chatUtils.ts` (~10 lines changed)
+- `src/pages/Chat.tsx` (~15 lines added)
+
+### Risk
+Very low — the reasoning field is simply ignored today; we're just detecting its presence. If the API doesn't send reasoning tokens (e.g. model changes), the indicator simply won't appear and the chat works as before.
 
