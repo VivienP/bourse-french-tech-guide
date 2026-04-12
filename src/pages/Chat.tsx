@@ -454,6 +454,8 @@ const Chat: React.FC = () => {
             if (isLastAssistant && showReport) return null;
             const isReportMsg = isLastAssistant && !leadCaptured;
 
+            const isError = isErrorMessage(msg);
+
             return (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
@@ -477,6 +479,18 @@ const Chat: React.FC = () => {
                           Renseignez vos coordonnées pour accéder au rapport
                         </div>
                       </div>
+                    </div>
+                  ) : isError ? (
+                    <div className="flex items-center gap-3">
+                      <span>{msg.content}</span>
+                      <button
+                        onClick={retryLastMessage}
+                        disabled={isLoading}
+                        className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-40"
+                        aria-label="Réessayer"
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                      </button>
                     </div>
                   ) : msg.role === 'assistant' ? (
                     <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&_*]:text-sm">
