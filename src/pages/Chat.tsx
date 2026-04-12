@@ -445,11 +445,11 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-[100dvh] bg-background">
       <NavigationBar activeSection="" scrollToSection={navigateToSection} minimal />
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 pt-[96px] pb-6 space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 pt-[72px] sm:pt-[96px] pb-6 space-y-4">
         <div className="max-w-3xl mx-auto space-y-4">
           {messages.map((msg, i) => {
             // Hide the report message (last assistant) if lead not captured yet
