@@ -1,5 +1,35 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
+// ── Focused BFT knowledge extract (sections 12-14, 18) ────────────────────────
+const BFT_REFERENCE = `
+## Critères d'évaluation Bpifrance (5 axes)
+1. **Équipe fondatrice** — Profil expérimenté, entrepreneur ou expert. Complémentarité des compétences.
+2. **Qualité du projet** — Caractère innovant, proposition de valeur, positionnement marché.
+3. **Structuration** — Cohérence des étapes, clarté des livrables, crédibilité du planning, alignement objectifs/budget.
+4. **Innovation vs concurrence** — Différenciation claire, éléments de rupture ou d'originalité par rapport aux solutions existantes.
+5. **Impact global** — Bénéfices utilisateurs, impact sociétal/environnemental, potentiel création d'emplois/valeur durable.
+
+## Bonnes pratiques
+- Présenter des verrous technologiques réels et une innovation tangible et différenciée.
+- Équipe solide et complémentaire ; valoriser les compétences techniques internes.
+- Marqueurs de confiance : incubation reconnue, prêt d'honneur, partenariats bancaires, investisseurs impliqués, premiers clients.
+- Alignement avec thématiques prioritaires Bpifrance (impact social/environnemental, industrie, santé, greentech).
+- Software > hardware pour documenter la maturation technologique (algorithmes, IA, modèles de données).
+- Trois dimensions clés en entretien : innovation (verrous, différenciation, impact), expertise fondateurs, plan de développement/commercialisation.
+- Timing : solliciter Bpifrance après avoir identifié un vrai besoin et une traction forte. Preuves tangibles indispensables : lettres d'engagement, pré-commandes, inscriptions pré-lancement, investisseurs, premiers clients.
+
+## Pièges à éviter
+- Timing prématuré : déposer sans vision/roadmap claire → refus.
+- Manque de transparence : surévaluer l'innovation est contreproductif et détecté.
+- Fragilité financière : trésorerie < 9 mois = dossier affaibli.
+- Négligence relationnelle : la relation avec le chargé d'affaires est déterminante.
+
+## Exemples de projets financés
+1. **App IA itinéraires bas carbone** — 30 000 € subvention / 43 000 € total / 30 000 € fonds propres. Algo IA prédictif + APIs données ouvertes + app mobile + tests utilisateurs.
+2. **Plateforme économie circulaire électronique (blockchain)** — 29 500 € / 42 000 € total / 20 000 € fonds propres. SaaS + blockchain traçabilité + audit sécurité.
+3. **Rééducation immersive AR à domicile** — 30 000 € / 53 000 € total / 70 000 € fonds propres. App AR + pose estimation + plateforme suivi thérapeutes + tests cliniques.
+`;
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
