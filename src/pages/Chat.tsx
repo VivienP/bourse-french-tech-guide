@@ -538,61 +538,67 @@ const Chat: React.FC = () => {
             </div>
           )}
 
-          {/* Lead capture gate */}
-          {showLeadGate && (
-            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Lock className="h-4 w-4 text-primary" />
-                <h3 className="text-sm font-semibold text-foreground">Accédez à votre rapport d'évaluation</h3>
-              </div>
-              <p className="text-xs text-muted-foreground mb-4">
-                Renseignez vos coordonnées pour débloquer votre rapport complet et recevoir des recommandations personnalisées.
-              </p>
-              <form onSubmit={handleLeadSubmit} className="space-y-3">
-                <div>
-                  <input
-                    type="email"
-                    value={contactEmail}
-                    onChange={(e) => setContactEmail(e.target.value)}
-                    placeholder="Adresse email"
-                    className="w-full bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="tel"
-                    value={contactPhone}
-                    onChange={(e) => setContactPhone(e.target.value)}
-                    placeholder="Numéro de téléphone"
-                    className="w-full bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20"
-                  />
-                </div>
-                {leadError && (
-                  <p className="text-xs text-destructive">{leadError}</p>
-                )}
-                <label className="flex items-start gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={rgpdConsent}
-                    onChange={(e) => setRgpdConsent(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded border-border accent-primary shrink-0"
-                  />
-                  <span className="text-[11px] text-muted-foreground leading-tight">
-                    J'accepte que mes données personnelles (email, téléphone) soient collectées et traitées par BFT dans le cadre de cette évaluation d'éligibilité, conformément au{' '}
-                    <a href="/mentions-legales" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
-                      RGPD et à notre politique de confidentialité
-                    </a>. Ces données sont utilisées uniquement pour vous recontacter et ne sont jamais cédées à des tiers.
-                  </span>
-                </label>
-                <button
-                  type="submit"
-                  className="w-full bg-primary text-primary-foreground rounded-xl py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
-                >
-                  Voir mon rapport
-                </button>
-              </form>
+          <div ref={bottomRef} />
+        </div>
+      </div>
+
+      {/* Lead capture gate — fixed overlay */}
+      {showLeadGate && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-card border border-border rounded-2xl p-6 shadow-lg w-full max-w-md animate-fade-in">
+            <div className="flex items-center gap-2 mb-3">
+              <Lock className="h-4 w-4 text-primary" />
+              <h3 className="text-sm font-semibold text-foreground">Accédez à votre rapport d'évaluation</h3>
             </div>
-          )}
+            <p className="text-xs text-muted-foreground mb-4">
+              Renseignez vos coordonnées pour débloquer votre rapport complet et recevoir des recommandations personnalisées.
+            </p>
+            <form onSubmit={handleLeadSubmit} className="space-y-3">
+              <div>
+                <input
+                  type="email"
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
+                  placeholder="Adresse email"
+                  className="w-full bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20"
+                />
+              </div>
+              <div>
+                <input
+                  type="tel"
+                  value={contactPhone}
+                  onChange={(e) => setContactPhone(e.target.value)}
+                  placeholder="Numéro de téléphone"
+                  className="w-full bg-muted rounded-xl px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20"
+                />
+              </div>
+              {leadError && (
+                <p className="text-xs text-destructive">{leadError}</p>
+              )}
+              <label className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={rgpdConsent}
+                  onChange={(e) => setRgpdConsent(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-border accent-primary shrink-0"
+                />
+                <span className="text-[11px] text-muted-foreground leading-tight">
+                  J'accepte que mes données personnelles (email, téléphone) soient collectées et traitées par BFT dans le cadre de cette évaluation d'éligibilité, conformément au{' '}
+                  <a href="/mentions-legales" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
+                    RGPD et à notre politique de confidentialité
+                  </a>. Ces données sont utilisées uniquement pour vous recontacter et ne sont jamais cédées à des tiers.
+                </span>
+              </label>
+              <button
+                type="submit"
+                className="w-full bg-primary text-primary-foreground rounded-xl py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                Voir mon rapport
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
           {/* Full report display after lead capture */}
           {showReport && reportContent && (
