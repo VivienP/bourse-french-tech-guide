@@ -97,11 +97,11 @@ function isValidPhone(phone: string): boolean {
 }
 
 const INITIAL_MESSAGE =
-  "**3 conditions** pour être éligible :\n\n" +
-  "✅ Société immatriculée (SAS, SARL…)\n" +
-  "✅ Créée il y a **moins d'un an**\n" +
-  "✅ **≥ 20 000 € de fonds propres**\n\n" +
-  "**Remplissez-vous ces conditions ?**";
+  "Ce programme est réservé aux startups qui remplissent les **3 conditions suivantes** :\n\n" +
+  "- ✅ Avoir une **société immatriculée** (SAS, SARL…)\n" +
+  "- ✅ Depuis **moins d'un an**\n" +
+  "- ✅ Avoir **≥ 20 000 € de fonds propres** (capital social + apports en compte courant)\n\n" +
+  "**Remplissez-vous ces 3 conditions ?**";
 
 const Chat: React.FC = () => {
   const saved = React.useMemo(() => loadChatState(), []);
@@ -111,6 +111,7 @@ const Chat: React.FC = () => {
   );
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [isReasoning, setIsReasoning] = useState(false);
   const [score, setScore] = useState<number | null>(saved?.score ?? null);
   const [emailSent, setEmailSent] = useState(false);
@@ -204,6 +205,12 @@ const Chat: React.FC = () => {
     if (userMsg) setMessages(newMessages);
     setIsLoading(true);
     setIsReasoning(false);
+
+    // Detect report generation phase (7+ user messages = all structured questions answered)
+    const userMsgCount = newMessages.filter(m => m.role === 'user').length;
+    if (userMsgCount >= 7) {
+      setIsGeneratingReport(true);
+    }
 
     const controller = new AbortController();
     abortRef.current = controller;
@@ -437,7 +444,7 @@ const Chat: React.FC = () => {
 
   const isEligible = score !== null && score >= 2.5 && !conversationClosed;
   const reportDone = score !== null;
-  const showLeadGate = reportDone && !leadCaptured && !conversationClosed;
+  const showLeadGate = (isGeneratingReport || reportDone) && !leadCaptured && !conversationClosed;
   const showReport = reportDone && leadCaptured && !conversationClosed;
 
   const navigateToSection = (sectionId: string) => {
@@ -449,7 +456,7 @@ const Chat: React.FC = () => {
       <NavigationBar activeSection="" scrollToSection={navigateToSection} minimal />
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-3 sm:px-4 pt-[64px] sm:pt-[96px] pb-4 sm:pb-6 space-y-3 sm:space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 pt-[64px] sm:pt-[96px] pb-6 space-y-4">
         <div className="max-w-3xl mx-auto space-y-4">
           {messages.map((msg, i) => {
             // Hide the report message (last assistant) if lead not captured yet
@@ -463,7 +470,7 @@ const Chat: React.FC = () => {
             return (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[85%] rounded-2xl px-3 py-2.5 sm:px-4 sm:py-3 text-[13px] sm:text-sm ${
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
                     msg.role === 'user'
                       ? 'bg-primary text-primary-foreground rounded-br-sm'
                       : 'bg-muted text-foreground rounded-bl-sm'
@@ -653,7 +660,7 @@ const Chat: React.FC = () => {
 
       {/* Input footer — hidden when lead gate, cal widget, or conversation closed */}
       {!conversationClosed && !showLeadGate && !showReport && (
-        <div className="border-t border-border px-3 sm:px-4 py-2.5 sm:py-3 bg-card shrink-0">
+        <div className="border-t border-border px-4 py-3 bg-card shrink-0">
           <div className="max-w-3xl mx-auto">
             {preQualStep < 1 ? (
               <div className="flex gap-3 justify-center">
