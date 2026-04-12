@@ -1,36 +1,42 @@
 
 
-## Plan: Add "thinking" indicator during GPT reasoning phase
+## Plan: Fix reasoning, improve scoring calibration, add recommendation section
 
-### What it does
-Shows an animated "Analyse en cours…" indicator while GPT-5.2 is reasoning (before content starts streaming). Disappears once the actual response begins. Does NOT show raw reasoning text — just a visual cue.
+### Problems identified
+
+1. **No reasoning phase**: `max_completion_tokens: 2500` is too low when `reasoning_effort: "high"` — the model skips reasoning to fit the output within the token budget. Reasoning tokens count against `max_completion_tokens`.
+
+2. **Score too harsh**: The current 5-dimension formula with "Clarté" weighted at 0.5 and division by 4.5 creates a strict scale. Early-stage projects with real innovation but limited traction get penalized too heavily.
+
+3. **No recommendation section**: The prompt explicitly forbids recommendations. We need a targeted "point d'amélioration clé" section that highlights the single most impactful action to secure BFT.
 
 ### Changes
 
-**`src/lib/chatUtils.ts`** — Extend `parseSSELine` to detect reasoning phase
+**`supabase/functions/eligibility-chat/index.ts`**
 
-Add a new return type to distinguish reasoning chunks from content chunks:
-```typescript
-export type SSEResult = 
-  | { type: 'content'; text: string }
-  | { type: 'reasoning' }
-  | typeof SSE_DONE
-  | null;
-```
+1. **Increase `max_completion_tokens`** from `2500` to `4096` (line 285) — gives the model room for both reasoning and a full report.
 
-Update `parseSSELine` to check for `delta.reasoning_content` or `delta.reasoning` in the parsed JSON. If present (and no `delta.content`), return `{ type: 'reasoning' }`. If `delta.content` exists, return `{ type: 'content', text: content }`.
+2. **Update `REPORT_PROMPT`** (lines 107-165):
+   - **Scoring calibration**: Adjust the eligibility threshold and add guidance that early-stage projects with genuine innovation should score 3+ on innovation. Rebalance: lower the penalty for missing traction when innovation is strong.
+   - **Add recommendation section**: After the conclusion, add a new mandatory section:
+     ```
+     ## 💡 Recommandation clé
+     [Identifier LE point d'amélioration qui aurait le plus d'impact pour sécuriser la BFT. 
+     Formuler en 2-3 phrases actionables.]
+     ```
+   - Remove the "INTERDIT ABSOLU" on recommendations and replace with: individual dimension analyses must remain factual (no advice), but the dedicated "Recommandation clé" section at the end must contain one actionable improvement.
 
-**`src/pages/Chat.tsx`** — Add reasoning state and UI indicator
+**`src/pages/Chat.tsx`** — No changes needed (the recommendation renders as markdown automatically).
 
-1. Add `isReasoning` boolean state
-2. Set it to `true` when first reasoning chunk arrives
-3. Set it to `false` when first content chunk arrives
-4. Show a pulsing indicator (brain icon + "Analyse en cours…") in the message area while `isReasoning` is true
+**`src/components/ScoreGauge.tsx`** — No changes needed.
+
+### Technical details
+
+- The `max_completion_tokens` parameter in OpenAI's API includes reasoning tokens. With `reasoning_effort: "high"`, the model may use 1000-2000 tokens for reasoning alone, leaving very little for the actual report at 2500.
+- Setting it to 4096 gives ~2000 tokens for reasoning + ~2000 for the report — sufficient for the 8-section format.
+- The prompt update keeps internal scoring invisible but adds one final recommendation block.
+- Edge function `eligibility-chat` will be redeployed.
 
 ### Files modified
-- `src/lib/chatUtils.ts` (~10 lines changed)
-- `src/pages/Chat.tsx` (~15 lines added)
-
-### Risk
-Very low — the reasoning field is simply ignored today; we're just detecting its presence. If the API doesn't send reasoning tokens (e.g. model changes), the indicator simply won't appear and the chat works as before.
+- `supabase/functions/eligibility-chat/index.ts` (~20 lines changed)
 
