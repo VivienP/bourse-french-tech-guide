@@ -1,36 +1,40 @@
 
 
-## Plan : Supprimer ChatBubble de /chat + corriger scroll/zoom mobile sur toutes les pages
+## Plan: Upgrade chat model to openai/gpt-5.2 with reasoning
 
-### Problèmes
+### Change
 
-1. **Double chatbot sur /chat** : la bulle ChatBubble chevauche l'input du chatbot principal
-2. **Zoom mobile non verrouillé** : le `<meta name="viewport">` ne bloque pas le pinch-to-zoom, ce qui provoque des zooms intempestifs quand l'utilisateur interagit avec les inputs (double-tap, pinch accidentel)
-3. **Bulle fixe sur la page Index** : la bulle en `position: fixed` peut créer des rebonds de scroll sur iOS (interaction avec le viewport mobile et le clavier virtuel)
+**`supabase/functions/chat/index.ts`** — lines 290-297
 
-### Modifications
+Replace the model, add reasoning config, and increase max_tokens:
 
-**1. `src/pages/Chat.tsx`** — Supprimer ChatBubble
-- Supprimer l'import `ChatBubble` (ligne 17)
-- Supprimer le rendu `<ChatBubble ... />` (ligne 627)
+```typescript
+// Before
+model: "google/gemini-2.5-flash",
+messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
+stream: true,
+temperature: 0.2,
+top_p: 1,
+max_tokens: 500,
 
-**2. `index.html`** — Verrouiller le zoom mobile
-Remplacer :
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+// After
+model: "openai/gpt-5.2",
+messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
+stream: true,
+max_tokens: 2000,
+reasoning: {
+  effort: "medium",
+},
 ```
-Par :
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-```
-Cela empêche le pinch-to-zoom et le zoom automatique sur focus d'input (iOS), éliminant les bugs de scroll/zoom sur toutes les pages.
 
-**3. `src/components/ChatBubble.tsx`** — Stabiliser le scroll mobile sur Index
-- Ajouter `touch-action: manipulation` sur le bouton bulle et le panneau de chat pour éviter les double-tap zoom et les conflits de gestes tactiles
-- Ajouter `-webkit-overflow-scrolling: touch` sur la zone de messages pour un scroll fluide sur iOS
+Note: `temperature` and `top_p` are removed as reasoning models typically manage these internally.
 
-### Fichiers modifiés
-- `src/pages/Chat.tsx` (2 lignes supprimées)
-- `index.html` (1 ligne modifiée)
-- `src/components/ChatBubble.tsx` (ajout de classes CSS tactiles)
+### Impact
+- Significantly better analysis quality for eligibility reports
+- Higher latency per response (~5-15s vs ~2-5s)
+- Higher cost per request
+
+### Files modified
+- `supabase/functions/chat/index.ts` (1 block, ~6 lines)
+- Edge function `chat` redeployed
 
