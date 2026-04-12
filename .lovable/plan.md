@@ -1,28 +1,16 @@
 
 
-## Diagnostic
+## Plan : Supprimer les 2 questions de triage dupliquées
 
-**Cause racine identifiée** : dans `classifyPillarsSemanticly()` (ligne 37-38), si le texte combiné fait moins de 100 caractères, la fonction retourne `[]` (tableau vide). Or dans la logique d'évaluation (ligne ~280), `[]` est interprété comme "aucun pilier manquant = tous couverts" → le rapport est généré immédiatement sans poser de questions.
+### Diagnostic
 
-Le texte "Saas de visualisation et analyse partagées de données biologiques" fait ~65 caractères, donc il tombe dans ce cas.
+Le code source actuel est correct : la gate combinée (3 conditions en un bloc) est bien en place côté frontend ET backend. Mais la fonction edge `eligibility-chat` **déployée** exécute encore une ancienne version du code qui contenait les questions de triage individuelles ("Votre société a-t-elle moins d'un an ?", "Avez-vous au moins 20 000 € de fonds propres…") comme premières questions structurées.
 
-Ce n'est ni un problème d'email ni un contournement utilisateur — c'est un bug dans la logique de détection des piliers.
+### Correction
 
-## Correction
+Redéployer la fonction edge `eligibility-chat` pour que la version actuelle du code (qui ne contient que des questions projet dans `STRUCTURED_QUESTIONS`) soit effective en production.
 
-**Fichier** : `supabase/functions/eligibility-chat/index.ts`
+### Fichiers modifiés
 
-**Changement** : Quand le texte est trop court pour évaluer sémantiquement, retourner TOUS les piliers comme manquants au lieu d'un tableau vide. Cela forcera l'agent à poser des questions complémentaires.
-
-```typescript
-// Ligne 37-38 : remplacer
-if (combined.length < 100) return [];
-
-// Par
-if (combined.length < 100) return ["innovation", "team", "market", "supports", "gtm"];
-```
-
-Cela garantit que toute description courte déclenche systématiquement les questions de relance sur les 5 piliers, au lieu de sauter directement au rapport.
-
-Redéployer la fonction `eligibility-chat` après la modification.
+Aucune modification de code nécessaire. Déploiement uniquement.
 
