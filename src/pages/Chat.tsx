@@ -538,6 +538,61 @@ const Chat: React.FC = () => {
             </div>
           )}
 
+          {/* Full report display after lead capture */}
+          {showReport && reportContent && (
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-6">
+              {score !== null && (
+                <div className="flex justify-center py-2">
+                  <ScoreGauge score={score} />
+                </div>
+              )}
+              <div className="prose prose-sm max-w-none dark:prose-invert [&>h2]:text-base [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-sm [&>h3]:font-semibold [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2">
+                <ReactMarkdown>{reportContent}</ReactMarkdown>
+              </div>
+            </div>
+          )}
+
+          {isEligible && leadCaptured && (
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-sm text-green-800">
+              Votre dossier a bien été transmis. Un expert vous contactera prochainement pour préparer votre candidature.
+            </div>
+          )}
+
+          {reportDone && !isEligible && !conversationClosed && leadCaptured && (
+            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-sm text-orange-800">
+              Votre projet nécessite des ajustements avant de candidater. Consultez les constats dans le rapport ci-dessus.
+            </div>
+          )}
+
+          {showReport && (
+            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <Calendar className="h-4 w-4 text-primary" />
+                <h3 className="text-sm font-semibold text-foreground">Prenez rendez-vous avec un expert</h3>
+              </div>
+              <Cal
+                namespace={CAL_NAMESPACE}
+                calLink="boursefrenchtech/decouverte"
+                calOrigin={CAL_ORIGIN}
+                embedJsUrl={CAL_EMBED_JS_URL}
+                style={{ width: '100%', height: '100%', overflow: 'auto' }}
+                config={{ layout: 'month_view', theme: 'light' }}
+              />
+            </div>
+          )}
+
+          {conversationClosed && (
+            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center space-y-3">
+              <p>Conversation terminée.</p>
+              <button
+                onClick={resetConversation}
+                className="text-xs font-medium text-primary hover:underline transition-colors"
+              >
+                Démarrer une nouvelle évaluation
+              </button>
+            </div>
+          )}
+
           <div ref={bottomRef} />
         </div>
       </div>
@@ -599,70 +654,6 @@ const Chat: React.FC = () => {
           </div>
         </div>
       )}
-
-          {/* Full report display after lead capture */}
-          {showReport && reportContent && (
-            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-6">
-              {/* Score gauge */}
-              {score !== null && (
-                <div className="flex justify-center py-2">
-                  <ScoreGauge score={score} />
-                </div>
-              )}
-              <div className="prose prose-sm max-w-none dark:prose-invert [&>h2]:text-base [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-sm [&>h3]:font-semibold [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2">
-                <ReactMarkdown>{reportContent}</ReactMarkdown>
-              </div>
-            </div>
-          )}
-
-          {/* Eligible notice — shown after lead capture */}
-          {isEligible && leadCaptured && (
-            <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-sm text-green-800">
-              Votre dossier a bien été transmis. Un expert vous contactera prochainement pour préparer votre candidature.
-            </div>
-          )}
-
-          {/* Non-eligible notice — shown after lead capture */}
-          {reportDone && !isEligible && !conversationClosed && leadCaptured && (
-            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 text-sm text-orange-800">
-              Votre projet nécessite des ajustements avant de candidater. Consultez les constats dans le rapport ci-dessus.
-            </div>
-          )}
-
-          {/* Cal.com booking widget — shown after lead capture */}
-          {showReport && (
-            <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar className="h-4 w-4 text-primary" />
-                <h3 className="text-sm font-semibold text-foreground">Prenez rendez-vous avec un expert</h3>
-              </div>
-              <Cal
-                namespace={CAL_NAMESPACE}
-                calLink="boursefrenchtech/decouverte"
-                calOrigin={CAL_ORIGIN}
-                embedJsUrl={CAL_EMBED_JS_URL}
-                style={{ width: '100%', height: '100%', overflow: 'auto' }}
-                config={{ layout: 'month_view', theme: 'light' }}
-              />
-            </div>
-          )}
-
-          {/* Conversation closed notice */}
-          {conversationClosed && (
-            <div className="bg-muted border border-border rounded-2xl p-4 text-sm text-muted-foreground text-center space-y-3">
-              <p>Conversation terminée.</p>
-              <button
-                onClick={resetConversation}
-                className="text-xs font-medium text-primary hover:underline transition-colors"
-              >
-                Démarrer une nouvelle évaluation
-              </button>
-            </div>
-          )}
-
-          <div ref={bottomRef} />
-        </div>
-      </div>
 
       {/* Input footer — hidden when lead gate, cal widget, or conversation closed */}
       {!conversationClosed && !showLeadGate && !showReport && (
