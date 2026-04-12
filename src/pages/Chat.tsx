@@ -10,7 +10,7 @@
  * Scoring     : SCORE_FINAL marker dans le dernier message assistant
  */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Send, Square, Lock, Calendar } from 'lucide-react';
+import { Send, Square, Lock, Calendar, RotateCcw } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import NavigationBar from '@/components/NavigationBar';
@@ -19,6 +19,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { isNo, extractScore, extractClosed, stripMarkers, parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
 type Message = { role: 'user' | 'assistant'; content: string };
+
+const ERROR_PREFIX = '⚠️ ';
+const isErrorMessage = (msg: Message) =>
+  msg.role === 'assistant' && msg.content.startsWith(ERROR_PREFIX);
 
 const ELIGIBILITY_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/eligibility-chat`;
 const SEND_EMAIL_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`;
@@ -309,7 +313,7 @@ const Chat: React.FC = () => {
       console.error('eligibility-chat error:', e);
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: '⚠️ Une erreur est survenue. Veuillez réessayer.' },
+        { role: 'assistant', content: `${ERROR_PREFIX}Une erreur est survenue. Veuillez réessayer.` },
       ]);
     } finally {
       clearTimeout(timeoutId);
@@ -317,6 +321,34 @@ const Chat: React.FC = () => {
       abortRef.current = null;
     }
   }, [input, isLoading, messages, conversationClosed]);
+
+  const retryLastMessage = useCallback(() => {
+    setMessages((prev) => {
+      // Remove trailing error message(s)
+      const cleaned = [...prev];
+      while (cleaned.length > 0 && isErrorMessage(cleaned[cleaned.length - 1])) {
+        cleaned.pop();
+      }
+      // Find last user message to re-send
+      const lastUserMsg = [...cleaned].reverse().find((m) => m.role === 'user');
+      if (lastUserMsg) {
+        // We'll trigger sendMessage after state update via a ref
+        retryTextRef.current = lastUserMsg.content;
+      }
+      return cleaned;
+    });
+  }, []);
+
+  const retryTextRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (retryTextRef.current && !isLoading) {
+      const text = retryTextRef.current;
+      retryTextRef.current = null;
+      // Re-send using existing messages (error already removed)
+      sendMessage(text);
+    }
+  }, [messages, isLoading, sendMessage]);
 
   useEffect(() => {
     return () => { abortRef.current?.abort(); };
@@ -422,6 +454,8 @@ const Chat: React.FC = () => {
             if (isLastAssistant && showReport) return null;
             const isReportMsg = isLastAssistant && !leadCaptured;
 
+            const isError = isErrorMessage(msg);
+
             return (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
@@ -445,6 +479,18 @@ const Chat: React.FC = () => {
                           Renseignez vos coordonnées pour accéder au rapport
                         </div>
                       </div>
+                    </div>
+                  ) : isError ? (
+                    <div className="flex items-center gap-3">
+                      <span>{msg.content}</span>
+                      <button
+                        onClick={retryLastMessage}
+                        disabled={isLoading}
+                        className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-40"
+                        aria-label="Réessayer"
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                      </button>
                     </div>
                   ) : msg.role === 'assistant' ? (
                     <div className="prose prose-sm max-w-none dark:prose-invert [&>p]:my-2 [&>ul]:my-2 [&>ol]:my-2 [&_*]:text-sm">
