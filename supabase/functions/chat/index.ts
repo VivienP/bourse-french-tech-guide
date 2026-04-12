@@ -292,9 +292,7 @@ serve(async (req) => {
         messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
         stream: true,
         max_tokens: 2000,
-        reasoning: {
-          effort: "medium",
-        },
+        reasoning_effort: "medium",
       }),
     });
 
