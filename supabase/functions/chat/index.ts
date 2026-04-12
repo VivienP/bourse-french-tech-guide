@@ -288,12 +288,13 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "openai/gpt-5.2",
         messages: [{ role: "system", content: systemPrompt }, ...truncatedMessages],
         stream: true,
-        temperature: 0.2,
-        top_p: 1,
-        max_tokens: 500,
+        max_tokens: 2000,
+        reasoning: {
+          effort: "medium",
+        },
       }),
     });
 
