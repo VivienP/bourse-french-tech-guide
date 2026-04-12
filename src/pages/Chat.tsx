@@ -30,8 +30,10 @@ const CAL_EMBED_JS_URL = `${CAL_ORIGIN}/embed/embed.js`;
 const MAX_INPUT_LENGTH = 10000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
 const CHAT_STATE_KEY = 'bft_chat_state';
+const CHAT_STATE_VERSION = 2;
 
 interface SavedChatState {
+  version: number;
   messages: Message[];
   preQualStep: number;
   conversationClosed: boolean;
@@ -46,7 +48,13 @@ interface SavedChatState {
 function loadChatState(): SavedChatState | null {
   try {
     const raw = localStorage.getItem(CHAT_STATE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw) as Partial<SavedChatState>;
+    if (parsed.version !== CHAT_STATE_VERSION) return null;
+    if (!Array.isArray(parsed.messages)) return null;
+
+    return parsed as SavedChatState;
   } catch {}
   return null;
 }
@@ -57,7 +65,13 @@ function saveChatState(state: SavedChatState) {
   } catch {}
 }
 
-function getOrCreateSessionId(): string {
+function getOrCreateSessionId(forceNew = false): string {
+  if (forceNew) {
+    const nextId = crypto.randomUUID();
+    localStorage.setItem(SESSION_STORAGE_KEY, nextId);
+    return nextId;
+  }
+
   let id = localStorage.getItem(SESSION_STORAGE_KEY);
   if (!id) {
     id = crypto.randomUUID();
@@ -111,11 +125,12 @@ const Chat: React.FC = () => {
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const conversationRef = useRef<Message[]>([]);
-  const sessionIdRef = useRef<string>(getOrCreateSessionId());
+  const sessionIdRef = useRef<string>(saved?.sessionId ?? getOrCreateSessionId(true));
 
   // Save chat state to localStorage
   useEffect(() => {
     saveChatState({
+      version: CHAT_STATE_VERSION,
       messages,
       preQualStep,
       conversationClosed,
@@ -198,11 +213,24 @@ const Chat: React.FC = () => {
 
       if (!resp.ok) {
         const data = await resp.json().catch(() => ({}));
-        if (resp.status === 429 && data.code === 'SESSION_LIMIT_REACHED') {
-          setConversationClosed(true);
+        if (resp.status === 429) {
+          const backendMessage = typeof data.error === 'string'
+            ? data.error
+            : 'Limite atteinte. Actualisez la page pour démarrer une nouvelle évaluation.';
+          const reachedSessionLimit = data.code === 'SESSION_LIMIT_REACHED' || /session atteinte/i.test(backendMessage);
+
+          if (reachedSessionLimit) {
+            setConversationClosed(true);
+          }
+
           setMessages((prev) => [
             ...prev,
-            { role: 'assistant', content: 'Vous avez atteint la limite de messages de cette session. Actualisez la page pour démarrer une nouvelle évaluation.' },
+            {
+              role: 'assistant',
+              content: reachedSessionLimit
+                ? 'Vous avez atteint la limite de messages de cette session. Actualisez la page ou relancez une nouvelle évaluation.'
+                : `⚠️ ${backendMessage}`,
+            },
           ]);
           return;
         }
