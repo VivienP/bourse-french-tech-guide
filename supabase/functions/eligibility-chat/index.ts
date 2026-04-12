@@ -123,6 +123,8 @@ Moyenne = (Maturité + Innovation + Traction + Engagement + Clarté×0,5) / 4,5
 
 ━━━ CALIBRATION ━━━
 
+La BFT cible des startups EARLY-STAGE. Il est NORMAL qu'un projet ait peu de traction à ce stade. La note de traction doit être indulgente pour les projets récents (< 6 mois) : quelques tests utilisateurs ou lettres d'intention suffisent pour un 3/5.
+
 Projets NON innovants (score innovation ≤ 2) — pas de complexité technique réelle :
 — Application/site web standard sans techno propriétaire
 — Commercialisation de produits existants sans R&D
@@ -139,9 +141,9 @@ Projets INNOVANTS (score innovation ≥ 3) — complexité technique avérée :
 ━━━ RÈGLES DE NOTATION (INTERNES — ne pas afficher) ━━━
 
 Ces notes sont internes au calcul de la moyenne et NE DOIVENT PAS apparaître dans le rapport.
-- Si l'information n'est pas fournie pour un critère, attribuer 1/5 en interne.
+- Si l'information n'est pas fournie pour un critère, attribuer 2/5 en interne (pas 1 — le doute profite au candidat early-stage).
 - Un 4/5 ou 5/5 nécessite des preuves concrètes (clients payants, LoI signées, équipe dédiée, etc.).
-- Un 3/5 = prometteur sans preuves solides.
+- Un 3/5 = prometteur, éléments encourageants même sans preuves solides.
 - Un 2/5 = faiblesses significatives.
 - Un 1/5 = absent ou critère clairement non rempli.
 
@@ -150,17 +152,21 @@ Ces notes sont internes au calcul de la moyenne et NE DOIVENT PAS apparaître da
 - Markdown avec titres H2 numérotés (## 1. Maturité du projet, ## 2. Innovation, etc.)
 - Ne jamais afficher la note individuelle de chaque critère. Rédiger un paragraphe d'analyse factuelle par dimension sans mentionner de note chiffrée.
 - Paragraphe de synthèse par dimension : forces et faiblesses factuelles uniquement.
-  INTERDIT ABSOLU : toute mention ou section "Recommandations", "Il est recommandé", "Il faudrait", "Nous conseillons", "je vous recommande", "pour améliorer", "prochaines étapes".
-  Si tu es tenté de mettre une recommandation, remplace-la par une simple constatation de faiblesse.
+  Dans les sections 1 à 5, rester FACTUEL : constater les forces et faiblesses, NE PAS donner de conseil ou recommandation.
 - Conclusion : Afficher uniquement la **Note globale : X.X/5** suivie du verdict d'éligibilité.
   - Moyenne ≥ 2,5 → éligible en l'état
   - Moyenne < 2,5 → non éligible en l'état
+- Après la conclusion, ajouter obligatoirement :
+
+## 💡 Recommandation clé
+
+Identifier LE point d'amélioration qui aurait le plus d'impact pour sécuriser l'obtention de la BFT. Formuler en 2-3 phrases actionables et concrètes.
+
 - Dernière ligne obligatoire (seule, sans markdown) : SCORE_FINAL: X.X
 
 ━━━ RÈGLES ABSOLUES ━━━
 
 - NE JAMAIS utiliser CONVERSATION_CLOSED. Vous DEVEZ produire un rapport.
-- NE JAMAIS générer de section ou de contenu "Recommandations".
 - Ton formel, professionnel, phrases courtes. Pas de préambule. Commencez directement par le titre.
 - Répondre uniquement en français.`;
 
@@ -282,7 +288,7 @@ serve(async (req) => {
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
     const systemPrompt = phase === "gate_rejected" ? buildGateRejectedPrompt() : REPORT_PROMPT;
-    const maxTokens = phase === "gate_rejected" ? 400 : 2500;
+    const maxTokens = phase === "gate_rejected" ? 400 : 4096;
 
     const truncatedMessages = messages.slice(-16);
 
