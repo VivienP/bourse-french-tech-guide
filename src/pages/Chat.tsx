@@ -208,7 +208,7 @@ const Chat: React.FC = () => {
 
     // Detect report generation phase (7+ user messages = all structured questions answered)
     const userMsgCount = newMessages.filter(m => m.role === 'user').length;
-    if (userMsgCount >= 7) {
+    if (userMsgCount >= 8) {
       setIsGeneratingReport(true);
     }
 
