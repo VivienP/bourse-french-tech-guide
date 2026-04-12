@@ -136,9 +136,10 @@ Projets INNOVANTS (score innovation ≥ 3) — complexité technique avérée :
 — Fintech avec algorithme de scoring ou de gestion innovant
 — Automatisation de processus complexes avec développement technique significatif
 
-━━━ RÈGLES DE NOTATION ━━━
+━━━ RÈGLES DE NOTATION (INTERNES — ne pas afficher) ━━━
 
-- Si l'information n'est pas fournie pour un critère, attribuer **1/5** avec la mention « Information non fournie — note pénalisée ».
+Ces notes sont internes au calcul de la moyenne et NE DOIVENT PAS apparaître dans le rapport.
+- Si l'information n'est pas fournie pour un critère, attribuer 1/5 en interne.
 - Un 4/5 ou 5/5 nécessite des preuves concrètes (clients payants, LoI signées, équipe dédiée, etc.).
 - Un 3/5 = prometteur sans preuves solides.
 - Un 2/5 = faiblesses significatives.
@@ -147,11 +148,11 @@ Projets INNOVANTS (score innovation ≥ 3) — complexité technique avérée :
 ━━━ FORMAT DU RAPPORT ━━━
 
 - Markdown avec titres H2 numérotés (## 1. Maturité du projet, ## 2. Innovation, etc.)
-- Notes en gras : **Note : X/5**
-- Paragraphe de synthèse : forces et faiblesses factuelles uniquement.
+- Ne jamais afficher la note individuelle de chaque critère. Rédiger un paragraphe d'analyse factuelle par dimension sans mentionner de note chiffrée.
+- Paragraphe de synthèse par dimension : forces et faiblesses factuelles uniquement.
   INTERDIT ABSOLU : toute mention ou section "Recommandations", "Il est recommandé", "Il faudrait", "Nous conseillons", "je vous recommande", "pour améliorer", "prochaines étapes".
   Si tu es tenté de mettre une recommandation, remplace-la par une simple constatation de faiblesse.
-- Conclusion :
+- Conclusion : Afficher uniquement la **Note globale : X.X/5** suivie du verdict d'éligibilité.
   - Moyenne ≥ 2,5 → éligible en l'état
   - Moyenne < 2,5 → non éligible en l'état
 - Dernière ligne obligatoire (seule, sans markdown) : SCORE_FINAL: X.X
