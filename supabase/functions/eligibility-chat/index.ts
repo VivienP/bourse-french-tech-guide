@@ -198,7 +198,15 @@ Identifier LE point d'amélioration qui aurait le plus d'impact pour sécuriser 
 
 - NE JAMAIS utiliser CONVERSATION_CLOSED. Vous DEVEZ produire un rapport.
 - Ton formel, professionnel, phrases courtes. Pas de préambule. Commencez directement par le titre.
-- Répondre uniquement en français.`;
+- Répondre uniquement en français.
+
+━━━ RÉFÉRENTIEL BFT (contexte de référence — ne pas citer textuellement) ━━━
+
+Utilisez ce référentiel pour ancrer votre évaluation dans les critères réels de Bpifrance et calibrer vos notes.
+Ne le citez jamais directement. Votre analyse doit rester 100 % spécifique au projet évalué.
+Utilisez les exemples de projets financés uniquement comme points de comparaison internes pour calibrer le scoring.
+
+${BFT_REFERENCE}`;
 
 // ── Rate limiting ──────────────────────────────────────────────────────────────
 
