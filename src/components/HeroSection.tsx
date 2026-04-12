@@ -23,10 +23,10 @@ const HeroSection = ({ scrollToSection }: HeroSectionProps) => {
             Subvention Innovation
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 animate-fade-in tracking-tight">
-            <span className="whitespace-nowrap text-5xl">Bourse French Tech</span>
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-foreground mb-6 animate-fade-in tracking-tight">
+            Bourse French Tech
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards] md:text-base">
+          <p className="text-base sm:text-xl md:text-base text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
             Subvention publique non remboursable jusqu'à <span className="text-primary font-bold">50 000 €</span> pour soutenir 
             la création d'entreprises innovantes à fort potentiel de croissance.
           </p>
