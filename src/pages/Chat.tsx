@@ -97,11 +97,11 @@ function isValidPhone(phone: string): boolean {
 }
 
 const INITIAL_MESSAGE =
-  "Ce programme est réservé aux startups qui remplissent les **3 conditions suivantes** :\n\n" +
+  "Ce programme vise à soutenir la phase de création d'entreprises innovantes à fort potentiel de croissance. Il est réservé aux startups remplissant les 3 conditions suivantes :\n\n" +
   "- ✅ Avoir une **société immatriculée** (SAS, SARL…)\n" +
   "- ✅ Depuis **moins d'un an**\n" +
   "- ✅ Avoir **≥ 20 000 € de fonds propres** (capital social + apports en compte courant)\n\n" +
-  "**Remplissez-vous ces 3 conditions ?**";
+  "Remplissez-vous ces 3 conditions ?";
 
 const Chat: React.FC = () => {
   const saved = React.useMemo(() => loadChatState(), []);

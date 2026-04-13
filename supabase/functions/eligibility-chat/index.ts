@@ -114,11 +114,11 @@ function sseText(text: string): Response {
 // ── Prompts ────────────────────────────────────────────────────────────────────
 
 const GATE_TEXT =
-  "Ce programme est réservé aux startups qui remplissent les **3 conditions suivantes** :\n\n" +
+  "Ce programme vise à soutenir la phase de création d'entreprises innovantes à fort potentiel de croissance. Il est réservé aux startups remplissant les 3 conditions suivantes :\n\n" +
   "- Société commerciale immatriculée (SAS, SARL, SASU, EURL…)\n" +
   "- Créée il y a **moins d'un an**\n" +
   "- Au moins **20 000 € de fonds propres** et quasi-fonds propres\n\n" +
-  "**Confirmez-vous que vous remplissez l'ensemble de ces conditions ?**";
+  "Remplissez-vous ces 3 conditions ?";
 
 function buildGateRejectedPrompt(): string {
   return `Vous êtes un conseiller expert en financement public d'innovation (Bourse French Tech).
