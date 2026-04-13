@@ -35,7 +35,7 @@ const CAL_EMBED_JS_URL = `${CAL_ORIGIN}/embed/embed.js`;
 const MAX_INPUT_LENGTH = 10000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
 const CHAT_STATE_KEY = 'bft_chat_state';
-const CHAT_STATE_VERSION = 3;
+const CHAT_STATE_VERSION = 4;
 
 interface SavedChatState {
   version: number;
@@ -119,11 +119,11 @@ const BFT_EXPENSES = {
 } as const;
 
 const INITIAL_MESSAGE =
-  "Ce programme vise à soutenir la phase de création d'entreprises innovantes à fort potentiel de croissance. Il est réservé aux startups remplissant les 3 conditions suivantes :\n\n" +
-  "- ✅ Avoir une **société immatriculée** (SAS, SARL…)\n" +
-  "- ✅ Depuis **moins d'un an**\n" +
-  "- ✅ Avoir **≥ 20 000 € de fonds propres** (capital social + apports en compte courant)\n\n" +
-  "Remplissez-vous ces 3 conditions ?";
+  "Ce programme vise à soutenir la phase de création d'entreprises innovantes à fort potentiel de croissance. Il est réservé aux startups remplissant les trois conditions suivantes :\n\n" +
+  "- ✅ Une **société commerciale immatriculée** (SAS, SARL, SASU, EURL…)\n" +
+  "- ✅ Créée depuis **moins d'un an**\n" +
+  "- ✅ Disposant d'au moins **20 000 € de fonds propres** (capital social + apports en compte courant)\n\n" +
+  "Remplissez-vous ces trois conditions ?";
 
 const Chat: React.FC = () => {
   const saved = React.useMemo(() => loadChatState(), []);
