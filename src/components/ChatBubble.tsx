@@ -5,7 +5,19 @@ import { Link } from 'react-router-dom';
 import { parseSSELine, SSE_DONE } from '@/lib/chatUtils';
 
 type Intent = 'bft' | 'non_dilutif';
-type Message = { role: 'user' | 'assistant'; content: string; intent?: Intent };
+type Message = { role: 'user' | 'assistant'; content: string; intent?: Intent; suggestions?: string[] };
+
+function extractSuggestions(content: string): { clean: string; suggestions: string[] } {
+  const idx = content.indexOf('\nSUGGESTIONS:');
+  if (idx === -1) return { clean: content, suggestions: [] };
+  try {
+    const jsonPart = content.slice(idx + '\nSUGGESTIONS:'.length).trim();
+    const suggestions = JSON.parse(jsonPart) as string[];
+    return { clean: content.slice(0, idx).trimEnd(), suggestions };
+  } catch {
+    return { clean: content, suggestions: [] };
+  }
+}
 
 function detectIntent(messages: Message[]): Intent {
   const recentUserText = messages
@@ -174,14 +186,16 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
 
       const upsert = (text: string) => {
         assistantContent += text;
+        // Hide SUGGESTIONS marker while streaming
+        const displayContent = assistantContent.replace(/\nSUGGESTIONS:.*$/s, '');
         setMessages((prev) => {
           const last = prev[prev.length - 1];
           if (last?.role === 'assistant' && last !== WELCOME_MESSAGE) {
             return prev.map((m, i) =>
-              i === prev.length - 1 ? { ...m, content: assistantContent } : m
+              i === prev.length - 1 ? { ...m, content: displayContent } : m
             );
           }
-          return [...prev, { role: 'assistant', content: assistantContent, intent }];
+          return [...prev, { role: 'assistant', content: displayContent, intent }];
         });
       };
 
@@ -215,6 +229,16 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
           } catch {}
         }
       }
+
+      // Extract SUGGESTIONS marker and set final clean content
+      const { clean, suggestions } = extractSuggestions(assistantContent);
+      setMessages((prev) =>
+        prev.map((m, i) =>
+          i === prev.length - 1 && m.role === 'assistant'
+            ? { ...m, content: clean, suggestions }
+            : m
+        )
+      );
     } catch (e: any) {
       if (e.name === 'AbortError') return;
       console.error('Chat error:', e);
@@ -237,14 +261,17 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
 
   const currentRemaining = DAILY_LIMIT - getQuota().count;
 
-  // Determine contextual suggestions based on last assistant message intent
+  // Determine contextual suggestions based on last assistant message
   const lastAssistantMsg = [...messages].reverse().find((m) => m.role === 'assistant' && m !== WELCOME_MESSAGE);
   const hasUserMessages = messages.some((m) => m.role === 'user');
-  const rawSuggestions = !hasUserMessages
+  // Priority 1: LLM-generated suggestions; Priority 2: static fallback by intent
+  const dynamicSuggestions = lastAssistantMsg?.suggestions ?? [];
+  const staticSuggestions = !hasUserMessages
     ? INITIAL_SUGGESTIONS
     : lastAssistantMsg?.intent === 'non_dilutif'
       ? ND_SUGGESTIONS
       : BFT_SUGGESTIONS;
+  const rawSuggestions = dynamicSuggestions.length > 0 ? dynamicSuggestions : staticSuggestions;
   const filteredSuggestions = hideEligibility
     ? rawSuggestions.filter((s) => s !== 'Évaluer mon éligibilité ?')
     : rawSuggestions;
@@ -335,13 +362,13 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
 
           {/* Contextual suggestions */}
           {currentRemaining > 0 && !isLoading && (
-            <div className="px-3 pb-1 flex flex-wrap gap-1.5">
+            <div className="border-t border-border px-3 pt-2 pb-1 flex flex-wrap gap-1.5">
               {contextualSuggestions.map((prompt) =>
                 prompt === 'Évaluer mon éligibilité ?' ? (
                   <Link
                     key={prompt}
                     to="/chat"
-                    className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-[0.7rem] border border-border rounded-full px-3 py-1 text-muted-foreground hover:bg-muted hover:border-primary/30 hover:text-foreground transition-colors"
                   >
                     {prompt}
                   </Link>
@@ -349,7 +376,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
                   <button
                     key={prompt}
                     onClick={() => sendMessage(prompt)}
-                    className="text-[0.7rem] border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:bg-muted transition-colors"
+                    className="text-[0.7rem] border border-border rounded-full px-3 py-1 text-muted-foreground hover:bg-muted hover:border-primary/30 hover:text-foreground transition-colors"
                   >
                     {prompt}
                   </button>
@@ -381,7 +408,7 @@ const ChatBubble: React.FC<{ hideEligibility?: boolean; eligibilityStep?: number
                   <button
                     onClick={() => sendMessage()}
                     disabled={!input.trim()}
-                    className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
+                    className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send className="h-4 w-4" />
                   </button>
