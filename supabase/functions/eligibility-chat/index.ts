@@ -128,9 +128,9 @@ function sseText(text: string): Response {
 
 const GATE_TEXT =
   "Ce programme vise à soutenir la phase de création d'entreprises innovantes à fort potentiel de croissance. Il est réservé aux startups remplissant les trois conditions suivantes :\n\n" +
-  "- Société commerciale immatriculée (SAS, SARL, SASU, EURL…)\n" +
-  "- Créée il y a **moins d'un an**\n" +
-  "- Au moins **20 000 € de fonds propres** et quasi-fonds propres\n\n" +
+  "- Une **société commerciale immatriculée** (SAS, SARL, SASU, EURL…)\n" +
+  "- Créée depuis **moins d'un an**\n" +
+  "- Disposant d'au moins **20 000 € de fonds propres** (capital social + apports en compte courant)\n\n" +
   "Remplissez-vous ces trois conditions ?";
 
 function buildGateRejectedPrompt(): string {
