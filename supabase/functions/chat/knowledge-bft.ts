@@ -43,6 +43,8 @@ Pour être éligible à la Bourse French Tech, l'entreprise doit être une soci�
 
 L'entreprise candidate doit être une société commerciale de type SAS, SASU, SARL ou EURL. Les auto-entrepreneurs, les entreprises individuelles et les EIRL sont exclus du dispositif. La société doit avoir été créée il y a moins d'un an au moment du dépôt complet du dossier auprès de Bpifrance.
 
+L'entreprise doit également répondre à la définition européenne de Petite Entreprise : effectif strictement inférieur à 50 personnes ET chiffre d'affaires annuel OU total du bilan inférieur à 10 millions d'euros. Une entreprise dépassant l'un de ces seuils — même récemment créée — n'est pas éligible à la BFT.
+
 L'entreprise doit disposer de fonds propres suffisants pour équilibrer le financement. Le montant idéal de fonds propres se situe entre 20 000 et 30 000 euros. En région, un montant minimum de 15 000 euros est parfois accepté, selon la délégation régionale et le profil du projet. Un capital social inférieur à 1 000 € est perçu négativement par les chargés d'affaires — signal de faible engagement des fondateurs.
 
 ---
