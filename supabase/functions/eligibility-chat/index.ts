@@ -57,13 +57,13 @@ function isNo(text: string): boolean {
 }
 
 const STRUCTURED_QUESTIONS: string[] = [
-  "Quel problème précis résous-tu ? *(1 phrase)*",
-  "Pour qui ? Décris le type de client et le marché cible *(3 phrases max — obligatoire)*.",
-  "Quelle est ta solution ?",
+  "Quel problème précis résolvez-vous ? *(1 phrase)*",
+  "Pour qui ? Décrivez le type de client et le marché cible *(3 phrases max — obligatoire)*.",
+  "Quelle est votre solution ?",
   "Pourquoi maintenant ? Qu'est-ce qui rend ce moment opportun ?",
-  "Quel est le modèle économique de la solution ?",
-  "Qu'avez-vous déjà fait concrètement ? *(prototype, premiers clients, tests, chiffre d'affaires…)*",
-  "Pourquoi demandez-vous cette bourse spécifiquement ?",
+  "Quel est le modèle économique envisagé de la solution ?",
+  "Qu'avez-vous déjà accompli jusqu'à maintenant ? Quel est votre stade d'avancement ?",
+  "Avez-vous déjà obtenu des financements publics ou privés ? *(investisseurs, prêt d'honneur, subventions, love money…)*",
 ];
 
 // ── Phase detection ────────────────────────────────────────────────────────────
@@ -154,6 +154,8 @@ Moyenne = (Maturité + Innovation + Traction + Engagement + Clarté×0,5) / 4,5
 ━━━ CALIBRATION ━━━
 
 La BFT cible des startups EARLY-STAGE. Il est NORMAL qu'un projet ait peu de traction à ce stade. La note de traction doit être indulgente pour les projets récents (< 6 mois) : quelques tests utilisateurs ou lettres d'intention suffisent pour un 3/5.
+
+**Financements obtenus (Q7)** : Si le fondateur a déjà obtenu un financement privé (investisseurs, love money, business angel) ou un prêt d'honneur, cela constitue une validation externe du projet et doit bonifier les notes d'Engagement et de Traction (+0,5 à +1 point selon le montant/source). L'absence de financement n'est pas pénalisée — ne jamais réduire une note au motif qu'aucun financement n'a encore été obtenu.
 
 Projets NON innovants (score innovation ≤ 2) — pas de complexité technique réelle :
 — Application/site web standard sans techno propriétaire
