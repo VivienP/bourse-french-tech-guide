@@ -10,7 +10,7 @@
  * Scoring     : SCORE_FINAL marker dans le dernier message assistant
  */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Send, Square, Lock, Calendar, RotateCcw } from 'lucide-react';
+import { Send, Square, Lock, Calendar, RotateCcw, Check } from 'lucide-react';
 import ScoreGauge from '@/components/ScoreGauge';
 import ReactMarkdown from 'react-markdown';
 import Cal, { getCalApi } from '@calcom/embed-react';
@@ -35,7 +35,7 @@ const CAL_EMBED_JS_URL = `${CAL_ORIGIN}/embed/embed.js`;
 const MAX_INPUT_LENGTH = 10000;
 const SESSION_STORAGE_KEY = 'bft_session_id';
 const CHAT_STATE_KEY = 'bft_chat_state';
-const CHAT_STATE_VERSION = 2;
+const CHAT_STATE_VERSION = 3;
 
 interface SavedChatState {
   version: number;
@@ -96,6 +96,28 @@ function isValidPhone(phone: string): boolean {
   return /^(\+33|0)[1-9]\d{8}$/.test(cleaned);
 }
 
+const NONE_EXPENSE = "Aucune de ces dépenses";
+
+const BFT_EXPENSES = {
+  internes: [
+    "Frais d'accompagnement (incubateurs, accélérateurs…)",
+    "Frais de Propriété intellectuelle",
+    "Études de faisabilité technique/économique",
+    "Étude juridique",
+    "Étude de marché",
+    "Design Produit",
+    "Recherche de partenaires R&D&I",
+    "Formations équipe fondatrice",
+  ],
+  externes: [
+    "Frais de personnel R&D",
+    "Frais généraux forfaitaires",
+    "Petits investissements",
+    "Frais de déplacement",
+    "Frais d'inscription à un salon",
+  ],
+} as const;
+
 const INITIAL_MESSAGE =
   "Ce programme vise à soutenir la phase de création d'entreprises innovantes à fort potentiel de croissance. Il est réservé aux startups remplissant les 3 conditions suivantes :\n\n" +
   "- ✅ Avoir une **société immatriculée** (SAS, SARL…)\n" +
@@ -120,6 +142,9 @@ const Chat: React.FC = () => {
 
   // Pre-qualification state
   const [preQualStep, setPreQualStep] = useState(saved?.preQualStep ?? 0);
+
+  // Q8 expenses selection
+  const [selectedExpenses, setSelectedExpenses] = useState<string[]>([]);
 
   // Lead capture state
   const [leadCaptured, setLeadCaptured] = useState(saved?.leadCaptured ?? false);
@@ -206,9 +231,9 @@ const Chat: React.FC = () => {
     setIsLoading(true);
     setIsReasoning(false);
 
-    // Detect report generation phase (7+ user messages = all structured questions answered)
+    // Detect report generation phase (8+ user messages = gate + Q1-Q8 all answered)
     const userMsgCount = newMessages.filter(m => m.role === 'user').length;
-    if (userMsgCount >= 8) {
+    if (userMsgCount >= 9) {
       setIsGeneratingReport(true);
     }
 
@@ -384,6 +409,28 @@ const Chat: React.FC = () => {
     setPreQualStep((prev) => prev + 1);
   }, [isLoading, sendMessage]);
 
+  const handleExpensesSubmit = useCallback(() => {
+    if (selectedExpenses.length === 0) return;
+    if (selectedExpenses.includes(NONE_EXPENSE)) {
+      sendMessage(NONE_EXPENSE);
+      setSelectedExpenses([]);
+      return;
+    }
+    const internes = selectedExpenses.filter(e =>
+      (BFT_EXPENSES.internes as readonly string[]).includes(e)
+    );
+    const externes = selectedExpenses.filter(e =>
+      (BFT_EXPENSES.externes as readonly string[]).includes(e)
+    );
+    const parts: string[] = [];
+    if (internes.length > 0)
+      parts.push(`Dépenses internes : ${internes.join(", ")}`);
+    if (externes.length > 0)
+      parts.push(`Dépenses externes : ${externes.join(", ")}`);
+    sendMessage(parts.join(" | "));
+    setSelectedExpenses([]);
+  }, [selectedExpenses, sendMessage]);
+
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLeadError('');
@@ -446,6 +493,14 @@ const Chat: React.FC = () => {
   const reportDone = score !== null;
   const showLeadGate = (isGeneratingReport || reportDone) && !leadCaptured && !conversationClosed;
   const showReport = reportDone && leadCaptured && !conversationClosed;
+
+  const currentUserMsgCount = messages.filter(m => m.role === 'user').length;
+  const isOnExpensesQuestion =
+    preQualStep >= 1 &&
+    currentUserMsgCount === 8 &&
+    !isLoading &&
+    !reportDone &&
+    !conversationClosed;
 
   const navigateToSection = (sectionId: string) => {
     window.location.href = `/#${sectionId}`;
@@ -675,6 +730,137 @@ const Chat: React.FC = () => {
                 >
                   Non
                 </button>
+              </div>
+            ) : isOnExpensesQuestion ? (
+              <div className="flex flex-col gap-2">
+                <div className="max-h-[216px] overflow-y-auto rounded-xl border border-border bg-card">
+                  {/* Section internes */}
+                  <div className="px-3 pt-2.5 pb-0.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50 select-none">
+                      Internes
+                    </p>
+                  </div>
+                  {BFT_EXPENSES.internes.map((expense) => {
+                    const checked = selectedExpenses.includes(expense);
+                    return (
+                      <label
+                        key={expense}
+                        className="flex items-center gap-2.5 mx-1 px-2 py-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/60 cursor-pointer transition-colors group"
+                      >
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={checked}
+                          onChange={(e) =>
+                            setSelectedExpenses((prev) =>
+                              e.target.checked
+                                ? [...prev.filter((x) => x !== NONE_EXPENSE), expense]
+                                : prev.filter((x) => x !== expense)
+                            )
+                          }
+                        />
+                        <span
+                          className={`w-3.5 h-3.5 rounded shrink-0 border flex items-center justify-center transition-colors ${
+                            checked
+                              ? 'bg-blue-500 border-blue-500'
+                              : 'border-border group-hover:border-muted-foreground/40'
+                          }`}
+                        >
+                          {checked && <Check className="h-2 w-2 text-white" strokeWidth={3} />}
+                        </span>
+                        <span className="text-xs text-foreground leading-snug">{expense}</span>
+                      </label>
+                    );
+                  })}
+
+                  <div className="mx-3 my-1.5 border-t border-border/60" />
+
+                  {/* Section externes */}
+                  <div className="px-3 pb-0.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50 select-none">
+                      Externes
+                    </p>
+                  </div>
+                  {BFT_EXPENSES.externes.map((expense) => {
+                    const checked = selectedExpenses.includes(expense);
+                    return (
+                      <label
+                        key={expense}
+                        className="flex items-center gap-2.5 mx-1 px-2 py-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/60 cursor-pointer transition-colors group"
+                      >
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={checked}
+                          onChange={(e) =>
+                            setSelectedExpenses((prev) =>
+                              e.target.checked
+                                ? [...prev.filter((x) => x !== NONE_EXPENSE), expense]
+                                : prev.filter((x) => x !== expense)
+                            )
+                          }
+                        />
+                        <span
+                          className={`w-3.5 h-3.5 rounded shrink-0 border flex items-center justify-center transition-colors ${
+                            checked
+                              ? 'bg-orange-400 border-orange-400'
+                              : 'border-border group-hover:border-muted-foreground/40'
+                          }`}
+                        >
+                          {checked && <Check className="h-2 w-2 text-white" strokeWidth={3} />}
+                        </span>
+                        <span className="text-xs text-foreground leading-snug">{expense}</span>
+                      </label>
+                    );
+                  })}
+
+                  <div className="mx-3 my-1.5 border-t border-border/60" />
+
+                  {/* Aucune option */}
+                  {(() => {
+                    const checked = selectedExpenses.includes(NONE_EXPENSE);
+                    return (
+                      <label className="flex items-center gap-2.5 mx-1 mb-1 px-2 py-1.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/60 cursor-pointer transition-colors group">
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={checked}
+                          onChange={(e) =>
+                            setSelectedExpenses(e.target.checked ? [NONE_EXPENSE] : [])
+                          }
+                        />
+                        <span
+                          className={`w-3.5 h-3.5 rounded shrink-0 border flex items-center justify-center transition-colors ${
+                            checked
+                              ? 'bg-muted-foreground border-muted-foreground'
+                              : 'border-border group-hover:border-muted-foreground/40'
+                          }`}
+                        >
+                          {checked && <Check className="h-2 w-2 text-white" strokeWidth={3} />}
+                        </span>
+                        <span className="text-xs text-muted-foreground italic leading-snug">
+                          {NONE_EXPENSE}
+                        </span>
+                      </label>
+                    );
+                  })()}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] text-muted-foreground/60 pl-1">
+                    {selectedExpenses.length > 0 && !selectedExpenses.includes(NONE_EXPENSE)
+                      ? `${selectedExpenses.length} sélectionné${selectedExpenses.length > 1 ? 's' : ''}`
+                      : ''}
+                  </span>
+                  <button
+                    onClick={handleExpensesSubmit}
+                    disabled={selectedExpenses.length === 0}
+                    className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity disabled:opacity-40 flex items-center gap-1.5"
+                  >
+                    <Send className="h-3.5 w-3.5" />
+                    Valider
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col gap-1">
